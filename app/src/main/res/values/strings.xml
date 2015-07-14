@@ -3,4 +3,12 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="submit">Submit</string>
+
+    <!-- Monster Search -->
+    <string name="level">Level: </string>
+    <string name="num_awakenings"># of awakenings: </string>
+    <string name="skill_level">Skill level: </string>
+    <string name="num_plug_eggs"># of plus eggs: </string>
+    <string name="hypermax">Hypermax</string>
 </resources>

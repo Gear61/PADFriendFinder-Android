@@ -1,9 +1,11 @@
-package com.randomappsinc.padfriendfinder;
+package com.randomappsinc.padfriendfinder.Activities;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.randomappsinc.padfriendfinder.R;
 
 
 public class MainActivity extends ActionBarActivity

@@ -1,0 +1,162 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <TextView
+            android:id="@+id/monster_search_instructions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"/>
+
+        <ImageView
+            android:id="@+id/monster_picture"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="5dp"
+            android:layout_alignBottom="@+id/monster_search_box"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"/>
+
+        <AutoCompleteTextView
+            android:id="@+id/monster_search_box"
+            android:inputType="textMultiLine"
+            android:lines="3"
+            android:minLines="1"
+            android:layout_toRightOf="@id/monster_picture"
+            android:layout_below="@+id/monster_search_instructions"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true" />
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:id="@+id/hypermax"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/monster_search_box"
+            android:text="@string/hypermax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:id="@+id/monster_stats"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/hypermax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/monster_fields"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/monster_search_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true">
+
+                <TextView
+                    android:id="@+id/level"
+                    android:layout_alignRight="@+id/num_awakenings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/level"
+                    android:textSize="24sp"/>
+
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/num_awakenings"
+                    android:layout_below="@+id/level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/num_awakenings"
+                    android:textSize="24sp"/>
+
+                <TextView
+                    android:id="@+id/skill_level"
+                    android:layout_alignRight="@+id/num_awakenings"
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@+id/num_awakenings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/skill_level"
+                    android:textSize="24sp"/>
+
+                <TextView
+                    android:id="@+id/num_plus_eggs"
+                    android:layout_alignRight="@+id/num_awakenings"
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@+id/skill_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/num_plug_eggs"
+                    android:textSize="24sp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/color_req_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/monster_level"
+                    android:layout_marginTop="3dp"
+                    android:textSize="24sp"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="2"/>
+
+                <EditText
+                    android:id="@+id/monster_num_awakenings"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/monster_level"
+                    android:textSize="24sp"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="2"/>
+
+                <EditText
+                    android:id="@+id/monster_skill_level"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/monster_num_awakenings"
+                    android:textSize="24sp"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="2"/>
+
+                <EditText
+                    android:id="@+id/monster_num_plus_eggs"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/monster_skill_level"
+                    android:textSize="24sp"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="3"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            android:id="@+id/submit_monster"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/monster_stats"
+            android:text="@string/submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+</ScrollView>
