@@ -77,10 +77,10 @@ public class MonsterSearchActivity extends FragmentActivity
         monsterEditText = (AutoCompleteTextView) findViewById(R.id.monster_search_box);
         submitMonster = (Button) findViewById(R.id.submit_monster);
         monsterPicture = (ImageView) findViewById(R.id.monster_picture);
-        level = (EditText) findViewById(R.id.monster_level);
-        numAwakenings = (EditText) findViewById(R.id.monster_num_awakenings);
-        skillLevel = (EditText) findViewById(R.id.monster_skill_level);
-        numPlusEggs = (EditText) findViewById(R.id.monster_num_plus_eggs);
+        level = (EditText) findViewById(R.id.level);
+        numAwakenings = (EditText) findViewById(R.id.num_awakenings);
+        skillLevel = (EditText) findViewById(R.id.skill_level);
+        numPlusEggs = (EditText) findViewById(R.id.num_plus_eggs);
 
         // Set listeners and adapters
         monsterEditText.addTextChangedListener(new TextWatcher()
@@ -145,7 +145,7 @@ public class MonsterSearchActivity extends FragmentActivity
                 if (level.getText().toString().isEmpty() || skillLevel.getText().toString().isEmpty() ||
                         numAwakenings.getText().toString().isEmpty() || numPlusEggs.getText().toString().isEmpty())
                 {
-                    Toast.makeText(context, Constants.MONSTER_FORM_INCOMPLETE, Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, Constants.MONSTER_FORM_INCOMPLETE_MESSAGE, Toast.LENGTH_LONG).show();
                 }
                 else
                 {
