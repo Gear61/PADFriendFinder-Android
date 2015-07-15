@@ -12,9 +12,6 @@ import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
  */
 public class MonsterSearchUtils
 {
-    // Default length of godfest in seconds (2 days)
-    public static long GODFEST_DEFAULT_LENGTH = 172800;
-
     public static String createMonsterFormMessage(int level, int numAwakenings, int skillLevel, int numPlusEgges, MonsterAttributes monsterAttributes)
     {
         if (level <= 0)

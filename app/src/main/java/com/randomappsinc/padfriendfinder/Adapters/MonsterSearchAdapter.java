@@ -1,9 +1,17 @@
 package com.randomappsinc.padfriendfinder.Adapters;
 
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.randomappsinc.padfriendfinder.Misc.GodMapper;
+import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
+import com.randomappsinc.padfriendfinder.R;
 
 import java.util.ArrayList;
 
@@ -30,7 +38,7 @@ public class MonsterSearchAdapter extends ArrayAdapter<String>
         godMapper = GodMapper.getGodMapper();
     }
 
-    /* public static class ViewHolder
+    public static class ViewHolder
     {
         public ImageView monsterIcon;
         public TextView monsterName;
@@ -71,7 +79,6 @@ public class MonsterSearchAdapter extends ArrayAdapter<String>
         return nameFilter;
     }
 
-    @SuppressLint("DefaultLocale")
     Filter nameFilter = new Filter()
     {
         public String convertResultToString(Object resultValue)
@@ -80,7 +87,6 @@ public class MonsterSearchAdapter extends ArrayAdapter<String>
             return str;
         }
 
-        @SuppressLint("DefaultLocale")
         @Override
         protected FilterResults performFiltering(CharSequence constraint)
         {
@@ -122,5 +128,5 @@ public class MonsterSearchAdapter extends ArrayAdapter<String>
                 notifyDataSetChanged();
             }
         }
-    }; */
+    };
 }
