@@ -18,11 +18,9 @@
             android:id="@+id/monster_picture"
             android:layout_centerVertical="true"
             android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@mipmap/ama_light"/>
+            android:layout_height="100dp"/>
 
         <LinearLayout
-            android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/monster_picture"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,25 +28,25 @@
 
             <EditText
                 android:id="@+id/level"
-                android:hint="@string/level"
+                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <EditText
                 android:id="@+id/num_awakenings"
-                android:hint="@string/num_awakenings"
+                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <EditText
                 android:id="@+id/num_plus_eggs"
-                android:hint="@string/num_plug_eggs"
+                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <EditText
                 android:id="@+id/skill_level"
-                android:hint="@string/skill_level"
+                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -63,6 +61,7 @@
         android:layout_height="wrap_content"/>
 
     <Button
+        android:id="@+id/submit_monster"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/submit"/>

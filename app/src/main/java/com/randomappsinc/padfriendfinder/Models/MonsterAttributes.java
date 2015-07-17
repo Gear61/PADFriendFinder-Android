@@ -5,38 +5,56 @@ package com.randomappsinc.padfriendfinder.Models;
  */
 public class MonsterAttributes
 {
-    private int maxLevel;
-    private int maxSkill;
-    private int maxAwakenings;
-    private int drawableID;
+    private int level;
+    private int skillLevel;
+    private int awakenings;
+    private int plusEggs;
+    private int drawableId;
 
-    public MonsterAttributes(int maxLevel, int maxSkill, int numAwakenings, int drawableID)
+    // For hard-coded hashmap
+    public MonsterAttributes(int level, int skillLevel, int awakenings, int drawableId)
     {
-        this.maxLevel = maxLevel;
-        this.maxSkill = maxSkill;
-        this.maxAwakenings = numAwakenings;
-        this.drawableID = drawableID;
-
+        setWithoutPlusEggs(level, skillLevel, awakenings, drawableId);
     }
 
-    public int getMaxLevel()
+    // For monsters from DB
+    public MonsterAttributes(int level, int skillLevel, int awakenings, int plusEggs, int drawableId)
     {
-        return maxLevel;
+        setWithoutPlusEggs(level, skillLevel, awakenings, drawableId);
+        this.plusEggs = plusEggs;
     }
 
-    public int getMaxSkill()
+    private void setWithoutPlusEggs(int level, int skillLevel, int awakenings, int drawableID)
     {
-        return maxSkill;
+        this.level = level;
+        this.skillLevel = skillLevel;
+        this.awakenings = awakenings;
+        this.drawableId = drawableID;
     }
 
-    public int getMaxAwakenings()
+    public int getLevel()
     {
-        return maxAwakenings;
+        return level;
     }
 
-    public int getDrawableID()
+    public int getSkillLevel()
     {
-        return drawableID;
+        return skillLevel;
+    }
+
+    public int getAwakenings()
+    {
+        return awakenings;
+    }
+
+    public int getDrawableId()
+    {
+        return drawableId;
+    }
+
+    public int getPlusEggs()
+    {
+        return plusEggs;
     }
 }
 

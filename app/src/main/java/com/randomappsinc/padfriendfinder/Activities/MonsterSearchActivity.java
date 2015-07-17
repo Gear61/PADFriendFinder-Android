@@ -1,10 +1,8 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -12,7 +10,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,8 +26,14 @@ import com.randomappsinc.padfriendfinder.Utils.MonsterSearchUtils;
 /**
  * Created by alexanderchiou on 7/13/15.
  */
-public class MonsterSearchActivity extends FragmentActivity
+public class MonsterSearchActivity extends ActionBarActivity
 {
+    public static final String LOOKING_FOR_HINT = "I am looking for...";
+    public static final String MINIMUM_LEVEL = "Minimum Level";
+    public static final String MINIMUM_AWAKENINGS = "Minimum # of awakenings";
+    public static final String MINIMUM_PLUS_EGGS = "Minimum # of + eggs";
+    public static final String MINIMUM_SKILL_LEVEL = "Minimum skill level";
+
     private Context context;
     private GodMapper godMapper;
 
@@ -46,28 +49,20 @@ public class MonsterSearchActivity extends FragmentActivity
     private EditText skillLevel;
     private EditText numPlusEggs;
 
-    public boolean killKeyboard()
+    public void hideKeyboard()
     {
-        View view = this.getWindow().getDecorView().findViewById(android.R.id.content);
-        Rect r = new Rect();
-        view.getWindowVisibleDisplayFrame(r);
-
-        int heightDiff = view.getRootView().getHeight() - (r.bottom - r.top);
-        if (heightDiff > 100)
-        {
-            InputMethodManager inputManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
-        return false;
+        InputMethodManager imm = (InputMethodManager) getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(monsterEditText.getWindowToken(), 0);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         setContentView(R.layout.monster_search);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         context = this;
         godMapper = GodMapper.getGodMapper();
@@ -75,14 +70,19 @@ public class MonsterSearchActivity extends FragmentActivity
         // Find views
         hypermax = (Button) findViewById(R.id.hypermax);
         monsterEditText = (AutoCompleteTextView) findViewById(R.id.monster_search_box);
+        monsterEditText.setHint(LOOKING_FOR_HINT);
         submitMonster = (Button) findViewById(R.id.submit_monster);
         monsterPicture = (ImageView) findViewById(R.id.monster_picture);
         level = (EditText) findViewById(R.id.level);
+        level.setHint(MINIMUM_LEVEL);
         numAwakenings = (EditText) findViewById(R.id.num_awakenings);
+        numAwakenings.setHint(MINIMUM_AWAKENINGS);
         skillLevel = (EditText) findViewById(R.id.skill_level);
+        skillLevel.setHint(MINIMUM_SKILL_LEVEL);
         numPlusEggs = (EditText) findViewById(R.id.num_plus_eggs);
+        numPlusEggs.setHint(MINIMUM_PLUS_EGGS);
 
-        // Set listeners and adapters
+        // Text listener for monster search with AC
         monsterEditText.addTextChangedListener(new TextWatcher()
         {
             @Override
@@ -97,22 +97,17 @@ public class MonsterSearchActivity extends FragmentActivity
                 MonsterAttributes monsterAttributes = godMapper.getMonsterAttributes(s.toString());
                 if (monsterAttributes != null)
                 {
-                    monsterPicture.setImageResource(monsterAttributes.getDrawableID());
+                    monsterPicture.setImageResource(monsterAttributes.getDrawableId());
+                    clearForm();
                 }
                 else
                 {
                     monsterPicture.setImageDrawable(null);
+                    clearForm();
                 }
             }
         });
-        monsterEditText.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
-            {
-                killKeyboard();
-            }
-        });
+
         hypermax.setOnClickListener(hypermaxListener);
         submitMonster.setOnClickListener(submitListener);
 
@@ -120,6 +115,15 @@ public class MonsterSearchActivity extends FragmentActivity
         monsterEditText.setAdapter(adapter);
     }
 
+    private void clearForm()
+    {
+        level.setText("");
+        numAwakenings.setText("");
+        numPlusEggs.setText("");
+        skillLevel.setText("");
+    }
+
+    // Fills in form with hypermaxed values
     View.OnClickListener hypermaxListener = new View.OnClickListener() {
         public void onClick(View v)
         {
@@ -127,9 +131,9 @@ public class MonsterSearchActivity extends FragmentActivity
             MonsterAttributes monsterAttributes = godMapper.getMonsterAttributes(monsterName);
             if (monsterAttributes != null)
             {
-                level.setText(String.valueOf(monsterAttributes.getMaxLevel()));
-                numAwakenings.setText(String.valueOf(monsterAttributes.getMaxAwakenings()));
-                skillLevel.setText(String.valueOf(monsterAttributes.getMaxSkill()));
+                level.setText(String.valueOf(monsterAttributes.getLevel()));
+                numAwakenings.setText(String.valueOf(monsterAttributes.getAwakenings()));
+                skillLevel.setText(String.valueOf(monsterAttributes.getSkillLevel()));
                 numPlusEggs.setText(String.valueOf(MAX_PLUS_EGGS));
             }
         }
@@ -161,6 +165,7 @@ public class MonsterSearchActivity extends FragmentActivity
                     }
                     else
                     {
+                        hideKeyboard();
                         // Make REST call and do legit business
                     }
                 }
@@ -177,12 +182,11 @@ public class MonsterSearchActivity extends FragmentActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            Intent intent = new Intent(context, MainActivity.class);
-            startActivity(intent);
             finish();
         }
         return super.onOptionsItemSelected(item);

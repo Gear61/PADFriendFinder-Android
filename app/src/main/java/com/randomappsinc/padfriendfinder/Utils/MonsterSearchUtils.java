@@ -18,21 +18,21 @@ public class MonsterSearchUtils
         {
             return "A monster's level has to be at least 1!";
         }
-        if (level > monsterAttributes.getMaxLevel())
+        if (level > monsterAttributes.getLevel())
         {
-            return "This monster cannot achieve a level higher than " + String.valueOf(monsterAttributes.getMaxLevel()) + "!";
+            return "This monster cannot achieve a level higher than " + String.valueOf(monsterAttributes.getLevel()) + "!";
         }
-        if (numAwakenings > monsterAttributes.getMaxAwakenings())
+        if (numAwakenings > monsterAttributes.getAwakenings())
         {
-            return "This monster cannot be awakened more than " + String.valueOf(monsterAttributes.getMaxAwakenings()) + " times!";
+            return "This monster cannot be awakened more than " + String.valueOf(monsterAttributes.getAwakenings()) + " times!";
         }
         if (skillLevel <= 0)
         {
             return "A monster's skill level has to be at least 1!";
         }
-        if (skillLevel > monsterAttributes.getMaxSkill())
+        if (skillLevel > monsterAttributes.getSkillLevel())
         {
-            return "This monster cannot achieve a skill level higher than " + String.valueOf(monsterAttributes.getMaxSkill()) + "!";
+            return "This monster cannot achieve a skill level higher than " + String.valueOf(monsterAttributes.getSkillLevel()) + "!";
         }
         if (numPlusEgges > MonsterSearchActivity.MAX_PLUS_EGGS)
         {

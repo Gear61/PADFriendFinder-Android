@@ -20,6 +20,10 @@ import com.randomappsinc.padfriendfinder.R;
  */
 public class PadIdActivity extends Activity
 {
+    public static final String INCOMPLETE_PAD_ID_MESSAGE = "Please enter in all 9 digits of your PAD ID.";
+    public static final String INCORRECT_FIRST_DIGIT_MESSAGE = "We only support NA right now, so your PAD ID's first" +
+            " digit must be 3.";
+
     private EditText padIdInput;
     private Button submitPadId;
     private Context context;
@@ -56,11 +60,11 @@ public class PadIdActivity extends Activity
 
             if (input.length() != 9)
             {
-                Toast.makeText(getApplicationContext(), Constants.INCOMPLETE_PAD_ID_MESSAGE, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), INCOMPLETE_PAD_ID_MESSAGE, Toast.LENGTH_LONG).show();
             }
             else if (input.charAt(0) != '3')
             {
-                Toast.makeText(getApplicationContext(), Constants.INCORRECT_FIRST_DIGIT_MESSAGE, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), INCORRECT_FIRST_DIGIT_MESSAGE, Toast.LENGTH_LONG).show();
             }
             else
             {

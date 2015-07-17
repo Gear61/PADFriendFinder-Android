@@ -68,7 +68,7 @@ public class MonsterSearchAdapter extends ArrayAdapter<String>
             holder.monsterName.setText(monsterName.trim());
             MonsterAttributes monsterAttributes = godMapper.getMonsterAttributes(monsterName);
             holder.monsterName.setText(monsterName.trim());
-            holder.monsterIcon.setImageResource(monsterAttributes.getDrawableID());
+            holder.monsterIcon.setImageResource(monsterAttributes.getDrawableId());
         }
         return v;
     }
