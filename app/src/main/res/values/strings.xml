@@ -13,4 +13,10 @@
     <!-- Monster Search -->
     <string name="hypermax">Hypermax</string>
     <string name="find_friends">Find Friends</string>
+
+    <!-- Monster Box -->
+    <string name="monster_box_instructions">These are the monsters currently associated with your PAD ID.
+        Hit the + in the action bar above to add new monsters.
+        Click on any of your current monsters to update its details.</string>
+    <string name="no_monsters">There are no monsters associated with your PAD ID.</string>
 </resources>

@@ -4,7 +4,7 @@ package com.randomappsinc.padfriendfinder.Utils;
  * Created by alexanderchiou on 7/13/15.
  */
 
-import com.randomappsinc.padfriendfinder.Activities.MonsterSearchActivity;
+import com.randomappsinc.padfriendfinder.Activities.MonsterFormActivity;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 
 /**
@@ -34,9 +34,9 @@ public class MonsterSearchUtils
         {
             return "This monster cannot achieve a skill level higher than " + String.valueOf(monsterAttributes.getSkillLevel()) + "!";
         }
-        if (numPlusEgges > MonsterSearchActivity.MAX_PLUS_EGGS)
+        if (numPlusEgges > MonsterFormActivity.MAX_PLUS_EGGS)
         {
-            return "You cannot give more than " + String.valueOf(MonsterSearchActivity.MAX_PLUS_EGGS) + " plus eggs to a creature!";
+            return "You cannot give more than " + String.valueOf(MonsterFormActivity.MAX_PLUS_EGGS) + " plus eggs to a creature!";
         }
         return "";
     }

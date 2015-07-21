@@ -26,16 +26,23 @@ import com.randomappsinc.padfriendfinder.Utils.MonsterSearchUtils;
 /**
  * Created by alexanderchiou on 7/13/15.
  */
-public class MonsterSearchActivity extends ActionBarActivity
+
+// Used for searching for friends and the user updating their monster box
+public class MonsterFormActivity extends ActionBarActivity
 {
     public static final String LOOKING_FOR_HINT = "I am looking for...";
-    public static final String MINIMUM_LEVEL = "Minimum Level";
-    public static final String MINIMUM_AWAKENINGS = "Minimum # of awakenings";
-    public static final String MINIMUM_PLUS_EGGS = "Minimum # of + eggs";
-    public static final String MINIMUM_SKILL_LEVEL = "Minimum skill level";
+    public static final String LEVEL_HINT = "Level";
+    public static final String AWAKENINGS_HINT = "# Awakenings";
+    public static final String PLUS_EGGS_HINT = "# of + Eggs";
+    public static final String SKILL_LEVEL_HINT = "Skill Level";
+
+    public static final String SEARCH_MODE = "Search";
+    public static final String ADD_MODE = "Add";
+    public static final String UPDATE_MODE = "Update";
 
     private Context context;
     private GodMapper godMapper;
+    private String mode;
 
     public static final int MAX_PLUS_EGGS = 297;
 
@@ -74,38 +81,19 @@ public class MonsterSearchActivity extends ActionBarActivity
         submitMonster = (Button) findViewById(R.id.submit_monster);
         monsterPicture = (ImageView) findViewById(R.id.monster_picture);
         level = (EditText) findViewById(R.id.level);
-        level.setHint(MINIMUM_LEVEL);
         numAwakenings = (EditText) findViewById(R.id.num_awakenings);
-        numAwakenings.setHint(MINIMUM_AWAKENINGS);
         skillLevel = (EditText) findViewById(R.id.skill_level);
-        skillLevel.setHint(MINIMUM_SKILL_LEVEL);
         numPlusEggs = (EditText) findViewById(R.id.num_plus_eggs);
-        numPlusEggs.setHint(MINIMUM_PLUS_EGGS);
+
+        // Hint setting
+        String minimumPrefix = mode.equals(SEARCH_MODE) ? "Minimum " : "";
+        level.setHint(minimumPrefix + LEVEL_HINT);
+        numAwakenings.setHint(minimumPrefix + AWAKENINGS_HINT);
+        skillLevel.setHint(minimumPrefix + SKILL_LEVEL_HINT);
+        numPlusEggs.setHint(minimumPrefix + PLUS_EGGS_HINT);
 
         // Text listener for monster search with AC
-        monsterEditText.addTextChangedListener(new TextWatcher()
-        {
-            @Override
-            public void afterTextChanged(Editable s) {}
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-                MonsterAttributes monsterAttributes = godMapper.getMonsterAttributes(s.toString());
-                if (monsterAttributes != null)
-                {
-                    monsterPicture.setImageResource(monsterAttributes.getDrawableId());
-                }
-                else
-                {
-                    monsterPicture.setImageResource(R.mipmap.mystery_creature);
-                    clearForm();
-                }
-            }
-        });
+        monsterEditText.addTextChangedListener(monsterInputListener);
 
         hypermax.setOnClickListener(hypermaxListener);
         submitMonster.setOnClickListener(submitListener);
@@ -121,6 +109,30 @@ public class MonsterSearchActivity extends ActionBarActivity
         numPlusEggs.setText("");
         skillLevel.setText("");
     }
+
+    TextWatcher monsterInputListener = new TextWatcher()
+    {
+        @Override
+        public void afterTextChanged (Editable s){}
+
+        @Override
+        public void beforeTextChanged (CharSequence s,int start, int count, int after){}
+
+        @Override
+        public void onTextChanged (CharSequence s,int start, int before, int count)
+        {
+            MonsterAttributes monsterAttributes = godMapper.getMonsterAttributes(s.toString());
+            if (monsterAttributes != null)
+            {
+                monsterPicture.setImageResource(monsterAttributes.getDrawableId());
+            }
+            else
+            {
+                monsterPicture.setImageResource(R.mipmap.mystery_creature);
+                clearForm();
+            }
+        }
+    };
 
     // Fills in form with hypermaxed values
     View.OnClickListener hypermaxListener = new View.OnClickListener() {

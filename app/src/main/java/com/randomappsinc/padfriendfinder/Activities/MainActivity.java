@@ -33,13 +33,13 @@ public class MainActivity extends ActionBarActivity
 
     public void findFriends(View view)
     {
-        Intent intent = new Intent(this, MonsterSearchActivity.class);
+        Intent intent = new Intent(this, MonsterFormActivity.class);
         startActivity(intent);
     }
 
     public void monsterBox(View view)
     {
-        Intent intent = new Intent(this, MonsterSearchActivity.class);
+        Intent intent = new Intent(this, MonsterFormActivity.class);
         startActivity(intent);
     }
 
@@ -54,11 +54,6 @@ public class MainActivity extends ActionBarActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        int id = item.getItemId();
-        if (id == android.R.id.home)
-        {
-            onBackPressed();
-        }
         return super.onOptionsItemSelected(item);
     }
 }

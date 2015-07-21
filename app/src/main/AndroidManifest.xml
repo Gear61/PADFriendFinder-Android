@@ -21,7 +21,7 @@
             android:label="@string/pad_id_label" >
         </activity>
         <activity
-            android:name=".Activities.MonsterSearchActivity"
+            android:name=".Activities.MonsterFormActivity"
             android:label="@string/find_friends" >
         </activity>
     </application>
