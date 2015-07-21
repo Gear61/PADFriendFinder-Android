@@ -19,4 +19,15 @@
         Hit the + in the action bar above to add new monsters.
         Click on any of your current monsters to update its details.</string>
     <string name="no_monsters">There are no monsters associated with your PAD ID.</string>
+
+    <!-- Friend Results -->
+    <string name="pad_id">Player ID:</string>
+
+    <!-- Monster Showing -->
+    <string name="name">Name:</string>
+    <string name="level">Level:</string>
+    <string name="awakenings">Awakenings:</string>
+    <string name="plus_eggs">Plus Eggs:</string>
+    <string name="skill_level">Skill Level:</string>
+
 </resources>
