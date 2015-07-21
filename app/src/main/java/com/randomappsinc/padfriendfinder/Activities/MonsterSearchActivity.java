@@ -102,7 +102,7 @@ public class MonsterSearchActivity extends ActionBarActivity
                 }
                 else
                 {
-                    monsterPicture.setImageDrawable(null);
+                    monsterPicture.setImageResource(R.mipmap.mystery_creature);
                     clearForm();
                 }
             }
@@ -187,7 +187,7 @@ public class MonsterSearchActivity extends ActionBarActivity
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            finish();
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }

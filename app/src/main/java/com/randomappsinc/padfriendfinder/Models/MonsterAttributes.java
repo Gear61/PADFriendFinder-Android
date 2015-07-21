@@ -5,6 +5,7 @@ package com.randomappsinc.padfriendfinder.Models;
  */
 public class MonsterAttributes
 {
+    private String monsterName;
     private int level;
     private int skillLevel;
     private int awakenings;
@@ -14,22 +15,16 @@ public class MonsterAttributes
     // For hard-coded hashmap
     public MonsterAttributes(int level, int skillLevel, int awakenings, int drawableId)
     {
-        setWithoutPlusEggs(level, skillLevel, awakenings, drawableId);
-    }
-
-    // For monsters from DB
-    public MonsterAttributes(int level, int skillLevel, int awakenings, int plusEggs, int drawableId)
-    {
-        setWithoutPlusEggs(level, skillLevel, awakenings, drawableId);
-        this.plusEggs = plusEggs;
-    }
-
-    private void setWithoutPlusEggs(int level, int skillLevel, int awakenings, int drawableID)
-    {
         this.level = level;
         this.skillLevel = skillLevel;
         this.awakenings = awakenings;
-        this.drawableId = drawableID;
+        this.drawableId = drawableId;
+    }
+
+    // For when the user searches for monsters/updates their box
+    public MonsterAttributes(String name, int level, int skillLevel, int awakenings, int plusEggs)
+    {
+        this.plusEggs = plusEggs;
     }
 
     public int getLevel()

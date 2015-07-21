@@ -1,19 +1,17 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
-import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.R;
 
-
-public class MainActivity extends Activity
+public class MainActivity extends ActionBarActivity
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,6 +35,30 @@ public class MainActivity extends Activity
     {
         Intent intent = new Intent(this, MonsterSearchActivity.class);
         startActivity(intent);
-        finish();
+    }
+
+    public void monsterBox(View view)
+    {
+        Intent intent = new Intent(this, MonsterSearchActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+        if (id == android.R.id.home)
+        {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -16,6 +16,7 @@
 
         <ImageView
             android:id="@+id/monster_picture"
+            android:src="@mipmap/mystery_creature"
             android:layout_centerVertical="true"
             android:layout_width="100dp"
             android:layout_height="100dp"/>

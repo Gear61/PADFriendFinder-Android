@@ -3,14 +3,14 @@
     <string name="submit">Submit</string>
 
     <!-- Main Page -->
-    <string name="find_friends">Find Friends</string>
-    <string name="monster_box">Monster Box</string>
 
     <!-- PAD ID Form -->
+    <string name="pad_id_label">PAD ID Form</string>
     <string name="your_pad_id">Your PAD ID</string>
     <string name="intro">This app needs your PAD ID in order to work, so please enter it below.
         You can only do this once, so make sure that it is correct before submitting!</string>
 
     <!-- Monster Search -->
     <string name="hypermax">Hypermax</string>
+    <string name="find_friends">Find Friends</string>
 </resources>

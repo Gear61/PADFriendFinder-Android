@@ -139,10 +139,5 @@ public class GodMapper
     {
         return nameToAttributes.get(monsterName);
     }
-
-    public int getDrawableId(String monsterName)
-    {
-        return nameToAttributes.get(monsterName).getDrawableId();
-    }
 }
 
