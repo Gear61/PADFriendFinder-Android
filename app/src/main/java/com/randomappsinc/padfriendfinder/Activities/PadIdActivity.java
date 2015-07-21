@@ -1,9 +1,9 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -17,7 +17,7 @@ import com.randomappsinc.padfriendfinder.R;
 /**
  * Created by alexanderchiou on 7/14/15.
  */
-public class PadIdActivity extends Activity
+public class PadIdActivity extends ActionBarActivity
 {
     public static final String INCOMPLETE_PAD_ID_MESSAGE = "Please enter in all 9 digits of your PAD ID.";
     public static final String INCORRECT_FIRST_DIGIT_MESSAGE = "We only support NA right now, so your PAD ID's first" +

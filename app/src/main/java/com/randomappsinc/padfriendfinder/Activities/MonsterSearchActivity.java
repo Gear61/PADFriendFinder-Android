@@ -98,7 +98,6 @@ public class MonsterSearchActivity extends ActionBarActivity
                 if (monsterAttributes != null)
                 {
                     monsterPicture.setImageResource(monsterAttributes.getDrawableId());
-                    clearForm();
                 }
                 else
                 {
