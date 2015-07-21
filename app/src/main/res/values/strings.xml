@@ -2,8 +2,6 @@
     <string name="app_name">PAD Friend Finder</string>
     <string name="submit">Submit</string>
 
-    <!-- Main Page -->
-
     <!-- PAD ID Form -->
     <string name="pad_id_label">PAD ID Form</string>
     <string name="your_pad_id">Your PAD ID</string>
@@ -19,9 +17,12 @@
         Hit the + in the action bar above to add new monsters.
         Click on any of your current monsters to update its details.</string>
     <string name="no_monsters">There are no monsters associated with your PAD ID.</string>
+    <string name="add_monster">Add Monster</string>
 
     <!-- Friend Results -->
-    <string name="pad_id">Player ID:</string>
+    <string name="pad_id">PAD ID:</string>
+    <string name="friend_results_intro">Here are your search results for:</string>
+    <string name="no_results">We were unable to find any monsters matching your criteria.</string>
 
     <!-- Monster Showing -->
     <string name="name">Name:</string>
