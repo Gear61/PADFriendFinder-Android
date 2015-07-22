@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.R;
 
@@ -74,6 +75,7 @@ public class PadIdActivity extends ActionBarActivity
                 PreferencesManager.get().setPadId(input);
                 Intent intent = new Intent(context, MainActivity.class);
                 startActivity(intent);
+                Toast.makeText(getApplicationContext(), Constants.WELCOME_MESSAGE, Toast.LENGTH_SHORT).show();
                 finish();
             }
         }

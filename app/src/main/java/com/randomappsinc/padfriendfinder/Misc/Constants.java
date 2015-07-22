@@ -5,6 +5,9 @@ package com.randomappsinc.padfriendfinder.Misc;
  */
 public class Constants
 {
+    // Welcome
+    public static final String WELCOME_MESSAGE = "Welcome to PAD Friend Finder!";
+
     // Monster search
     public static final String MONSTER_FORM_INCOMPLETE_MESSAGE = "Please fill in every field before submitting!";
 
