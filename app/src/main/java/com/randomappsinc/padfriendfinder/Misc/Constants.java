@@ -35,4 +35,7 @@ public class Constants
     public static final int MAX_PLUS_EGGS = 297;
     public static final String LOOKING_FOR_HINT = "I am looking for...";
     public static final String INVALID_MONSTER_MESSAGE = "Please enter in a valid monster name.";
+
+    // Friend results
+    public static final String PAD_ID_COPIED_MESSAGE = "PAD ID copied to clipboard.";
 }

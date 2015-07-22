@@ -30,6 +30,11 @@
             android:screenOrientation="portrait"
             android:label="@string/monster_box_label" >
         </activity>
+        <activity
+            android:name=".Activities.FriendResultsActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/friend_results_label" >
+        </activity>
     </application>
 
 </manifest>

@@ -32,10 +32,13 @@ public class MonsterAttributes implements Parcelable
     }
 
     // For when the user searches for monsters/updates their box
-    public MonsterAttributes(String name, int level, int skillLevel, int awakenings, int plusEggs)
+    public MonsterAttributes(String name, int level, int awakenings, int plusEggs, int skillLevel)
     {
         this.name = name;
+        this.level = level;
+        this.awakenings = awakenings;
         this.plusEggs = plusEggs;
+        this.skillLevel = skillLevel;
     }
 
     // Getters

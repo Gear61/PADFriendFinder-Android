@@ -14,15 +14,16 @@
     <!-- Monster Box -->
     <string name="monster_box_instructions">These are the monsters currently associated with your PAD ID.
         Hit the + in the action bar above to add new monsters.
-        Click on any of your current monsters to update its details.</string>
+        Click on any monster to update its details.</string>
     <string name="no_monsters">There are no monsters associated with your PAD ID.</string>
     <string name="add_monster">Add Monster</string>
     <string name="monster_box_label">Monster Box</string>
 
     <!-- Friend Results -->
-    <string name="pad_id">PAD ID:</string>
+    <string name="pad_id">PAD ID:&#160;</string>
     <string name="friend_results_intro">Here are your search results for:</string>
     <string name="no_results">We were unable to find any monsters matching your criteria.</string>
+    <string name="friend_results_label">Search Results</string>
 
     <!-- Monster Showing -->
     <string name="name">Name:&#160;</string>

@@ -75,7 +75,7 @@ public class MonsterBoxActivity extends ActionBarActivity
         }, 1500);
     }
 
-    // Student list item clicked
+    // Monster clicked
     AdapterView.OnItemClickListener monsterListListener = new AdapterView.OnItemClickListener()
     {
         @Override

@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -52,6 +53,11 @@ public class MonsterFormActivity extends ActionBarActivity
         imm.hideSoftInputFromWindow(monsterEditText.getWindowToken(), 0);
     }
 
+    public void showKeyboard()
+    {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -76,14 +82,8 @@ public class MonsterFormActivity extends ActionBarActivity
         Intent intent = getIntent();
         setUpPage(intent);
 
-        // Text listener for monster search with AC
-        monsterEditText.addTextChangedListener(monsterInputListener);
-
         hypermax.setOnClickListener(hypermaxListener);
         submitMonster.setOnClickListener(submitListener);
-
-        MonsterSearchAdapter adapter = new MonsterSearchAdapter(context, android.R.layout.simple_dropdown_item_1line, godMapper.getFriendFinderMonsterList());
-        monsterEditText.setAdapter(adapter);
     }
 
     private void setUpPage(Intent intent)
@@ -116,11 +116,21 @@ public class MonsterFormActivity extends ActionBarActivity
     private void setUpSearchMode()
     {
         setTitle(Constants.FIND_FRIENDS_LABEL);
+        setUpMonsterInput();
     }
 
     private void setUpAddMode()
     {
         setTitle(Constants.ADD_MONSTER_LABEL);
+        setUpMonsterInput();
+    }
+
+    public void setUpMonsterInput()
+    {
+        // Text listener for monster search with AC
+        monsterEditText.addTextChangedListener(monsterInputListener);
+        MonsterSearchAdapter adapter = new MonsterSearchAdapter(context, android.R.layout.simple_dropdown_item_1line, godMapper.getFriendFinderMonsterList());
+        monsterEditText.setAdapter(adapter);
     }
 
     private void setUpUpdateMode(Intent intent)
@@ -135,6 +145,12 @@ public class MonsterFormActivity extends ActionBarActivity
         numPlusEggs.setText(String.valueOf(monster.getPlusEggs()));
         skillLevel.setText(String.valueOf(monster.getSkillLevel()));
         monsterEditText.setEnabled(false);
+    }
+
+    private void clearEverything()
+    {
+        clearForm();
+        monsterEditText.setText("");
     }
 
     private void clearForm()
@@ -209,10 +225,20 @@ public class MonsterFormActivity extends ActionBarActivity
                     {
                         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                     }
+                    // Everything is A-OK
                     else
                     {
                         hideKeyboard();
-                        // Make REST call and do legit business
+                        MonsterAttributes monster = new MonsterAttributes(monsterName, monLevel,
+                                monNumAwakenings, monNumPlusEggs, monSkillLevel);
+                        monster.setDrawableId(monsterAttributes.getDrawableId());
+                        if (mode.equals(Constants.SEARCH_MODE))
+                        {
+                            Intent intent = new Intent(context, FriendResultsActivity.class);
+                            intent.putExtra(Constants.MONSTER_KEY, monster);
+                            startActivity(intent);
+                            clearEverything();
+                        }
                     }
                 }
             }
