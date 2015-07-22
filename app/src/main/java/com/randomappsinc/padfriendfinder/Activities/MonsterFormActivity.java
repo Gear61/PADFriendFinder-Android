@@ -102,10 +102,12 @@ public class MonsterFormActivity extends ActionBarActivity
         if (mode.equals(Constants.SEARCH_MODE))
         {
             setUpSearchMode();
+            showKeyboard();
         }
         else if (mode.equals(Constants.ADD_MODE))
         {
             setUpAddMode();
+            showKeyboard();
         }
         else if (mode.equals(Constants.UPDATE_MODE))
         {

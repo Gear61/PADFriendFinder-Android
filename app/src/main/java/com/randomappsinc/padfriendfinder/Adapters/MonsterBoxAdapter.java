@@ -34,6 +34,23 @@ public class MonsterBoxAdapter extends BaseAdapter
         notifyDataSetChanged();
     }
 
+    public void updateMonster(MonsterAttributes monster)
+    {
+        // This loop updates the monster if it's already there
+        for (int i = 0; i < monsters.size(); i++)
+        {
+            if (monsters.get(i).getName().equals(monster.getName()))
+            {
+                monsters.set(i, monster);
+                notifyDataSetChanged();
+                return;
+            }
+        }
+        // If we made it out of the loop without returning, it's a new monster
+        monsters.add(monster);
+        notifyDataSetChanged();
+    }
+
     public int getCount() {
         return monsters.size();
     }

@@ -16,9 +16,12 @@ import android.widget.TextView;
 
 import com.randomappsinc.padfriendfinder.Adapters.MonsterBoxAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
+import com.randomappsinc.padfriendfinder.Misc.MonsterBoxManager;
 import com.randomappsinc.padfriendfinder.Misc.Stubber;
+import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.R;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -27,7 +30,6 @@ import java.util.TimerTask;
  */
 public class MonsterBoxActivity extends ActionBarActivity
 {
-    private Activity activity;
     private Context context;
 
     // Views
@@ -45,34 +47,45 @@ public class MonsterBoxActivity extends ActionBarActivity
         setContentView(R.layout.monster_box);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        activity = this;
         context = this;
         loadingMonsters = (ProgressBar) findViewById(R.id.loading_monsters);
         instructions = (TextView) findViewById(R.id.monster_box_instructions);
         noMonsters = (TextView) findViewById(R.id.no_monsters);
         monsterList = (ListView) findViewById(R.id.monster_list);
-        boxAdapter = new MonsterBoxAdapter(context);
-        boxAdapter.addMonsters(Stubber.getMonsterBox());
-        monsterList.setAdapter(boxAdapter);
         monsterList.setOnItemClickListener(monsterListListener);
-
-        new Timer().schedule(new TimerTask()
+        boxAdapter = new MonsterBoxAdapter(context);
+        monsterList.setAdapter(boxAdapter);
+        List<MonsterAttributes> monsters = MonsterBoxManager.getInstance().getMonsterList();
+        // If we've made the call before, and everything's cached...
+        if (monsters != null)
         {
-            @Override
-            public void run()
+            if (!monsters.isEmpty())
             {
-                activity.runOnUiThread(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        loadingMonsters.setVisibility(View.GONE);
-                        instructions.setVisibility(View.VISIBLE);
-                        monsterList.setVisibility(View.VISIBLE);
-                    }
-                });
+                boxAdapter.addMonsters(monsters);
             }
-        }, 1500);
+            refreshContent();
+        }
+        else
+        {
+            // Make API call
+        }
+    }
+
+    // Refresh the page after an API call is made (or after initial loading)
+    public void refreshContent()
+    {
+        loadingMonsters.setVisibility(View.GONE);
+        instructions.setVisibility(View.VISIBLE);
+        if (boxAdapter.getCount() == 0)
+        {
+            monsterList.setVisibility(View.GONE);
+            noMonsters.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            noMonsters.setVisibility(View.GONE);
+            monsterList.setVisibility(View.VISIBLE);
+        }
     }
 
     // Monster clicked
