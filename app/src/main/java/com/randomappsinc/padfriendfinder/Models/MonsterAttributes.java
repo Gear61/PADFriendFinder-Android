@@ -1,9 +1,13 @@
 package com.randomappsinc.padfriendfinder.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by alexanderchiou on 7/13/15.
  */
-public class MonsterAttributes
+
+public class MonsterAttributes implements Parcelable
 {
     private String name;
     private int level;
@@ -90,5 +94,53 @@ public class MonsterAttributes
     {
         this.plusEggs = plusEggs;
     }
+
+    public void setDrawableId(int drawableId)
+    {
+        this.drawableId = drawableId;
+    }
+
+    protected MonsterAttributes(Parcel in)
+    {
+        name = in.readString();
+        level = in.readInt();
+        skillLevel = in.readInt();
+        awakenings = in.readInt();
+        plusEggs = in.readInt();
+        drawableId = in.readInt();
+    }
+
+    @Override
+    public int describeContents()
+    {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags)
+    {
+        dest.writeString(name);
+        dest.writeInt(level);
+        dest.writeInt(skillLevel);
+        dest.writeInt(awakenings);
+        dest.writeInt(plusEggs);
+        dest.writeInt(drawableId);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<MonsterAttributes> CREATOR = new Parcelable.Creator<MonsterAttributes>()
+    {
+        @Override
+        public MonsterAttributes createFromParcel(Parcel in)
+        {
+            return new MonsterAttributes(in);
+        }
+
+        @Override
+        public MonsterAttributes[] newArray(int size)
+        {
+            return new MonsterAttributes[size];
+        }
+    };
 }
 

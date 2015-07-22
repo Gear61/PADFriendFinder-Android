@@ -10,7 +10,6 @@
 
     <!-- Monster Search -->
     <string name="hypermax">Hypermax</string>
-    <string name="find_friends">Find Friends</string>
 
     <!-- Monster Box -->
     <string name="monster_box_instructions">These are the monsters currently associated with your PAD ID.
@@ -18,6 +17,7 @@
         Click on any of your current monsters to update its details.</string>
     <string name="no_monsters">There are no monsters associated with your PAD ID.</string>
     <string name="add_monster">Add Monster</string>
+    <string name="monster_box_label">Monster Box</string>
 
     <!-- Friend Results -->
     <string name="pad_id">PAD ID:</string>
@@ -25,10 +25,10 @@
     <string name="no_results">We were unable to find any monsters matching your criteria.</string>
 
     <!-- Monster Showing -->
-    <string name="name">Name:</string>
-    <string name="level">Level:</string>
-    <string name="awakenings">Awakenings:</string>
-    <string name="plus_eggs">Plus Eggs:</string>
-    <string name="skill_level">Skill Level:</string>
+    <string name="name">Name:&#160;</string>
+    <string name="level">Level:&#160;</string>
+    <string name="awakenings">Awakenings:&#160;</string>
+    <string name="plus_eggs">Plus Eggs:&#160;</string>
+    <string name="skill_level">Skill Level:&#160;</string>
 
 </resources>

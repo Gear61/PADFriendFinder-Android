@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.R;
 
@@ -34,12 +35,13 @@ public class MainActivity extends ActionBarActivity
     public void findFriends(View view)
     {
         Intent intent = new Intent(this, MonsterFormActivity.class);
+        intent.putExtra(Constants.MODE_KEY, Constants.SEARCH_MODE);
         startActivity(intent);
     }
 
     public void monsterBox(View view)
     {
-        Intent intent = new Intent(this, MonsterFormActivity.class);
+        Intent intent = new Intent(this, MonsterBoxActivity.class);
         startActivity(intent);
     }
 

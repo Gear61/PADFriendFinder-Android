@@ -1,6 +1,7 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
@@ -30,21 +31,9 @@ import com.randomappsinc.padfriendfinder.Utils.MonsterSearchUtils;
 // Used for searching for friends and the user updating their monster box
 public class MonsterFormActivity extends ActionBarActivity
 {
-    public static final String LOOKING_FOR_HINT = "I am looking for...";
-    public static final String LEVEL_HINT = "Level";
-    public static final String AWAKENINGS_HINT = "# Awakenings";
-    public static final String PLUS_EGGS_HINT = "# of + Eggs";
-    public static final String SKILL_LEVEL_HINT = "Skill Level";
-
-    public static final String SEARCH_MODE = "Search";
-    public static final String ADD_MODE = "Add";
-    public static final String UPDATE_MODE = "Update";
-
     private Context context;
     private GodMapper godMapper;
     private String mode;
-
-    public static final int MAX_PLUS_EGGS = 297;
 
     // Views
     private AutoCompleteTextView monsterEditText;
@@ -77,7 +66,6 @@ public class MonsterFormActivity extends ActionBarActivity
         // Find views
         hypermax = (Button) findViewById(R.id.hypermax);
         monsterEditText = (AutoCompleteTextView) findViewById(R.id.monster_search_box);
-        monsterEditText.setHint(LOOKING_FOR_HINT);
         submitMonster = (Button) findViewById(R.id.submit_monster);
         monsterPicture = (ImageView) findViewById(R.id.monster_picture);
         level = (EditText) findViewById(R.id.level);
@@ -85,12 +73,8 @@ public class MonsterFormActivity extends ActionBarActivity
         skillLevel = (EditText) findViewById(R.id.skill_level);
         numPlusEggs = (EditText) findViewById(R.id.num_plus_eggs);
 
-        // Hint setting
-        String minimumPrefix = mode.equals(SEARCH_MODE) ? "Minimum " : "";
-        level.setHint(minimumPrefix + LEVEL_HINT);
-        numAwakenings.setHint(minimumPrefix + AWAKENINGS_HINT);
-        skillLevel.setHint(minimumPrefix + SKILL_LEVEL_HINT);
-        numPlusEggs.setHint(minimumPrefix + PLUS_EGGS_HINT);
+        Intent intent = getIntent();
+        setUpPage(intent);
 
         // Text listener for monster search with AC
         monsterEditText.addTextChangedListener(monsterInputListener);
@@ -100,6 +84,57 @@ public class MonsterFormActivity extends ActionBarActivity
 
         MonsterSearchAdapter adapter = new MonsterSearchAdapter(context, android.R.layout.simple_dropdown_item_1line, godMapper.getFriendFinderMonsterList());
         monsterEditText.setAdapter(adapter);
+    }
+
+    private void setUpPage(Intent intent)
+    {
+        mode = intent.getStringExtra(Constants.MODE_KEY);
+
+        // Hint setting
+        String minimumPrefix = mode.equals(Constants.SEARCH_MODE) ? "Minimum " : "";
+        String searchHint = mode.equals(Constants.SEARCH_MODE) ? Constants.LOOKING_FOR_HINT : Constants.HAVE_A_HINT;
+        monsterEditText.setHint(searchHint);
+        level.setHint(minimumPrefix + Constants.LEVEL_HINT);
+        numAwakenings.setHint(minimumPrefix + Constants.AWAKENINGS_HINT);
+        skillLevel.setHint(minimumPrefix + Constants.SKILL_LEVEL_HINT);
+        numPlusEggs.setHint(minimumPrefix + Constants.PLUS_EGGS_HINT);
+
+        if (mode.equals(Constants.SEARCH_MODE))
+        {
+            setUpSearchMode();
+        }
+        else if (mode.equals(Constants.ADD_MODE))
+        {
+            setUpAddMode();
+        }
+        else if (mode.equals(Constants.UPDATE_MODE))
+        {
+            setUpUpdateMode(intent);
+        }
+    }
+
+    private void setUpSearchMode()
+    {
+        setTitle(Constants.FIND_FRIENDS_LABEL);
+    }
+
+    private void setUpAddMode()
+    {
+        setTitle(Constants.ADD_MONSTER_LABEL);
+    }
+
+    private void setUpUpdateMode(Intent intent)
+    {
+        setTitle(Constants.UPDATE_MONSTER_LABEL);
+        Bundle data = intent.getExtras();
+        MonsterAttributes monster = data.getParcelable(Constants.MONSTER_KEY);
+        monsterPicture.setImageResource(monster.getDrawableId());
+        monsterEditText.setText(monster.getName());
+        level.setText(String.valueOf(monster.getLevel()));
+        numAwakenings.setText(String.valueOf(monster.getAwakenings()));
+        numPlusEggs.setText(String.valueOf(monster.getPlusEggs()));
+        skillLevel.setText(String.valueOf(monster.getSkillLevel()));
+        monsterEditText.setEnabled(false);
     }
 
     private void clearForm()
@@ -145,7 +180,7 @@ public class MonsterFormActivity extends ActionBarActivity
                 level.setText(String.valueOf(monsterAttributes.getLevel()));
                 numAwakenings.setText(String.valueOf(monsterAttributes.getAwakenings()));
                 skillLevel.setText(String.valueOf(monsterAttributes.getSkillLevel()));
-                numPlusEggs.setText(String.valueOf(MAX_PLUS_EGGS));
+                numPlusEggs.setText(String.valueOf(Constants.MAX_PLUS_EGGS));
             }
         }
     };
@@ -180,6 +215,10 @@ public class MonsterFormActivity extends ActionBarActivity
                         // Make REST call and do legit business
                     }
                 }
+            }
+            else
+            {
+                Toast.makeText(context, Constants.INVALID_MONSTER_MESSAGE, Toast.LENGTH_LONG).show();
             }
         }
     };

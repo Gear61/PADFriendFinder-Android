@@ -9,20 +9,26 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".Activities.MainActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Activities.PadIdActivity"
+            android:screenOrientation="portrait"
             android:label="@string/pad_id_label" >
         </activity>
         <activity
             android:name=".Activities.MonsterFormActivity"
-            android:label="@string/find_friends" >
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".Activities.MonsterBoxActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/monster_box_label" >
         </activity>
     </application>
 

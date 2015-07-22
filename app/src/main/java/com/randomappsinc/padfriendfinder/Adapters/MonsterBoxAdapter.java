@@ -31,13 +31,14 @@ public class MonsterBoxAdapter extends BaseAdapter
     public void addMonsters(List<MonsterAttributes> monsters)
     {
         this.monsters.addAll(monsters);
+        notifyDataSetChanged();
     }
 
     public int getCount() {
         return monsters.size();
     }
 
-    public Object getItem(int position) {
+    public MonsterAttributes getItem(int position) {
         return monsters.get(position);
     }
 
@@ -63,7 +64,7 @@ public class MonsterBoxAdapter extends BaseAdapter
         if (v == null)
         {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(R.layout.monster_ac_item, null);
+            v = vi.inflate(R.layout.monster_box_list_item, null);
             holder = new ViewHolder();
             holder.picture = (ImageView) v.findViewById(R.id.picture);
             holder.name = (TextView) v.findViewById(R.id.name);
@@ -81,10 +82,10 @@ public class MonsterBoxAdapter extends BaseAdapter
         MonsterAttributes monster = monsters.get(position);
         holder.picture.setImageResource(monster.getDrawableId());
         holder.name.setText(monster.getName());
-        holder.level.setText(monster.getLevel());
-        holder.awakenings.setText(monster.getAwakenings());
-        holder.plusEggs.setText(monster.getPlusEggs());
-        holder.skillLevel.setText(monster.getSkillLevel());
+        holder.level.setText(String.valueOf(monster.getLevel()));
+        holder.awakenings.setText(String.valueOf(monster.getAwakenings()));
+        holder.plusEggs.setText(String.valueOf(monster.getPlusEggs()));
+        holder.skillLevel.setText(String.valueOf(monster.getSkillLevel()));
 
         return v;
     }
