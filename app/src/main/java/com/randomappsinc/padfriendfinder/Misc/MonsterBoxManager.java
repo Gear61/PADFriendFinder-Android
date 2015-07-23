@@ -1,10 +1,8 @@
 package com.randomappsinc.padfriendfinder.Misc;
 
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
-import com.randomappsinc.padfriendfinder.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**

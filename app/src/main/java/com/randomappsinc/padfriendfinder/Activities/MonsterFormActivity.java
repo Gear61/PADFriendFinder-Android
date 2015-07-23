@@ -182,7 +182,6 @@ public class MonsterFormActivity extends ActionBarActivity
             else
             {
                 monsterPicture.setImageResource(R.mipmap.mystery_creature);
-                clearForm();
             }
         }
     };

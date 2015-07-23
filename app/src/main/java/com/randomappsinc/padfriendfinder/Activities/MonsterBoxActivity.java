@@ -1,8 +1,9 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
-import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -17,13 +18,11 @@ import android.widget.TextView;
 import com.randomappsinc.padfriendfinder.Adapters.MonsterBoxAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.MonsterBoxManager;
-import com.randomappsinc.padfriendfinder.Misc.Stubber;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
+import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.R;
 
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by alexanderchiou on 7/20/15.
@@ -39,6 +38,8 @@ public class MonsterBoxActivity extends ActionBarActivity
     private ListView monsterList;
 
     private MonsterBoxAdapter boxAdapter;
+    private MonsterBoxReceiver boxReceiver;
+    private MonsterUpdateReceiver updateReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -56,6 +57,12 @@ public class MonsterBoxActivity extends ActionBarActivity
         boxAdapter = new MonsterBoxAdapter(context);
         monsterList.setAdapter(boxAdapter);
         List<MonsterAttributes> monsters = MonsterBoxManager.getInstance().getMonsterList();
+
+        updateReceiver = new MonsterUpdateReceiver();
+        boxReceiver = new MonsterBoxReceiver();
+        context.registerReceiver(updateReceiver, new IntentFilter(Constants.MONSTER_UPDATE_KEY));
+        context.registerReceiver(boxReceiver, new IntentFilter(Constants.MONSTER_BOX_KEY));
+
         // If we've made the call before, and everything's cached...
         if (monsters != null)
         {
@@ -68,6 +75,37 @@ public class MonsterBoxActivity extends ActionBarActivity
         else
         {
             // Make API call
+        }
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        try
+        {
+            context.unregisterReceiver(boxReceiver);
+            context.unregisterReceiver(updateReceiver);
+        }
+        catch (IllegalArgumentException ignored) {}
+    }
+
+    private class MonsterUpdateReceiver extends BroadcastReceiver
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            RestCallResponse response = intent.getParcelableExtra(Constants.REST_CALL_RESPONSE_KEY);
+            MonsterAttributes monster = intent.getParcelableExtra(Constants.MONSTER_KEY);
+        }
+    }
+
+    private class MonsterBoxReceiver extends BroadcastReceiver
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            RestCallResponse response = intent.getParcelableExtra(Constants.REST_CALL_RESPONSE_KEY);
         }
     }
 
