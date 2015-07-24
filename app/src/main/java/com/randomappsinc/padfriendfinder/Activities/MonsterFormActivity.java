@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.randomappsinc.padfriendfinder.Adapters.MonsterSearchAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.GodMapper;
+import com.randomappsinc.padfriendfinder.Misc.MonsterBoxManager;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.R;
 import com.randomappsinc.padfriendfinder.Utils.MonsterSearchUtils;
@@ -225,6 +226,11 @@ public class MonsterFormActivity extends ActionBarActivity
                     if (!message.isEmpty())
                     {
                         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                    }
+                    else if (MonsterBoxManager.getInstance().alreadyContainsMonster(monsterName))
+                    {
+                        Toast.makeText(context, "Your monster box already has a " + monsterName + ".",
+                                Toast.LENGTH_LONG).show();
                     }
                     // Everything is A-OK
                     else

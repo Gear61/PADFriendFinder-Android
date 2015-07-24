@@ -20,6 +20,8 @@ public class Constants
     public static final String SKILL_LEVEL_KEY = "skill_level";
     public static final String AWAKENINGS_KEY = "awakenings";
     public static final String PLUS_EGGS_KEY = "plus_eggs";
+    public static final String FETCH_FRIENDS_KEY = "fetchFriends";
+    public static final String UPDATE_KEY = "update";
 
     // Activity communication/broadcasts
     public static final String MODE_KEY = "mode";

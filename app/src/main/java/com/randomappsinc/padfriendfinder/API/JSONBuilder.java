@@ -13,7 +13,7 @@ import org.json.JSONObject;
 
 public class JSONBuilder
 {
-    public static JSONObject createMonsterJson(MonsterAttributes monster)
+    private static JSONObject createMonsterJson(MonsterAttributes monster)
     {
         JSONObject monsterJson = new JSONObject();
         try
@@ -28,7 +28,8 @@ public class JSONBuilder
         return monsterJson;
     }
 
-    public static String updateMonsterBoxBuilder(MonsterAttributes monster)
+    // For adding/updating creatures in your box
+    public static String updateMonsterBuilder(MonsterAttributes monster)
     {
         JSONObject monsterBoxJson = new JSONObject();
         try
@@ -40,7 +41,8 @@ public class JSONBuilder
         return monsterBoxJson.toString();
     }
 
-    public static String monsterSearchBuilder(MonsterAttributes monster)
+    // For finding friends
+    public static String fetchFriendsBuilder(MonsterAttributes monster)
     {
         return createMonsterJson(monster).toString();
     }
