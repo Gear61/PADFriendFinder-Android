@@ -1,7 +1,9 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
@@ -23,6 +25,7 @@ import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.GodMapper;
 import com.randomappsinc.padfriendfinder.Misc.MonsterBoxManager;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
+import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.R;
 import com.randomappsinc.padfriendfinder.Utils.MonsterSearchUtils;
 
@@ -46,6 +49,8 @@ public class MonsterFormActivity extends ActionBarActivity
     private EditText numAwakenings;
     private EditText skillLevel;
     private EditText numPlusEggs;
+
+    private MonsterUpdateReceiver updateReceiver;
 
     public void hideKeyboard()
     {
@@ -85,6 +90,53 @@ public class MonsterFormActivity extends ActionBarActivity
 
         hypermax.setOnClickListener(hypermaxListener);
         submitMonster.setOnClickListener(submitListener);
+
+        updateReceiver = new MonsterUpdateReceiver();
+        context.registerReceiver(updateReceiver, new IntentFilter(Constants.MONSTER_UPDATE_KEY));
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        try
+        {
+            context.unregisterReceiver(updateReceiver);
+        }
+        catch (IllegalArgumentException ignored) {}
+    }
+
+    private class MonsterUpdateReceiver extends BroadcastReceiver
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            RestCallResponse response = intent.getParcelableExtra(Constants.REST_CALL_RESPONSE_KEY);
+            if (response.getStatusCode() == 200)
+            {
+                if (mode.equals(Constants.ADD_MODE))
+                {
+                    Toast.makeText(context, Constants.MONSTER_ADD_SUCCESS_MESSAGE, Toast.LENGTH_SHORT).show();
+                    clearEverything();
+                }
+                else if (mode.equals(Constants.UPDATE_MODE))
+                {
+                    Toast.makeText(context, Constants.MONSTER_UPDATE_SUCCESS_MESSAGE, Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+            else
+            {
+                if (mode.equals(Constants.ADD_MODE))
+                {
+                    Toast.makeText(context, Constants.MONSTER_ADD_FAILED_MESSAGE, Toast.LENGTH_LONG).show();
+                }
+                else if (mode.equals(Constants.UPDATE_MODE))
+                {
+                    Toast.makeText(context, Constants.MONSTER_UPDATE_FAILED_MESSAGE, Toast.LENGTH_LONG).show();
+                }
+            }
+        }
     }
 
     private void setUpPage(Intent intent)

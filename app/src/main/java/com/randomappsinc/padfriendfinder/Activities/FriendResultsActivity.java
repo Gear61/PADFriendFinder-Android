@@ -1,9 +1,11 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -17,12 +19,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.randomappsinc.padfriendfinder.API.JSONParser;
 import com.randomappsinc.padfriendfinder.Adapters.FriendResultsAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
+import com.randomappsinc.padfriendfinder.Misc.MonsterBoxManager;
 import com.randomappsinc.padfriendfinder.Misc.Stubber;
+import com.randomappsinc.padfriendfinder.Models.Friend;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
+import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.R;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,7 +38,6 @@ import java.util.TimerTask;
  */
 public class FriendResultsActivity extends ActionBarActivity
 {
-    private Activity activity;
     private Context context;
 
     // Views
@@ -53,7 +59,6 @@ public class FriendResultsActivity extends ActionBarActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         monster = getIntent().getExtras().getParcelable(Constants.MONSTER_KEY);
 
-        activity = this;
         context = this;
         loadingFriendResults = (ProgressBar) findViewById(R.id.loading_friend_results);
         intro = (TextView) findViewById(R.id.friend_results_intro);
@@ -67,26 +72,36 @@ public class FriendResultsActivity extends ActionBarActivity
         friendResultsAdapter.addFriends(Stubber.getFriendResults());
         friendResultsList.setAdapter(friendResultsAdapter);
         friendResultsList.setOnItemClickListener(friendResultsListener);
+    }
 
-        new Timer().schedule(new TimerTask()
+    private class FetchFriendsReceiver extends BroadcastReceiver
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
         {
-            @Override
-            public void run()
+            RestCallResponse response = intent.getParcelableExtra(Constants.REST_CALL_RESPONSE_KEY);
+            if (response.getStatusCode() == 200)
             {
-                activity.runOnUiThread(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        loadingFriendResults.setVisibility(View.GONE);
-                        intro.setVisibility(View.VISIBLE);
-                        monsterPicture.setVisibility(View.VISIBLE);
-                        monsterName.setVisibility(View.VISIBLE);
-                        friendResultsList.setVisibility(View.VISIBLE);
-                    }
-                });
+                List<Friend> friendResults = JSONParser.parseFriendCandidatesResponse(response.getResponse());
+                friendResultsAdapter.addFriends(friendResults);
             }
-        }, 1500);
+            else
+            {
+                Toast.makeText(context, Constants.FETCH_FRIENDS_FAILED_MESSAGE, Toast.LENGTH_LONG).show();
+            }
+            loadingFriendResults.setVisibility(View.GONE);
+            intro.setVisibility(View.VISIBLE);
+            monsterPicture.setVisibility(View.VISIBLE);
+            monsterName.setVisibility(View.VISIBLE);
+            if (friendResultsAdapter.getCount() == 0)
+            {
+                noResults.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                friendResultsList.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     // Student list item clicked

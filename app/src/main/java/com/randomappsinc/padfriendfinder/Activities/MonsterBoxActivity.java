@@ -14,7 +14,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.randomappsinc.padfriendfinder.API.JSONParser;
 import com.randomappsinc.padfriendfinder.Adapters.MonsterBoxAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.MonsterBoxManager;
@@ -56,13 +58,13 @@ public class MonsterBoxActivity extends ActionBarActivity
         monsterList.setOnItemClickListener(monsterListListener);
         boxAdapter = new MonsterBoxAdapter(context);
         monsterList.setAdapter(boxAdapter);
-        List<MonsterAttributes> monsters = MonsterBoxManager.getInstance().getMonsterList();
 
         updateReceiver = new MonsterUpdateReceiver();
         boxReceiver = new MonsterBoxReceiver();
         context.registerReceiver(updateReceiver, new IntentFilter(Constants.MONSTER_UPDATE_KEY));
         context.registerReceiver(boxReceiver, new IntentFilter(Constants.MONSTER_BOX_KEY));
 
+        List<MonsterAttributes> monsters = MonsterBoxManager.getInstance().getMonsterList();
         // If we've made the call before, and everything's cached...
         if (monsters != null)
         {
@@ -96,7 +98,12 @@ public class MonsterBoxActivity extends ActionBarActivity
         public void onReceive(Context context, Intent intent)
         {
             RestCallResponse response = intent.getParcelableExtra(Constants.REST_CALL_RESPONSE_KEY);
-            MonsterAttributes monster = intent.getParcelableExtra(Constants.MONSTER_KEY);
+            if (response.getStatusCode() == 200)
+            {
+                MonsterAttributes monster = intent.getParcelableExtra(Constants.MONSTER_KEY);
+                boxAdapter.updateMonster(monster);
+                MonsterBoxManager.getInstance().updateMonster(monster);
+            }
         }
     }
 
@@ -106,6 +113,18 @@ public class MonsterBoxActivity extends ActionBarActivity
         public void onReceive(Context context, Intent intent)
         {
             RestCallResponse response = intent.getParcelableExtra(Constants.REST_CALL_RESPONSE_KEY);
+            if (response.getStatusCode() == 200)
+            {
+                List<MonsterAttributes> monsterBox = JSONParser.parseMonsterBoxResponse(response.getResponse());
+                boxAdapter.addMonsters(monsterBox);
+                MonsterBoxManager.getInstance().addMonsters(monsterBox);
+                refreshContent();
+            }
+            else
+            {
+                refreshContent();
+                Toast.makeText(context, Constants.BOX_FETCH_FAILED_MESSAGE, Toast.LENGTH_LONG).show();
+            }
         }
     }
 

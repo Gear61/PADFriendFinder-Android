@@ -45,9 +45,19 @@ public class Constants
     public static final int MAX_PLUS_EGGS = 297;
     public static final String LOOKING_FOR_HINT = "I am looking for...";
     public static final String INVALID_MONSTER_MESSAGE = "Please enter in a valid monster name.";
+    public static final String MONSTER_ADD_FAILED_MESSAGE = "We were unable to add your monster to our database. " +
+            "Please try again later.";
+    public static final String MONSTER_UPDATE_FAILED_MESSAGE = "We were unable to update your monster in our database. " +
+            "Please try again later.";
+    public static final String MONSTER_ADD_SUCCESS_MESSAGE = "Your monster was successfully added to our database.";
+    public static final String MONSTER_UPDATE_SUCCESS_MESSAGE = "Your monster was successfully updated in our database.";
 
     // Friend results
     public static final String PAD_ID_COPIED_MESSAGE = "PAD ID copied to clipboard.";
-    public static final String UNABLE_TO_FIND_FRIENDS_MESSAGE = "We were unable to find friends for you. " +
+    public static final String FETCH_FRIENDS_FAILED_MESSAGE = "We were unable to find friends for you. " +
+            "Please try again later.";
+
+    // Monster box
+    public static final String BOX_FETCH_FAILED_MESSAGE = "We were unable to fetch your monster box. " +
             "Please try again later.";
 }
