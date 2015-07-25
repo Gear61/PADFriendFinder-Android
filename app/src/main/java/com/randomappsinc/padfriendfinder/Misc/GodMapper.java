@@ -120,6 +120,20 @@ public class GodMapper
         nameToAttributes.put("Noble Wolf King Hero, Cu Chulainn", new MonsterAttributes(99, 7, 3, R.mipmap.cu_chu_dark));
         nameToAttributes.put("Earth-Rending Emperor, Siegfried", new MonsterAttributes(99, 7, 3, R.mipmap.sieg_fire));
         nameToAttributes.put("Abyssal Hell Deity Jackal, Anubis", new MonsterAttributes(99, 11, 4, R.mipmap.hamnubis));
+        nameToAttributes.put("Sparkling Goddess of Secrets, Kali", new MonsterAttributes(99, 6, 6, R.mipmap.lkali_7));
+        nameToAttributes.put("Awoken Horus", new MonsterAttributes(99, 5, 8, R.mipmap.awoken_horus));
+        nameToAttributes.put("Awoken Ra", new MonsterAttributes(99, 5, 8, R.mipmap.awoken_ra));
+        nameToAttributes.put("Awoken Bastet", new MonsterAttributes(99, 5, 8, R.mipmap.awoken_bastet));
+        nameToAttributes.put("Awoken Shiva", new MonsterAttributes(99, 5, 8, R.mipmap.awoken_shiva));
+        nameToAttributes.put("Magic Hand Slayer Goddess, Durga", new MonsterAttributes(99, 6, 4, R.mipmap.durga_7));
+        nameToAttributes.put("Avowed Thief, Ishikawa Goemon", new MonsterAttributes(99, 6, 4, R.mipmap.goemon_8));
+        nameToAttributes.put("Wailing Bleak Night Goddess, Pandora", new MonsterAttributes(99, 6, 7, R.mipmap.pandora_7));
+        nameToAttributes.put("Chaotic Flying General, Lu Bu", new MonsterAttributes(99, 5, 7, R.mipmap.lubu_7));
+        nameToAttributes.put("Awoken Meimei", new MonsterAttributes(99, 5, 8, R.mipmap.awoken_meimei));
+        nameToAttributes.put("Lightning Red Dragonbound, Gadius", new MonsterAttributes(99, 6, 5, R.mipmap.gadius_6));
+        nameToAttributes.put("Dawning Dragon Caller, Sonia Gran", new MonsterAttributes(99, 11, 9, R.mipmap.sonia_gran_8));
+        nameToAttributes.put("Blue Chain Starsea Goddess, Andromeda", new MonsterAttributes(99, 6, 7, R.mipmap.andromeda_7));
+        nameToAttributes.put("Sacred Divine Flower, Xiao Qiao", new MonsterAttributes(99, 6, 4, R.mipmap.xq_7));
     }
 
     private static void setUpFriendFinderMonsterList()
