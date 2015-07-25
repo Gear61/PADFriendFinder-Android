@@ -12,7 +12,7 @@ public class Constants
     public static final String MONSTER_FORM_INCOMPLETE_MESSAGE = "Please fill in every field before submitting!";
 
     // API
-    public static final String SERVER_URL = "";
+    public static final String SERVER_URL = "https://www.google.com/";
     public static final String PLAYER_ID_KEY = "player_id";
     public static final String MONSTER_KEY = "monster";
     public static final String NAME_KEY = "name";
@@ -27,7 +27,6 @@ public class Constants
     public static final String MODE_KEY = "mode";
     public static final String MONSTER_UPDATE_KEY = "monsterUpdate";
     public static final String MONSTER_BOX_KEY = "monsterBox";
-    public static final String FRIEND_FETCH_KEY = "friendFetch";
     public static final String REST_CALL_RESPONSE_KEY = "restCallResponse";
 
     // Monster form
@@ -51,6 +50,8 @@ public class Constants
             "Please try again later.";
     public static final String MONSTER_ADD_SUCCESS_MESSAGE = "Your monster was successfully added to our database.";
     public static final String MONSTER_UPDATE_SUCCESS_MESSAGE = "Your monster was successfully updated in our database.";
+    public static final String ADDING_MONSTER = "Adding your monster to our database...";
+    public static final String UPDATING_MONSTER = "Updating your monster in our database...";
 
     // Friend results
     public static final String PAD_ID_COPIED_MESSAGE = "PAD ID copied to clipboard.";

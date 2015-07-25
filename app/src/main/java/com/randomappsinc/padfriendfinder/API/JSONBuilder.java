@@ -44,6 +44,6 @@ public class JSONBuilder
     // For finding friends
     public static String fetchFriendsBuilder(MonsterAttributes monster)
     {
-        return createMonsterJson(monster).toString();
+        return updateMonsterBuilder(monster).toString();
     }
 }

@@ -19,13 +19,13 @@ import java.io.IOException;
 /**
  * Created by alexanderchiou on 7/24/15.
  */
-public class fetchFriends extends AsyncTask<String, Integer, Long>
+public class FetchFriends extends AsyncTask<String, Integer, Long>
 {
     private Context context;
     private RestCallResponse restCallResponse;
     private MonsterAttributes monster;
 
-    public fetchFriends(Context context, MonsterAttributes monster)
+    public FetchFriends(Context context, MonsterAttributes monster)
     {
         this.context = context;
         this.restCallResponse = new RestCallResponse();
@@ -52,12 +52,6 @@ public class fetchFriends extends AsyncTask<String, Integer, Long>
             return (long) -1;
         }
         return null;
-    }
-
-    @Override
-    protected void onPreExecute()
-    {
-        super.onPreExecute();
     }
 
     @Override

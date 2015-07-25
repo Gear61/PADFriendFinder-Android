@@ -1,5 +1,6 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.randomappsinc.padfriendfinder.API.UpdateMonster;
 import com.randomappsinc.padfriendfinder.Adapters.MonsterSearchAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.GodMapper;
@@ -49,6 +51,7 @@ public class MonsterFormActivity extends ActionBarActivity
     private EditText numAwakenings;
     private EditText skillLevel;
     private EditText numPlusEggs;
+    private ProgressDialog updatingBoxDialog;
 
     private MonsterUpdateReceiver updateReceiver;
 
@@ -84,6 +87,7 @@ public class MonsterFormActivity extends ActionBarActivity
         numAwakenings = (EditText) findViewById(R.id.num_awakenings);
         skillLevel = (EditText) findViewById(R.id.skill_level);
         numPlusEggs = (EditText) findViewById(R.id.num_plus_eggs);
+        updatingBoxDialog = new ProgressDialog(context);
 
         Intent intent = getIntent();
         setUpPage(intent);
@@ -106,11 +110,13 @@ public class MonsterFormActivity extends ActionBarActivity
         catch (IllegalArgumentException ignored) {}
     }
 
+    // Processes API call response
     private class MonsterUpdateReceiver extends BroadcastReceiver
     {
         @Override
         public void onReceive(Context context, Intent intent)
         {
+            updatingBoxDialog.dismiss();
             RestCallResponse response = intent.getParcelableExtra(Constants.REST_CALL_RESPONSE_KEY);
             if (response.getStatusCode() == 200)
             {
@@ -177,6 +183,7 @@ public class MonsterFormActivity extends ActionBarActivity
     private void setUpAddMode()
     {
         setTitle(Constants.ADD_MONSTER_LABEL);
+        updatingBoxDialog.setMessage(Constants.ADDING_MONSTER);
         setUpMonsterInput();
     }
 
@@ -200,6 +207,7 @@ public class MonsterFormActivity extends ActionBarActivity
         numPlusEggs.setText(String.valueOf(monster.getPlusEggs()));
         skillLevel.setText(String.valueOf(monster.getSkillLevel()));
         monsterEditText.setEnabled(false);
+        updatingBoxDialog.setMessage(Constants.UPDATING_MONSTER);
     }
 
     private void clearEverything()
@@ -222,10 +230,10 @@ public class MonsterFormActivity extends ActionBarActivity
         public void afterTextChanged (Editable s){}
 
         @Override
-        public void beforeTextChanged (CharSequence s,int start, int count, int after){}
+        public void beforeTextChanged (CharSequence s, int start, int count, int after){}
 
         @Override
-        public void onTextChanged (CharSequence s,int start, int before, int count)
+        public void onTextChanged (CharSequence s, int start, int before, int count)
         {
             MonsterAttributes monsterAttributes = godMapper.getMonsterAttributes(s.toString());
             if (monsterAttributes != null)
@@ -255,6 +263,7 @@ public class MonsterFormActivity extends ActionBarActivity
         }
     };
 
+    // Monster search/add/update submit
     View.OnClickListener submitListener = new View.OnClickListener() {
         public void onClick(View v)
         {
@@ -297,6 +306,11 @@ public class MonsterFormActivity extends ActionBarActivity
                             intent.putExtra(Constants.MONSTER_KEY, monster);
                             startActivity(intent);
                             clearEverything();
+                        }
+                        else if (mode.equals(Constants.ADD_MODE) || mode.equals(Constants.UPDATE_MODE))
+                        {
+                            updatingBoxDialog.show();
+                            new UpdateMonster(context, monster).execute();
                         }
                     }
                 }

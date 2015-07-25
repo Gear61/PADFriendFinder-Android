@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.randomappsinc.padfriendfinder.API.JSONParser;
+import com.randomappsinc.padfriendfinder.API.GetMonsterBox;
 import com.randomappsinc.padfriendfinder.Adapters.MonsterBoxAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.MonsterBoxManager;
@@ -76,7 +77,7 @@ public class MonsterBoxActivity extends ActionBarActivity
         }
         else
         {
-            // Make API call
+            new GetMonsterBox(context).execute();
         }
     }
 

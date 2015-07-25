@@ -17,10 +17,7 @@ public class MonsterBoxManager
     private static List<MonsterAttributes> monsters;
     private static Set<String> monsterNames;
 
-    private MonsterBoxManager()
-    {
-        addMonsters(Stubber.getMonsterBox());
-    }
+    private MonsterBoxManager() {}
 
     public static MonsterBoxManager getInstance()
     {

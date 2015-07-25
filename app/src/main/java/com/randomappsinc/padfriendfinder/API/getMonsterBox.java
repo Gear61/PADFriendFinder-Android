@@ -20,12 +20,12 @@ import java.io.IOException;
 /**
  * Created by alexanderchiou on 7/23/15.
  */
-public class getMonsterBox extends AsyncTask<String, Integer, Long>
+public class GetMonsterBox extends AsyncTask<String, Integer, Long>
 {
     private Context context;
     private RestCallResponse restCallResponse;
 
-    public getMonsterBox(Context context)
+    public GetMonsterBox(Context context)
     {
         this.context = context;
         restCallResponse = new RestCallResponse();
@@ -55,12 +55,6 @@ public class getMonsterBox extends AsyncTask<String, Integer, Long>
             return (long) -1;
         }
         return null;
-    }
-
-    @Override
-    protected void onPreExecute()
-    {
-        super.onPreExecute();
     }
 
     @Override

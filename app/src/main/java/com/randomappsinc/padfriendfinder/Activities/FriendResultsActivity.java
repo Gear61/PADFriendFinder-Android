@@ -1,11 +1,11 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -20,18 +20,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.randomappsinc.padfriendfinder.API.JSONParser;
+import com.randomappsinc.padfriendfinder.API.FetchFriends;
 import com.randomappsinc.padfriendfinder.Adapters.FriendResultsAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
-import com.randomappsinc.padfriendfinder.Misc.MonsterBoxManager;
-import com.randomappsinc.padfriendfinder.Misc.Stubber;
 import com.randomappsinc.padfriendfinder.Models.Friend;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.R;
 
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by alexanderchiou on 7/21/15.
@@ -50,6 +47,7 @@ public class FriendResultsActivity extends ActionBarActivity
 
     private MonsterAttributes monster;
     private FriendResultsAdapter friendResultsAdapter;
+    private FetchFriendsReceiver friendsReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -69,9 +67,25 @@ public class FriendResultsActivity extends ActionBarActivity
         noResults = (TextView) findViewById(R.id.no_results);
         friendResultsList = (ListView) findViewById(R.id.friend_results_list);
         friendResultsAdapter = new FriendResultsAdapter(context);
-        friendResultsAdapter.addFriends(Stubber.getFriendResults());
         friendResultsList.setAdapter(friendResultsAdapter);
         friendResultsList.setOnItemClickListener(friendResultsListener);
+
+        // Receiver for API call
+        friendsReceiver = new FetchFriendsReceiver();
+        context.registerReceiver(friendsReceiver, new IntentFilter(Constants.FETCH_FRIENDS_KEY));
+
+        new FetchFriends(context, monster).execute();
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        try
+        {
+            context.unregisterReceiver(friendsReceiver);
+        }
+        catch (IllegalArgumentException ignored) {}
     }
 
     private class FetchFriendsReceiver extends BroadcastReceiver
