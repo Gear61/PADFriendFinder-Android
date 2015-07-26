@@ -136,6 +136,8 @@ public class GodMapper
         nameToAttributes.put("Dawning Dragon Caller, Sonia Gran", new MonsterAttributes(99, 11, 9, R.mipmap.sonia_gran_8));
         nameToAttributes.put("Blue Chain Starsea Goddess, Andromeda", new MonsterAttributes(99, 6, 7, R.mipmap.andromeda_7));
         nameToAttributes.put("Sacred Divine Flower, Xiao Qiao", new MonsterAttributes(99, 6, 4, R.mipmap.xq_7));
+        nameToAttributes.put("Awoken Venus", new MonsterAttributes(99, 5, 8, R.mipmap.awoken_venus));
+        nameToAttributes.put("Awoken Hades", new MonsterAttributes(99, 5, 8, R.mipmap.awoken_hades));
     }
 
     private static void setUpFriendFinderMonsterList()
