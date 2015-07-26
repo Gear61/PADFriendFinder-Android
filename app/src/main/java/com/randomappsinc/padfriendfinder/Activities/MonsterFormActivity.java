@@ -52,6 +52,7 @@ public class MonsterFormActivity extends ActionBarActivity
     private EditText skillLevel;
     private EditText numPlusEggs;
     private ProgressDialog updatingBoxDialog;
+    private String monsterChosen;
 
     private MonsterUpdateReceiver updateReceiver;
 
@@ -214,6 +215,8 @@ public class MonsterFormActivity extends ActionBarActivity
     {
         clearForm();
         monsterEditText.setText("");
+        monsterEditText.setThreshold(2);
+        monsterPicture.setImageResource(R.mipmap.mystery_creature);
     }
 
     private void clearForm()
@@ -235,14 +238,37 @@ public class MonsterFormActivity extends ActionBarActivity
         @Override
         public void onTextChanged (CharSequence s, int start, int before, int count)
         {
-            MonsterAttributes monsterAttributes = godMapper.getMonsterAttributes(s.toString());
-            if (monsterAttributes != null)
+            String input = s.toString();
+            if (monsterChosen != null)
             {
-                monsterPicture.setImageResource(monsterAttributes.getDrawableId());
+                // Prevent them from adding to target after it's chosen
+                if (monsterChosen.length() + 1 == input.length())
+                {
+                    monsterEditText.setText(input.substring(0, input.length() - 1));
+                }
+                // If they're deleting and something is there, clear the entire thing
+                else if (monsterChosen.length() - 1 == input.length())
+                {
+                    monsterChosen = null;
+                    monsterEditText.setText("");
+                    monsterEditText.setThreshold(2);
+                }
             }
             else
             {
-                monsterPicture.setImageResource(R.mipmap.mystery_creature);
+                MonsterAttributes monsterAttributes = godMapper.getMonsterAttributes(s.toString());
+                if (monsterAttributes != null)
+                {
+                    monsterChosen = input;
+                    monsterPicture.setImageResource(monsterAttributes.getDrawableId());
+                    monsterEditText.setThreshold(1000);
+                }
+                else
+                {
+                    monsterChosen = null;
+                    monsterPicture.setImageResource(R.mipmap.mystery_creature);
+                    monsterEditText.setThreshold(2);
+                }
             }
         }
     };

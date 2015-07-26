@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:padding="5dp">
 
-    <AutoCompleteTextView
+    <com.randomappsinc.padfriendfinder.Views.LockedAutoCompleteTextView
         android:id="@+id/monster_search_box"
         android:singleLine="true"
         android:layout_width="match_parent"

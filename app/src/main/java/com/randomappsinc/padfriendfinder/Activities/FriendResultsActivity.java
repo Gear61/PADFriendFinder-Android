@@ -19,8 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.randomappsinc.padfriendfinder.API.JSONParser;
 import com.randomappsinc.padfriendfinder.API.FetchFriends;
+import com.randomappsinc.padfriendfinder.API.JSONParser;
 import com.randomappsinc.padfriendfinder.Adapters.FriendResultsAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Models.Friend;

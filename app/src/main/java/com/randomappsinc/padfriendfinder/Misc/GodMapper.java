@@ -8,7 +8,9 @@ import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Alex on 11/1/2014.
@@ -142,6 +144,7 @@ public class GodMapper
         {
             friendFinderMonsterList.add(key);
         }
+        Collections.sort(friendFinderMonsterList);
     }
 
     public ArrayList<String> getFriendFinderMonsterList()
