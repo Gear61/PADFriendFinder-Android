@@ -12,9 +12,9 @@
     <string name="hypermax">Hypermax</string>
 
     <!-- Monster Box -->
-    <string name="monster_box_instructions">These are the monsters currently associated with your PAD ID.
+    <string name="monster_box_instructions">These are the monsters associated with your PAD ID.
         Hit the + in the action bar above to add new monsters.
-        Click on any monster to update its details.</string>
+        Click on any monster to see its options.</string>
     <string name="no_monsters">There are no monsters associated with your PAD ID.</string>
     <string name="add_monster">Add Monster</string>
     <string name="monster_box_label">Monster Box</string>

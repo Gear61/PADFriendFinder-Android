@@ -1,6 +1,8 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -23,9 +25,6 @@ import com.randomappsinc.padfriendfinder.R;
  */
 public class PadIdActivity extends ActionBarActivity
 {
-    public static final String INCOMPLETE_PAD_ID_MESSAGE = "Please enter in all 9 digits of your PAD ID.";
-    public static final String INCORRECT_FIRST_DIGIT_MESSAGE = "We only support NA right now, so your PAD ID's first" +
-            " digit must be 3.";
 
     private EditText padIdInput;
     private Button submitPadId;
@@ -59,24 +58,48 @@ public class PadIdActivity extends ActionBarActivity
 
     View.OnClickListener padIdSubmitListener = new View.OnClickListener() {
         public void onClick(View v) {
-            String input = padIdInput.getText().toString();
+            final String input = padIdInput.getText().toString();
 
             if (input.length() != 9)
             {
-                Toast.makeText(getApplicationContext(), INCOMPLETE_PAD_ID_MESSAGE, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), Constants.INCOMPLETE_PAD_ID_MESSAGE, Toast.LENGTH_LONG).show();
             }
             else if (input.charAt(0) != '3')
             {
-                Toast.makeText(getApplicationContext(), INCORRECT_FIRST_DIGIT_MESSAGE, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), Constants.INCORRECT_FIRST_DIGIT_MESSAGE, Toast.LENGTH_LONG).show();
             }
             else
             {
                 hideKeyboard();
-                PreferencesManager.get().setPadId(input);
-                Intent intent = new Intent(context, MainActivity.class);
-                startActivity(intent);
-                Toast.makeText(getApplicationContext(), Constants.WELCOME_MESSAGE, Toast.LENGTH_SHORT).show();
-                finish();
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        context);
+                alertDialogBuilder.setTitle(Constants.PAD_ID_CONFIRMATION);
+                alertDialogBuilder
+                        .setMessage("You have entered " + input + " as your PAD ID. " +
+                                    "Are you absolutely sure that this is correct? " +
+                                    "Remember, you can only enter your ID in once.")
+                        .setCancelable(true)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                        {
+                            public void onClick(DialogInterface dialog, int id)
+                            {
+                                PreferencesManager.get().setPadId(input);
+                                Intent intent = new Intent(context, MainActivity.class);
+                                startActivity(intent);
+                                Toast.makeText(getApplicationContext(), Constants.WELCOME_MESSAGE, Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener()
+                        {
+                            public void onClick(DialogInterface dialog, int id)
+                            {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.setCanceledOnTouchOutside(true);
+                alertDialog.show();
             }
         }
     };
