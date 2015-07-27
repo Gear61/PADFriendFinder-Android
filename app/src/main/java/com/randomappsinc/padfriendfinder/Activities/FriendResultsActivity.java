@@ -42,6 +42,7 @@ public class FriendResultsActivity extends ActionBarActivity
     private TextView intro;
     private ImageView monsterPicture;
     private TextView monsterName;
+    private TextView instructions;
     private TextView noResults;
     private ListView friendResultsList;
 
@@ -64,6 +65,7 @@ public class FriendResultsActivity extends ActionBarActivity
         monsterPicture.setImageResource(monster.getDrawableId());
         monsterName = (TextView) findViewById(R.id.monster_name);
         monsterName.setText(monster.getName());
+        instructions = (TextView) findViewById(R.id.friend_results_instructions);
         noResults = (TextView) findViewById(R.id.no_results);
         friendResultsList = (ListView) findViewById(R.id.friend_results_list);
         friendResultsAdapter = new FriendResultsAdapter(context);
@@ -107,6 +109,7 @@ public class FriendResultsActivity extends ActionBarActivity
             intro.setVisibility(View.VISIBLE);
             monsterPicture.setVisibility(View.VISIBLE);
             monsterName.setVisibility(View.VISIBLE);
+            instructions.setVisibility(View.VISIBLE);
             if (friendResultsAdapter.getCount() == 0)
             {
                 noResults.setVisibility(View.VISIBLE);

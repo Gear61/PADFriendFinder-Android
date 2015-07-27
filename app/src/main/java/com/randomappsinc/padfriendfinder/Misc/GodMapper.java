@@ -137,6 +137,9 @@ public class GodMapper
         nameToAttributes.put("Sacred Divine Flower, Xiao Qiao", new MonsterAttributes(99, 6, 4, R.mipmap.xq_7));
         nameToAttributes.put("Awoken Venus", new MonsterAttributes(99, 5, 8, R.mipmap.awoken_venus));
         nameToAttributes.put("Awoken Hades", new MonsterAttributes(99, 5, 8, R.mipmap.awoken_hades));
+        nameToAttributes.put("Awoken Lakshmi", new MonsterAttributes(99, 5, 8, R.mipmap.awoken_lakshmi));
+        nameToAttributes.put("Awoken Parvati", new MonsterAttributes(99, 5, 8, R.mipmap.awoken_parvati));
+        nameToAttributes.put("Sacred Dragon Princess, Da Qiao", new MonsterAttributes(99, 6, 7, R.mipmap.dq_7));
     }
 
     private static void setUpFriendFinderMonsterList()
