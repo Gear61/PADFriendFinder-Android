@@ -214,9 +214,11 @@ public class MonsterFormActivity extends ActionBarActivity
     private void clearEverything()
     {
         clearForm();
+        monsterChosen = null;
         monsterEditText.setText("");
         monsterEditText.setThreshold(2);
         monsterPicture.setImageResource(R.mipmap.mystery_creature);
+        monsterEditText.requestFocus();
     }
 
     private void clearForm()
@@ -314,7 +316,8 @@ public class MonsterFormActivity extends ActionBarActivity
                     {
                         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                     }
-                    else if (MonsterBoxManager.getInstance().alreadyContainsMonster(monsterName))
+                    else if (MonsterBoxManager.getInstance().alreadyContainsMonster(monsterName) &&
+                             mode.equals(Constants.ADD_MODE))
                     {
                         Toast.makeText(context, "Your monster box already has a " + monsterName + ".",
                                 Toast.LENGTH_LONG).show();

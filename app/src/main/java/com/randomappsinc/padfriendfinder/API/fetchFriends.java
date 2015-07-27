@@ -8,11 +8,13 @@ import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 
@@ -46,6 +48,12 @@ public class FetchFriends extends AsyncTask<String, Integer, Long>
 
             // StatusLine stat = response.getStatusLine();
             restCallResponse.setStatusCode(response.getStatusLine().getStatusCode());
+
+            if (restCallResponse.getStatusCode() == 200)
+            {
+                HttpEntity entity = response.getEntity();
+                restCallResponse.setResponse(EntityUtils.toString(entity));
+            }
         }
         catch(IOException e)
         {

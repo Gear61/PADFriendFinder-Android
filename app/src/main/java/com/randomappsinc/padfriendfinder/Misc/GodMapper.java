@@ -10,7 +10,6 @@ import com.randomappsinc.padfriendfinder.R;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Alex on 11/1/2014.

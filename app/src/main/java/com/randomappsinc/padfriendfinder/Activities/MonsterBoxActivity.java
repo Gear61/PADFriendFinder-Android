@@ -103,7 +103,9 @@ public class MonsterBoxActivity extends ActionBarActivity
             {
                 MonsterAttributes monster = intent.getParcelableExtra(Constants.MONSTER_KEY);
                 boxAdapter.updateMonster(monster);
+                boxAdapter.notifyDataSetChanged();
                 MonsterBoxManager.getInstance().updateMonster(monster);
+                refreshContent();
             }
         }
     }

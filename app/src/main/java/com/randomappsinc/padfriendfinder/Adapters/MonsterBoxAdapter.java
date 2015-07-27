@@ -42,13 +42,11 @@ public class MonsterBoxAdapter extends BaseAdapter
             if (monsters.get(i).getName().equals(monster.getName()))
             {
                 monsters.set(i, monster);
-                notifyDataSetChanged();
                 return;
             }
         }
         // If we made it out of the loop without returning, it's a new monster
         monsters.add(monster);
-        notifyDataSetChanged();
     }
 
     public int getCount() {
