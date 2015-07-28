@@ -14,12 +14,19 @@ import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by alexanderchiou on 7/13/15.
  */
 public class MonsterSearchAdapter extends ArrayAdapter<String>
 {
+    private static final String[] DEFAULT_LEADERS = {"Marvelous Red Dragon Caller, Sonia",
+                                                     "Sparkling Goddess of Secrets, Kali",
+                                                     "Chaotic Flying General, Lu Bu",
+                                                     "Guardian of the Sacred City, Athena",
+                                                     "Keeper of the Sacred Texts, Metatron"};
+
     private ArrayList<String> items;
     private ArrayList<String> itemsAll;
     private ArrayList<String> suggestions;
@@ -94,12 +101,21 @@ public class MonsterSearchAdapter extends ArrayAdapter<String>
             {
                 suggestions.clear();
 
-                for (int i = 0, j = 0; i < itemsAll.size() && j <= 10; i++)
+                int constraintLen = constraint.toString().length();
+                if (constraintLen == 0)
                 {
-                    if (itemsAll.get(i).toString().toLowerCase().contains(constraint.toString().toLowerCase()))
+                    System.out.println("NARNIA EMPTY!");
+                    suggestions.addAll(Arrays.asList(DEFAULT_LEADERS));
+                }
+                else if (constraintLen > 1)
+                {
+                    for (int i = 0, j = 0; i < itemsAll.size() && j <= 10; i++)
                     {
-                        j++;
-                        suggestions.add(itemsAll.get(i));
+                        if (itemsAll.get(i).toString().toLowerCase().contains(constraint.toString().toLowerCase()))
+                        {
+                            j++;
+                            suggestions.add(itemsAll.get(i));
+                        }
                     }
                 }
 

@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:padding="5dp">
 
-    <com.randomappsinc.padfriendfinder.Views.LockedAutoCompleteTextView
+    <com.randomappsinc.padfriendfinder.Views.CustomAutoCompleteTextView
         android:id="@+id/monster_search_box"
         android:singleLine="true"
         android:layout_width="match_parent"
@@ -17,6 +17,8 @@
 
         <ImageView
             android:id="@+id/monster_picture"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:src="@mipmap/mystery_creature"
             android:layout_centerVertical="true"
             android:layout_width="100dp"

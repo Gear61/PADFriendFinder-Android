@@ -19,6 +19,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.randomappsinc.padfriendfinder.API.UpdateMonster;
@@ -44,7 +45,6 @@ public class MonsterFormActivity extends ActionBarActivity
 
     // Views
     private AutoCompleteTextView monsterEditText;
-    private Button hypermax;
     private Button submitMonster;
     private ImageView monsterPicture;
     private EditText level;
@@ -55,6 +55,7 @@ public class MonsterFormActivity extends ActionBarActivity
     private String monsterChosen;
 
     private MonsterUpdateReceiver updateReceiver;
+    private MonsterSearchAdapter monsterAdapter;
 
     public void hideKeyboard()
     {
@@ -78,9 +79,10 @@ public class MonsterFormActivity extends ActionBarActivity
 
         context = this;
         godMapper = GodMapper.getGodMapper();
+        monsterAdapter = new MonsterSearchAdapter(context, android.R.layout.simple_dropdown_item_1line,
+                godMapper.getFriendFinderMonsterList());
 
         // Find views
-        hypermax = (Button) findViewById(R.id.hypermax);
         monsterEditText = (AutoCompleteTextView) findViewById(R.id.monster_search_box);
         submitMonster = (Button) findViewById(R.id.submit_monster);
         monsterPicture = (ImageView) findViewById(R.id.monster_picture);
@@ -161,12 +163,10 @@ public class MonsterFormActivity extends ActionBarActivity
         if (mode.equals(Constants.SEARCH_MODE))
         {
             setUpSearchMode();
-            showKeyboard();
         }
         else if (mode.equals(Constants.ADD_MODE))
         {
             setUpAddMode();
-            showKeyboard();
         }
         else if (mode.equals(Constants.UPDATE_MODE))
         {
@@ -191,8 +191,9 @@ public class MonsterFormActivity extends ActionBarActivity
     {
         // Text listener for monster search with AC
         monsterEditText.addTextChangedListener(monsterInputListener);
-        MonsterSearchAdapter adapter = new MonsterSearchAdapter(context, android.R.layout.simple_dropdown_item_1line, godMapper.getFriendFinderMonsterList());
-        monsterEditText.setAdapter(adapter);
+        monsterEditText.setAdapter(monsterAdapter);
+        monsterEditText.setOnFocusChangeListener(monsterSearchFocusListener);
+        showKeyboard();
     }
 
     private void setUpUpdateMode(Intent intent)
@@ -215,9 +216,9 @@ public class MonsterFormActivity extends ActionBarActivity
         clearForm();
         monsterChosen = null;
         monsterEditText.setText("");
-        monsterEditText.setThreshold(2);
+        monsterEditText.setAdapter(monsterAdapter);
         monsterPicture.setImageResource(R.mipmap.mystery_creature);
-        monsterEditText.requestFocus();
+        monsterPicture.requestFocus();
     }
 
     private void clearForm()
@@ -252,7 +253,7 @@ public class MonsterFormActivity extends ActionBarActivity
                 {
                     monsterChosen = null;
                     monsterEditText.setText("");
-                    monsterEditText.setThreshold(2);
+                    monsterEditText.setAdapter(monsterAdapter);
                 }
             }
             else
@@ -262,13 +263,13 @@ public class MonsterFormActivity extends ActionBarActivity
                 {
                     monsterChosen = input;
                     monsterPicture.setImageResource(monsterAttributes.getDrawableId());
-                    monsterEditText.setThreshold(1000);
+                    monsterEditText.setAdapter(null);
                 }
                 else
                 {
                     monsterChosen = null;
                     monsterPicture.setImageResource(R.mipmap.mystery_creature);
-                    monsterEditText.setThreshold(2);
+                    monsterEditText.setAdapter(monsterAdapter);
                 }
             }
         }
@@ -351,6 +352,18 @@ public class MonsterFormActivity extends ActionBarActivity
             else
             {
                 Toast.makeText(context, Constants.INVALID_MONSTER_MESSAGE, Toast.LENGTH_LONG).show();
+            }
+        }
+    };
+
+    // Monster AC focus change listener to allow for default suggestions
+    AutoCompleteTextView.OnFocusChangeListener monsterSearchFocusListener = new AutoCompleteTextView.OnFocusChangeListener()
+    {
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            if (hasFocus && getWindow().isActive() && monsterChosen == null)
+            {
+                monsterEditText.showDropDown();
             }
         }
     };
