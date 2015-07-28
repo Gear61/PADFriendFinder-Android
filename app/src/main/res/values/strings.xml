@@ -10,6 +10,7 @@
 
     <!-- Monster Search -->
     <string name="hypermax">Hypermax</string>
+    <string name="minimum">Minimum</string>
 
     <!-- Monster Box -->
     <string name="monster_box_instructions">These are the monsters associated with your PAD ID.

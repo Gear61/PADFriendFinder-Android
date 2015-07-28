@@ -93,7 +93,6 @@ public class MonsterFormActivity extends ActionBarActivity
         Intent intent = getIntent();
         setUpPage(intent);
 
-        hypermax.setOnClickListener(hypermaxListener);
         submitMonster.setOnClickListener(submitListener);
 
         updateReceiver = new MonsterUpdateReceiver();
@@ -275,21 +274,26 @@ public class MonsterFormActivity extends ActionBarActivity
         }
     };
 
-    // Fills in form with hypermaxed values
-    View.OnClickListener hypermaxListener = new View.OnClickListener() {
-        public void onClick(View v)
+    public void hypermax(View v)
+    {
+        String monsterName = monsterEditText.getText().toString();
+        MonsterAttributes monsterAttributes = godMapper.getMonsterAttributes(monsterName);
+        if (monsterAttributes != null)
         {
-            String monsterName = monsterEditText.getText().toString();
-            MonsterAttributes monsterAttributes = godMapper.getMonsterAttributes(monsterName);
-            if (monsterAttributes != null)
-            {
-                level.setText(String.valueOf(monsterAttributes.getLevel()));
-                numAwakenings.setText(String.valueOf(monsterAttributes.getAwakenings()));
-                skillLevel.setText(String.valueOf(monsterAttributes.getSkillLevel()));
-                numPlusEggs.setText(String.valueOf(Constants.MAX_PLUS_EGGS));
-            }
+            level.setText(String.valueOf(monsterAttributes.getLevel()));
+            numAwakenings.setText(String.valueOf(monsterAttributes.getAwakenings()));
+            skillLevel.setText(String.valueOf(monsterAttributes.getSkillLevel()));
+            numPlusEggs.setText(String.valueOf(Constants.MAX_PLUS_EGGS));
         }
-    };
+    }
+
+    public void minimum(View v)
+    {
+        level.setText(String.valueOf(1));
+        numAwakenings.setText(String.valueOf(0));
+        skillLevel.setText(String.valueOf(1));
+        numPlusEggs.setText(String.valueOf(0));
+    }
 
     // Monster search/add/update submit
     View.OnClickListener submitListener = new View.OnClickListener() {
