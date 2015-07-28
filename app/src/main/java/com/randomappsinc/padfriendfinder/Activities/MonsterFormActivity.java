@@ -19,7 +19,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.randomappsinc.padfriendfinder.API.UpdateMonster;
@@ -40,7 +39,6 @@ import com.randomappsinc.padfriendfinder.Utils.MonsterSearchUtils;
 public class MonsterFormActivity extends ActionBarActivity
 {
     private Context context;
-    private GodMapper godMapper;
     private String mode;
 
     // Views
@@ -78,9 +76,8 @@ public class MonsterFormActivity extends ActionBarActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         context = this;
-        godMapper = GodMapper.getGodMapper();
         monsterAdapter = new MonsterSearchAdapter(context, android.R.layout.simple_dropdown_item_1line,
-                godMapper.getFriendFinderMonsterList());
+                GodMapper.getGodMapper().getFriendFinderMonsterList());
 
         // Find views
         monsterEditText = (AutoCompleteTextView) findViewById(R.id.monster_search_box);
@@ -163,6 +160,18 @@ public class MonsterFormActivity extends ActionBarActivity
         if (mode.equals(Constants.SEARCH_MODE))
         {
             setUpSearchMode();
+            String monsterName = intent.getStringExtra(Constants.NAME_KEY);
+            if (monsterName != null)
+            {
+                MonsterAttributes seededMonster = GodMapper.getGodMapper().getMonsterAttributes(monsterName);
+                if (seededMonster != null)
+                {
+                    monsterEditText.setText(monsterName);
+                    monsterPicture.setImageResource(seededMonster.getDrawableId());
+                    monsterEditText.setAdapter(null);
+                    level.requestFocus();
+                }
+            }
         }
         else if (mode.equals(Constants.ADD_MODE))
         {
@@ -258,7 +267,7 @@ public class MonsterFormActivity extends ActionBarActivity
             }
             else
             {
-                MonsterAttributes monsterAttributes = godMapper.getMonsterAttributes(s.toString());
+                MonsterAttributes monsterAttributes = GodMapper.getGodMapper().getMonsterAttributes(s.toString());
                 if (monsterAttributes != null)
                 {
                     monsterChosen = input;
@@ -278,7 +287,7 @@ public class MonsterFormActivity extends ActionBarActivity
     public void hypermax(View v)
     {
         String monsterName = monsterEditText.getText().toString();
-        MonsterAttributes monsterAttributes = godMapper.getMonsterAttributes(monsterName);
+        MonsterAttributes monsterAttributes = GodMapper.getGodMapper().getMonsterAttributes(monsterName);
         if (monsterAttributes != null)
         {
             level.setText(String.valueOf(monsterAttributes.getLevel()));
@@ -301,7 +310,7 @@ public class MonsterFormActivity extends ActionBarActivity
         public void onClick(View v)
         {
             String monsterName = monsterEditText.getText().toString();
-            MonsterAttributes monsterAttributes = godMapper.getMonsterAttributes(monsterName);
+            MonsterAttributes monsterAttributes = GodMapper.getGodMapper().getMonsterAttributes(monsterName);
             if (monsterAttributes != null)
             {
                 if (level.getText().toString().isEmpty() || skillLevel.getText().toString().isEmpty() ||

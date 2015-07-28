@@ -34,7 +34,7 @@ public class GetMonsterBox extends AsyncTask<String, Integer, Long>
     @Override
     protected Long doInBackground(String... strings)
     {
-        String endpoint = Constants.SERVER_URL + Constants.MONSTERS_ENDPOINT + PreferencesManager.get().getPadId();
+        String endpoint = Constants.SERVER_URL + Constants.MONSTERS_KEY + PreferencesManager.get().getPadId();
         try
         {
             HttpGet getMonsterBoxRequest = new HttpGet(endpoint);

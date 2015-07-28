@@ -35,7 +35,7 @@ public class JSONBuilder
         try
         {
             monsterBoxJson.put(Constants.MONSTER_KEY, createMonsterJson(monster));
-            monsterBoxJson.put(Constants.PLAYER_ID_KEY, PreferencesManager.get().getPadId());
+            monsterBoxJson.put(Constants.PAD_ID_KEY, PreferencesManager.get().getPadId());
         }
         catch (JSONException ignored) {}
         return monsterBoxJson.toString();
@@ -45,5 +45,17 @@ public class JSONBuilder
     public static String fetchFriendsBuilder(MonsterAttributes monster)
     {
         return updateMonsterBuilder(monster).toString();
+    }
+
+    public static String deleteMonsterBuilder(String monsterName)
+    {
+        JSONObject deleteMonsterJson = new JSONObject();
+        try
+        {
+            deleteMonsterJson.put(Constants.PAD_ID_KEY, PreferencesManager.get().getPadId());
+            deleteMonsterJson.put(Constants.NAME_KEY, monsterName);
+        }
+        catch (JSONException ignored) {}
+        return deleteMonsterJson.toString();
     }
 }

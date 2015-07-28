@@ -48,7 +48,7 @@ public class JSONParser
             for (int i = 0; i < friendsArray.length(); i++)
             {
                 JSONObject friendJson = friendsArray.getJSONObject(i);
-                String padId = friendJson.getString(Constants.PLAYER_ID_KEY);
+                String padId = friendJson.getString(Constants.PAD_ID_KEY);
                 Friend friend = new Friend(padId, parseMonsterJson(friendJson));
                 friends.add(friend);
             }

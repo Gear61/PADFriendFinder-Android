@@ -49,6 +49,20 @@ public class MonsterBoxAdapter extends BaseAdapter
         monsters.add(monster);
     }
 
+    public void deleteMonster(String monsterName)
+    {
+        // This loop updates the monster if it's already there
+        for (int i = 0; i < monsters.size(); i++)
+        {
+            if (monsters.get(i).getName().equals(monsterName))
+            {
+                monsters.remove(i);
+                notifyDataSetChanged();
+                break;
+            }
+        }
+    }
+
     public int getCount() {
         return monsters.size();
     }

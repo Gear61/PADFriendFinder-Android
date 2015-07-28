@@ -129,7 +129,7 @@ public class FriendResultsActivity extends ActionBarActivity
         {
             String padId = friendResultsAdapter.getItem(position).getPadId();
             ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText(Constants.PLAYER_ID_KEY, padId);
+            ClipData clip = ClipData.newPlainText(Constants.PAD_ID_KEY, padId);
             clipboard.setPrimaryClip(clip);
             Toast.makeText(context, Constants.PAD_ID_COPIED_MESSAGE, Toast.LENGTH_SHORT).show();
         }

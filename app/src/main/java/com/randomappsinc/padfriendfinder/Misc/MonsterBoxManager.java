@@ -68,6 +68,20 @@ public class MonsterBoxManager
         monsterNames.add(monster.getName());
     }
 
+    public void deleteMonster(String monsterName)
+    {
+        monsterNames.remove(monsterName);
+        // This loop updates the monster if it's already there
+        for (int i = 0; i < monsters.size(); i++)
+        {
+            if (monsters.get(i).getName().equals(monsterName))
+            {
+                monsters.remove(i);
+                break;
+            }
+        }
+    }
+
     public List<MonsterAttributes> getMonsterList()
     {
         return monsters;
