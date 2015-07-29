@@ -140,6 +140,11 @@ public class GodMapper
         nameToAttributes.put("Awoken Lakshmi", new MonsterAttributes(99, 5, 8, R.mipmap.awoken_lakshmi));
         nameToAttributes.put("Awoken Parvati", new MonsterAttributes(99, 5, 8, R.mipmap.awoken_parvati));
         nameToAttributes.put("Sacred Dragon Princess, Da Qiao", new MonsterAttributes(99, 6, 7, R.mipmap.dq_7));
+        nameToAttributes.put("Scholarship Student, Isis", new MonsterAttributes(99, 6, 5, R.mipmap.schoolgirl_isis));
+        nameToAttributes.put("Discipline Committee Chair, Athena", new MonsterAttributes(99, 9, 6, R.mipmap.schoolgirl_athena));
+        nameToAttributes.put("Stormy God-Emperor, Yamato Takeru", new MonsterAttributes(99, 6, 7, R.mipmap.yamato_7));
+        nameToAttributes.put("Revered Monkey King, Sun Wukong", new MonsterAttributes(99, 6, 7, R.mipmap.wukong_7));
+        nameToAttributes.put("Green Star Vanquishing Deity, Perseus", new MonsterAttributes(99, 6, 7, R.mipmap.perseus_7));
     }
 
     private static void setUpFriendFinderMonsterList()
