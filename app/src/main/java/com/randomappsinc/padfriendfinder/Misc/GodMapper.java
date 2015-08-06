@@ -147,6 +147,8 @@ public class GodMapper
         nameToAttributes.put("Green Star Vanquishing Deity, Perseus", new MonsterAttributes(99, 6, 7, R.mipmap.perseus_7));
         nameToAttributes.put("Dominating Warrior King, Cao Cao", new MonsterAttributes(99, 6, 7, R.mipmap.cao_cao_green));
         nameToAttributes.put("Unifying Martial Deity, Cao Cao", new MonsterAttributes(99, 6, 4, R.mipmap.cao_cao_dark));
+        nameToAttributes.put("Divine General of the Sun, Krishna", new MonsterAttributes(99, 10, 4, R.mipmap.krishna_7));
+        nameToAttributes.put("Wise and Moral Goddess, Sarasvati", new MonsterAttributes(99, 10, 4, R.mipmap.sarasvati_7));
     }
 
     private static void setUpFriendFinderMonsterList()
