@@ -149,6 +149,9 @@ public class GodMapper
         nameToAttributes.put("Unifying Martial Deity, Cao Cao", new MonsterAttributes(99, 6, 4, R.mipmap.cao_cao_dark));
         nameToAttributes.put("Divine General of the Sun, Krishna", new MonsterAttributes(99, 10, 4, R.mipmap.krishna_7));
         nameToAttributes.put("Wise and Moral Goddess, Sarasvati", new MonsterAttributes(99, 10, 4, R.mipmap.sarasvati_7));
+        nameToAttributes.put("Awoken Isis", new MonsterAttributes(99, 5, 8, R.mipmap.awoken_isis));
+        nameToAttributes.put("Awoken Anubis", new MonsterAttributes(99, 5, 8, R.mipmap.awoken_anubis));
+        nameToAttributes.put("Enraged Black Phantom Demon, Zuoh", new MonsterAttributes(99, 6, 5, R.mipmap.zuoh_6));
     }
 
     private static void setUpFriendFinderMonsterList()
