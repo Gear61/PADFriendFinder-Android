@@ -8,8 +8,8 @@ android {
         applicationId "com.randomappsinc.padfriendfinder"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 109
-        versionName "1.0.9"
+        versionCode 110
+        versionName "1.0.10"
     }
     buildTypes {
         release {

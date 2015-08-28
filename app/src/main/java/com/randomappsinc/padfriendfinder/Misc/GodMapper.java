@@ -5,12 +5,13 @@ package com.randomappsinc.padfriendfinder.Misc;
  */
 
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
-import com.randomappsinc.padfriendfinder.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Alex on 11/1/2014.
@@ -19,11 +20,9 @@ public class GodMapper
 {
     private static GodMapper instance = null;
     private static HashMap<String, MonsterAttributes> nameToAttributes = new HashMap<>();
-    private static ArrayList<String> friendFinderMonsterList = new ArrayList<String>();
+    private static Set<String> friendFinderMonsterList = new HashSet<>();
 
-    private GodMapper()
-    {
-    }
+    private GodMapper() {}
 
     public static GodMapper getGodMapper()
     {
@@ -48,12 +47,14 @@ public class GodMapper
         {
             friendFinderMonsterList.add(key);
         }
-        Collections.sort(friendFinderMonsterList);
     }
 
     public ArrayList<String> getFriendFinderMonsterList()
     {
-        return (ArrayList<String>) friendFinderMonsterList.clone();
+        ArrayList<String> monsters = new ArrayList<>();
+        monsters.addAll(friendFinderMonsterList);
+        Collections.sort(monsters);
+        return monsters;
     }
 
     public MonsterAttributes getMonsterAttributes(String monsterName)
