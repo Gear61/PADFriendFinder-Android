@@ -30,6 +30,7 @@ import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.R;
 import com.randomappsinc.padfriendfinder.Utils.MonsterSearchUtils;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by alexanderchiou on 7/13/15.
@@ -167,7 +168,7 @@ public class MonsterFormActivity extends ActionBarActivity
                 if (seededMonster != null)
                 {
                     monsterEditText.setText(monsterName);
-                    monsterPicture.setImageResource(seededMonster.getDrawableId());
+                    Picasso.with(context).load(seededMonster.getImageUrl()).into(monsterPicture);
                     monsterEditText.setAdapter(null);
                     level.requestFocus();
                 }
@@ -210,7 +211,7 @@ public class MonsterFormActivity extends ActionBarActivity
         setTitle(Constants.UPDATE_MONSTER_LABEL);
         Bundle data = intent.getExtras();
         MonsterAttributes monster = data.getParcelable(Constants.MONSTER_KEY);
-        monsterPicture.setImageResource(monster.getDrawableId());
+        Picasso.with(context).load(monster.getImageUrl()).into(monsterPicture);
         monsterEditText.setText(monster.getName());
         level.setText(String.valueOf(monster.getLevel()));
         numAwakenings.setText(String.valueOf(monster.getAwakenings()));
@@ -271,7 +272,7 @@ public class MonsterFormActivity extends ActionBarActivity
                 if (monsterAttributes != null)
                 {
                     monsterChosen = input;
-                    monsterPicture.setImageResource(monsterAttributes.getDrawableId());
+                    Picasso.with(context).load(monsterAttributes.getImageUrl()).into(monsterPicture);
                     monsterEditText.setAdapter(null);
                 }
                 else
@@ -342,7 +343,7 @@ public class MonsterFormActivity extends ActionBarActivity
                         hideKeyboard();
                         MonsterAttributes monster = new MonsterAttributes(monsterName, monLevel,
                                 monNumAwakenings, monNumPlusEggs, monSkillLevel);
-                        monster.setDrawableId(monsterAttributes.getDrawableId());
+                        monster.setImageUrl(GodMapper.getGodMapper().getMonsterAttributes(monsterName).getImageUrl());
                         if (mode.equals(Constants.SEARCH_MODE))
                         {
                             Intent intent = new Intent(context, FriendResultsActivity.class);

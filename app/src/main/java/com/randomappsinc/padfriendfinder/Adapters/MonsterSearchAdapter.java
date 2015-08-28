@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.randomappsinc.padfriendfinder.Misc.GodMapper;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,7 +76,7 @@ public class MonsterSearchAdapter extends ArrayAdapter<String>
             holder.monsterName.setText(monsterName.trim());
             MonsterAttributes monsterAttributes = godMapper.getMonsterAttributes(monsterName);
             holder.monsterName.setText(monsterName.trim());
-            holder.monsterIcon.setImageResource(monsterAttributes.getDrawableId());
+            Picasso.with(context).load(monsterAttributes.getImageUrl()).into(holder.monsterIcon);
         }
         return v;
     }

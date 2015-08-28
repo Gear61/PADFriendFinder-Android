@@ -24,8 +24,16 @@ public class JSONParser
         {
             String monsterName = monsterJson.getString(Constants.NAME_KEY);
             monster.setName(monsterName);
-            int drawableId = GodMapper.getGodMapper().getMonsterAttributes(monsterName).getDrawableId();
-            monster.setDrawableId(drawableId);
+            MonsterAttributes mappedMonster = GodMapper.getGodMapper().getMonsterAttributes(monsterName);
+            if (mappedMonster != null)
+                monster.setImageUrl(mappedMonster.getImageUrl());
+            else  {
+                try{
+                    int monsterId = monsterJson.getInt(Constants.MONSTER_ID_KEY);
+                    monster.setImageUrl(monsterId);
+                }
+                catch (JSONException ignored) {}
+            }
         }
         catch (JSONException ignored) {}
         try
@@ -71,5 +79,19 @@ public class JSONParser
         }
         catch (JSONException e) {}
         return monsters;
+    }
+
+    public static void parseMonsterListResponse(String response) {
+        List<MonsterAttributes> monsters = new ArrayList<>();
+        try {
+            JSONArray monstersArray = new JSONArray(response);
+            for (int i = 0; i < monstersArray.length(); i++)
+            {
+                JSONObject monsterJson = monstersArray.getJSONObject(i);
+                monsters.add(parseMonsterJson(monsterJson));
+            }
+        }
+        catch (JSONException e) {}
+        GodMapper.getGodMapper().setUpMonsterMap(monsters);
     }
 }

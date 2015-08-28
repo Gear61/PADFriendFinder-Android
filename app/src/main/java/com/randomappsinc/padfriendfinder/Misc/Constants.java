@@ -30,6 +30,8 @@ public class Constants
     public static final String FETCH_FRIENDS_KEY = "fetch";
     public static final String UPDATE_KEY = "update";
     public static final String DELETE_KEY = "delete";
+    public static final String MONSTER_ID_KEY = "monsterId";
+    public static final String GET_MONSTERS = "getMonsters";
 
     // Activity communication/broadcasts
     public static final String MODE_KEY = "mode";

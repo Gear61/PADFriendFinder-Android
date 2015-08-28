@@ -14,7 +14,7 @@ public class MonsterAttributes implements Parcelable
     private int skillLevel;
     private int awakenings;
     private int plusEggs;
-    private int drawableId;
+    private String imageUrl;
 
     // Default constructor
     public MonsterAttributes()
@@ -23,12 +23,19 @@ public class MonsterAttributes implements Parcelable
     }
 
     // For hard-coded hashmap
-    public MonsterAttributes(int level, int skillLevel, int awakenings, int drawableId)
+    public MonsterAttributes(int level, int skillLevel, int awakenings)
     {
         this.level = level;
         this.skillLevel = skillLevel;
         this.awakenings = awakenings;
-        this.drawableId = drawableId;
+    }
+
+    public void setImageUrl(int monsterId) {
+        this.imageUrl = "http://www.puzzledragonx.com/en/img/book/" + String.valueOf(monsterId) + ".png";
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     // For when the user searches for monsters/updates their box
@@ -57,9 +64,8 @@ public class MonsterAttributes implements Parcelable
         return awakenings;
     }
 
-    public int getDrawableId()
-    {
-        return drawableId;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public int getPlusEggs()
@@ -98,11 +104,6 @@ public class MonsterAttributes implements Parcelable
         this.plusEggs = plusEggs;
     }
 
-    public void setDrawableId(int drawableId)
-    {
-        this.drawableId = drawableId;
-    }
-
     protected MonsterAttributes(Parcel in)
     {
         name = in.readString();
@@ -110,7 +111,7 @@ public class MonsterAttributes implements Parcelable
         skillLevel = in.readInt();
         awakenings = in.readInt();
         plusEggs = in.readInt();
-        drawableId = in.readInt();
+        imageUrl = in.readString();
     }
 
     @Override
@@ -127,7 +128,7 @@ public class MonsterAttributes implements Parcelable
         dest.writeInt(skillLevel);
         dest.writeInt(awakenings);
         dest.writeInt(plusEggs);
-        dest.writeInt(drawableId);
+        dest.writeString(imageUrl);
     }
 
     @SuppressWarnings("unused")

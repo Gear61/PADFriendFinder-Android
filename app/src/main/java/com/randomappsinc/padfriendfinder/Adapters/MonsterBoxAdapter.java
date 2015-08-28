@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +110,7 @@ public class MonsterBoxAdapter extends BaseAdapter
         }
 
         MonsterAttributes monster = monsters.get(position);
-        holder.picture.setImageResource(monster.getDrawableId());
+        Picasso.with(context).load(monster.getImageUrl()).into(holder.picture);
         holder.name.setText(monster.getName());
         holder.level.setText(String.valueOf(monster.getLevel()));
         holder.awakenings.setText(String.valueOf(monster.getAwakenings()));

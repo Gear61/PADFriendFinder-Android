@@ -27,6 +27,7 @@ import com.randomappsinc.padfriendfinder.Models.Friend;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class FriendResultsActivity extends ActionBarActivity
         loadingFriendResults = (ProgressBar) findViewById(R.id.loading_friend_results);
         intro = (TextView) findViewById(R.id.friend_results_intro);
         monsterPicture = (ImageView) findViewById(R.id.monster_picture);
-        monsterPicture.setImageResource(monster.getDrawableId());
+        Picasso.with(context).load(monster.getImageUrl()).into(monsterPicture);
         monsterName = (TextView) findViewById(R.id.monster_name);
         monsterName.setText(monster.getName());
         instructions = (TextView) findViewById(R.id.friend_results_instructions);

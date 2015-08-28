@@ -1,5 +1,6 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -8,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.randomappsinc.padfriendfinder.API.GetMonsterList;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.R;
@@ -29,6 +31,9 @@ public class MainActivity extends ActionBarActivity
         else
         {
             setContentView(R.layout.activity_main);
+            ProgressDialog progress = new ProgressDialog(this);
+            progress.setMessage("Loading monster list...");
+            new GetMonsterList(this, progress).execute();
         }
     }
 
