@@ -65,8 +65,8 @@ public class GetMonsterList extends AsyncTask<String, Integer, Long> {
         super.onPostExecute(aLong);
         progressDialog.dismiss();
         if (statusCode == 200)
-            Toast.makeText(context, "Monster List loaded.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Monster list loaded.", Toast.LENGTH_SHORT).show();
         else
-            Toast.makeText(context, "Monster List failed to load.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Failed to load monster list. Try using the app later.", Toast.LENGTH_LONG).show();
     }
 }
