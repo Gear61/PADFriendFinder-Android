@@ -33,6 +33,8 @@ public class MainActivity extends ActionBarActivity
             setContentView(R.layout.activity_main);
             ProgressDialog progress = new ProgressDialog(this);
             progress.setMessage("Loading monster list...");
+            progress.setCancelable(false);
+            progress.setCanceledOnTouchOutside(false);
             progress.show();
             new GetMonsterList(this, progress).execute();
         }

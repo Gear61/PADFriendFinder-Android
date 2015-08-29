@@ -100,6 +100,7 @@ public class MonsterBoxActivity extends ActionBarActivity
         {
             context.unregisterReceiver(boxReceiver);
             context.unregisterReceiver(updateReceiver);
+            context.unregisterReceiver(deleteReceiver);
         }
         catch (IllegalArgumentException ignored) {}
     }
