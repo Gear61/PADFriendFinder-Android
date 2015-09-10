@@ -42,8 +42,8 @@ public class Constants
     // Monster form
     public static final String HAVE_A_HINT = "I have a...";
     public static final String LEVEL_HINT = "Level";
-    public static final String AWAKENINGS_HINT = "# of Awakenings";
-    public static final String PLUS_EGGS_HINT = "# of + Eggs";
+    public static final String AWAKENINGS_HINT = "Awakenings";
+    public static final String PLUS_EGGS_HINT = "+ Eggs";
     public static final String SKILL_LEVEL_HINT = "Skill Level";
     public static final String SEARCH_MODE = "Search";
     public static final String ADD_MODE = "Add";
