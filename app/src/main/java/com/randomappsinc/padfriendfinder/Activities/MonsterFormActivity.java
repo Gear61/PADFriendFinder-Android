@@ -62,7 +62,7 @@ public class MonsterFormActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.monster_search);
+        setContentView(R.layout.monster_form);
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

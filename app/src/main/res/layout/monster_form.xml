@@ -1,0 +1,100 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <com.randomappsinc.padfriendfinder.Views.CustomAutoCompleteTextView
+            android:id="@+id/monster_search_box"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/monster_picture"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:src="@mipmap/mystery_creature"
+                android:layout_centerVertical="true"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+
+            <LinearLayout
+                android:layout_toRightOf="@+id/monster_picture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/level"
+                    android:maxLength="2"
+                    android:inputType="number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:id="@+id/num_awakenings"
+                    android:maxLength="2"
+                    android:inputType="number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:id="@+id/num_plus_eggs"
+                    android:maxLength="3"
+                    android:inputType="number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:id="@+id/skill_level"
+                    android:imeOptions="actionDone"
+                    android:maxLength="2"
+                    android:inputType="number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/hypermax"
+                android:onClick="hypermax"
+                android:text="@string/hypermax"
+                android:layout_weight="1"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/minimum"
+                android:onClick="minimum"
+                android:text="@string/minimum"
+                android:layout_weight="1"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/submit_monster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/submit"/>
+    </LinearLayout>
+</ScrollView>
