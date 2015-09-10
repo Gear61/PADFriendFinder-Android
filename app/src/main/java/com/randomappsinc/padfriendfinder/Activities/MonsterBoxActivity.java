@@ -48,8 +48,8 @@ public class MonsterBoxActivity extends AppCompatActivity
     @Bind(R.id.monster_box_instructions) TextView instructions;
     @Bind(R.id.no_monsters) TextView noMonsters;
     @Bind(R.id.monster_list) ListView monsterList;
-    private ProgressDialog deletingMonsterDialog;
 
+    private ProgressDialog deletingMonsterDialog;
     private MonsterBoxAdapter boxAdapter;
     private MonsterBoxReceiver boxReceiver;
     private MonsterUpdateReceiver updateReceiver;

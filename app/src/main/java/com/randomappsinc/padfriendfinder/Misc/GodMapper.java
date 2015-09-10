@@ -59,6 +59,10 @@ public class GodMapper
 
     public MonsterAttributes getMonsterAttributes(String monsterName)
     {
+        if (monsterName == null)
+        {
+            return null;
+        }
         return nameToAttributes.get(monsterName);
     }
 }

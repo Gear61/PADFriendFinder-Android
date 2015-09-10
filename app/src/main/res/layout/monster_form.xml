@@ -2,7 +2,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="5dp">
 
     <LinearLayout
@@ -38,34 +37,90 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/level"
-                    android:maxLength="2"
-                    android:inputType="number"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/num_awakenings"
-                    android:maxLength="2"
-                    android:inputType="number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    <Button
+                        android:id="@+id/max_level"
+                        android:layout_alignParentRight="true"
+                        android:text="@string/max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
-                <EditText
-                    android:id="@+id/num_plus_eggs"
-                    android:maxLength="3"
-                    android:inputType="number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    <EditText
+                        android:id="@+id/level"
+                        android:layout_toLeftOf="@+id/max_level"
+                        android:layout_alignBottom="@+id/max_level"
+                        android:maxLength="2"
+                        android:inputType="number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
 
-                <EditText
-                    android:id="@+id/skill_level"
-                    android:imeOptions="actionDone"
-                    android:maxLength="2"
-                    android:inputType="number"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/max_num_awakenings"
+                        android:layout_alignParentRight="true"
+                        android:text="@string/max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:id="@+id/num_awakenings"
+                        android:layout_toLeftOf="@+id/max_num_awakenings"
+                        android:layout_alignBottom="@+id/max_num_awakenings"
+                        android:maxLength="2"
+                        android:inputType="number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/max_plus_eggs"
+                        android:layout_alignParentRight="true"
+                        android:text="@string/max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:id="@+id/num_plus_eggs"
+                        android:layout_toLeftOf="@+id/max_plus_eggs"
+                        android:layout_alignBottom="@+id/max_plus_eggs"
+                        android:maxLength="3"
+                        android:inputType="number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/max_skill_level"
+                        android:layout_alignParentRight="true"
+                        android:text="@string/max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:id="@+id/skill_level"
+                        android:layout_toLeftOf="@+id/max_skill_level"
+                        android:layout_alignBottom="@+id/max_skill_level"
+                        android:imeOptions="actionDone"
+                        android:maxLength="2"
+                        android:inputType="number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>
 
@@ -76,7 +131,6 @@
 
             <Button
                 android:id="@+id/hypermax"
-                android:onClick="hypermax"
                 android:text="@string/hypermax"
                 android:layout_weight="1"
                 android:layout_width="0px"
@@ -84,7 +138,6 @@
 
             <Button
                 android:id="@+id/minimum"
-                android:onClick="minimum"
                 android:text="@string/minimum"
                 android:layout_weight="1"
                 android:layout_width="0px"

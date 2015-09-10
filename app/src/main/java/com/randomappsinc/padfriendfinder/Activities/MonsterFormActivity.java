@@ -129,7 +129,7 @@ public class MonsterFormActivity extends AppCompatActivity
         mode = intent.getStringExtra(Constants.MODE_KEY);
 
         // Hint setting
-        String minimumPrefix = mode.equals(Constants.SEARCH_MODE) ? "Minimum " : "";
+        String minimumPrefix = mode.equals(Constants.SEARCH_MODE) ? "Min " : "";
         String searchHint = mode.equals(Constants.SEARCH_MODE) ? Constants.LOOKING_FOR_HINT : Constants.HAVE_A_HINT;
         monsterEditText.setHint(searchHint);
         level.setHint(minimumPrefix + Constants.LEVEL_HINT);
@@ -264,6 +264,7 @@ public class MonsterFormActivity extends AppCompatActivity
         }
     };
 
+    @OnClick(R.id.hypermax)
     public void hypermax(View v)
     {
         String monsterName = monsterEditText.getText().toString();
@@ -277,12 +278,38 @@ public class MonsterFormActivity extends AppCompatActivity
         }
     }
 
+    @OnClick(R.id.minimum)
     public void minimum(View v)
     {
         level.setText(String.valueOf(1));
         numAwakenings.setText(String.valueOf(0));
         skillLevel.setText(String.valueOf(1));
         numPlusEggs.setText(String.valueOf(0));
+    }
+
+    @OnClick({R.id.max_level, R.id.max_num_awakenings, R.id.max_plus_eggs, R.id.max_skill_level})
+    public void max(View view)
+    {
+        MonsterAttributes monsterAttributes = GodMapper.getGodMapper().getMonsterAttributes(monsterChosen);
+        if (monsterAttributes != null)
+        {
+            if (view.getId() == R.id.max_level)
+            {
+                level.setText(String.valueOf(monsterAttributes.getLevel()));
+            }
+            else if (view.getId() == R.id.max_num_awakenings)
+            {
+                numAwakenings.setText(String.valueOf(monsterAttributes.getAwakenings()));
+            }
+            else if (view.getId() == R.id.max_plus_eggs)
+            {
+                numPlusEggs.setText(String.valueOf(Constants.MAX_PLUS_EGGS));
+            }
+            else if (view.getId() == R.id.max_skill_level)
+            {
+                skillLevel.setText(String.valueOf(monsterAttributes.getSkillLevel()));
+            }
+        }
     }
 
     @OnClick(R.id.submit_monster)
