@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,18 +32,22 @@ import com.randomappsinc.padfriendfinder.R;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnItemClick;
+
 /**
  * Created by alexanderchiou on 7/20/15.
  */
-public class MonsterBoxActivity extends ActionBarActivity
+public class MonsterBoxActivity extends AppCompatActivity
 {
     private Context context;
 
     // Views
-    private ProgressBar loadingMonsters;
-    private TextView instructions;
-    private TextView noMonsters;
-    private ListView monsterList;
+    @Bind(R.id.loading_monsters) ProgressBar loadingMonsters;
+    @Bind(R.id.monster_box_instructions) TextView instructions;
+    @Bind(R.id.no_monsters) TextView noMonsters;
+    @Bind(R.id.monster_list) ListView monsterList;
     private ProgressDialog deletingMonsterDialog;
 
     private MonsterBoxAdapter boxAdapter;
@@ -56,16 +60,12 @@ public class MonsterBoxActivity extends ActionBarActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.monster_box);
+        ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         context = this;
-        loadingMonsters = (ProgressBar) findViewById(R.id.loading_monsters);
-        instructions = (TextView) findViewById(R.id.monster_box_instructions);
-        noMonsters = (TextView) findViewById(R.id.no_monsters);
-        monsterList = (ListView) findViewById(R.id.monster_list);
         deletingMonsterDialog = new ProgressDialog(context);
         deletingMonsterDialog.setMessage(Constants.DELETING_MONSTER_MESSAGE);
-        monsterList.setOnItemClickListener(monsterListListener);
         boxAdapter = new MonsterBoxAdapter(context);
         monsterList.setAdapter(boxAdapter);
 
@@ -182,53 +182,49 @@ public class MonsterBoxActivity extends ActionBarActivity
         }
     }
 
-    // Monster clicked
-    AdapterView.OnItemClickListener monsterListListener = new AdapterView.OnItemClickListener()
+    @OnItemClick(R.id.monster_list)
+    public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id)
     {
-        @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id)
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View convertView = inflater.inflate(R.layout.ordinary_listview, null);
+        alertDialogBuilder.setView(convertView);
+        final String monsterName = boxAdapter.getItem(position).getName();
+        ListView monsterChoices = (ListView) convertView.findViewById(R.id.listView1);
+        final MonsterChoicesAdapter adapter = new MonsterChoicesAdapter(context, monsterName);
+        monsterChoices.setAdapter(adapter);
+        final AlertDialog monsterChosenDialog = alertDialogBuilder.show();
+        monsterChoices.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View convertView = inflater.inflate(R.layout.ordinary_listview, null);
-            alertDialogBuilder.setView(convertView);
-            final String monsterName = boxAdapter.getItem(position).getName();
-            ListView monsterChoices = (ListView) convertView.findViewById(R.id.listView1);
-            final MonsterChoicesAdapter adapter = new MonsterChoicesAdapter(context, monsterName);
-            monsterChoices.setAdapter(adapter);
-            final AlertDialog monsterChosenDialog = alertDialogBuilder.show();
-            monsterChoices.setOnItemClickListener(new AdapterView.OnItemClickListener()
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, final int dialogPosition, long id)
             {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, final int dialogPosition, long id)
+                monsterChosenDialog.dismiss();
+                String action = adapter.getItem(dialogPosition);
+                if (action.startsWith(Constants.FIND_OTHER))
                 {
-                    monsterChosenDialog.dismiss();
-                    String action = adapter.getItem(dialogPosition);
-                    if (action.startsWith(Constants.FIND_OTHER))
-                    {
-                        Intent intent = new Intent(context, MonsterFormActivity.class);
-                        intent.putExtra(Constants.NAME_KEY, monsterName);
-                        intent.putExtra(Constants.MODE_KEY, Constants.SEARCH_MODE);
-                        startActivity(intent);
-                    }
-                    else if (action.startsWith(Constants.EDIT))
-                    {
-                        Intent intent = new Intent(context, MonsterFormActivity.class);
-                        intent.putExtra(Constants.MONSTER_KEY, boxAdapter.getItem(position));
-                        intent.putExtra(Constants.MODE_KEY, Constants.UPDATE_MODE);
-                        startActivity(intent);
-                    }
-                    else if (action.startsWith(Constants.DELETE))
-                    {
-                        deletingMonsterDialog.show();
-                        new DeleteMonster(context, monsterName).execute();
-                    }
+                    Intent intent = new Intent(context, MonsterFormActivity.class);
+                    intent.putExtra(Constants.NAME_KEY, monsterName);
+                    intent.putExtra(Constants.MODE_KEY, Constants.SEARCH_MODE);
+                    startActivity(intent);
                 }
-            });
-            monsterChosenDialog.setCanceledOnTouchOutside(true);
-            monsterChosenDialog.setCancelable(true);
-        }
-    };
+                else if (action.startsWith(Constants.EDIT))
+                {
+                    Intent intent = new Intent(context, MonsterFormActivity.class);
+                    intent.putExtra(Constants.MONSTER_KEY, boxAdapter.getItem(position));
+                    intent.putExtra(Constants.MODE_KEY, Constants.UPDATE_MODE);
+                    startActivity(intent);
+                }
+                else if (action.startsWith(Constants.DELETE))
+                {
+                    deletingMonsterDialog.show();
+                    new DeleteMonster(context, monsterName).execute();
+                }
+            }
+        });
+        monsterChosenDialog.setCanceledOnTouchOutside(true);
+        monsterChosenDialog.setCancelable(true);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)

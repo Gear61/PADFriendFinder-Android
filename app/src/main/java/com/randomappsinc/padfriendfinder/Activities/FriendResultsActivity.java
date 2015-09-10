@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,23 +31,26 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnItemClick;
+
 /**
  * Created by alexanderchiou on 7/21/15.
  */
-public class FriendResultsActivity extends ActionBarActivity
+public class FriendResultsActivity extends AppCompatActivity
 {
     private Context context;
 
     // Views
-    private ProgressBar loadingFriendResults;
-    private TextView intro;
-    private ImageView monsterPicture;
-    private TextView monsterName;
-    private TextView instructions;
-    private TextView noResults;
-    private ListView friendResultsList;
+    @Bind(R.id.loading_friend_results) ProgressBar loadingFriendResults;
+    @Bind(R.id.friend_results_intro) TextView intro;
+    @Bind(R.id.monster_picture) ImageView monsterPicture;
+    @Bind(R.id.monster_name) TextView monsterName;
+    @Bind(R.id.friend_results_instructions) TextView instructions;
+    @Bind(R.id.no_results) TextView noResults;
+    @Bind(R.id.friend_results_list) ListView friendResultsList;
 
-    private MonsterAttributes monster;
     private FriendResultsAdapter friendResultsAdapter;
     private FetchFriendsReceiver friendsReceiver;
 
@@ -56,22 +59,15 @@ public class FriendResultsActivity extends ActionBarActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.friend_results);
+        ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        monster = getIntent().getExtras().getParcelable(Constants.MONSTER_KEY);
-
         context = this;
-        loadingFriendResults = (ProgressBar) findViewById(R.id.loading_friend_results);
-        intro = (TextView) findViewById(R.id.friend_results_intro);
-        monsterPicture = (ImageView) findViewById(R.id.monster_picture);
+
+        MonsterAttributes monster = getIntent().getExtras().getParcelable(Constants.MONSTER_KEY);
         Picasso.with(context).load(monster.getImageUrl()).into(monsterPicture);
-        monsterName = (TextView) findViewById(R.id.monster_name);
         monsterName.setText(monster.getName());
-        instructions = (TextView) findViewById(R.id.friend_results_instructions);
-        noResults = (TextView) findViewById(R.id.no_results);
-        friendResultsList = (ListView) findViewById(R.id.friend_results_list);
         friendResultsAdapter = new FriendResultsAdapter(context);
         friendResultsList.setAdapter(friendResultsAdapter);
-        friendResultsList.setOnItemClickListener(friendResultsListener);
 
         // Receiver for API call
         friendsReceiver = new FetchFriendsReceiver();
@@ -122,19 +118,15 @@ public class FriendResultsActivity extends ActionBarActivity
         }
     }
 
-    // Student list item clicked
-    AdapterView.OnItemClickListener friendResultsListener = new AdapterView.OnItemClickListener()
+    @OnItemClick(R.id.friend_results_list)
+    public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id)
     {
-        @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id)
-        {
-            String padId = friendResultsAdapter.getItem(position).getPadId();
-            ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText(Constants.PAD_ID_KEY, padId);
-            clipboard.setPrimaryClip(clip);
-            Toast.makeText(context, Constants.PAD_ID_COPIED_MESSAGE, Toast.LENGTH_SHORT).show();
-        }
-    };
+        String padId = friendResultsAdapter.getItem(position).getPadId();
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText(Constants.PAD_ID_KEY, padId);
+        clipboard.setPrimaryClip(clip);
+        Toast.makeText(context, Constants.PAD_ID_COPIED_MESSAGE, Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)

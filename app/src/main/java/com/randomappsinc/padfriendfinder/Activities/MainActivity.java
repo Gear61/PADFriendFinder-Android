@@ -14,6 +14,9 @@ import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.R;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class MainActivity extends ActionBarActivity
 {
     @Override
@@ -31,6 +34,7 @@ public class MainActivity extends ActionBarActivity
         else
         {
             setContentView(R.layout.activity_main);
+            ButterKnife.bind(this);
             ProgressDialog progress = new ProgressDialog(this);
             progress.setMessage("Loading monster list...");
             progress.setCancelable(false);
@@ -40,6 +44,7 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
+    @OnClick(R.id.find_friends)
     public void findFriends(View view)
     {
         Intent intent = new Intent(this, MonsterFormActivity.class);
@@ -47,6 +52,7 @@ public class MainActivity extends ActionBarActivity
         startActivity(intent);
     }
 
+    @OnClick(R.id.monster_box)
     public void monsterBox(View view)
     {
         Intent intent = new Intent(this, MonsterBoxActivity.class);
