@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/monster_bar"
         android:layout_below="@+id/friend_results_intro"
         android:orientation="horizontal"
@@ -35,18 +35,17 @@
             android:visibility="gone"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_centerVertical="true"/>
+            android:layout_gravity="center_horizontal"/>
 
         <TextView
             android:id="@+id/monster_name"
             android:visibility="gone"
             android:textSize="24sp"
-            android:layout_toRightOf="@+id/monster_picture"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"/>
+            android:layout_gravity="center_vertical"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/friend_results_instructions"

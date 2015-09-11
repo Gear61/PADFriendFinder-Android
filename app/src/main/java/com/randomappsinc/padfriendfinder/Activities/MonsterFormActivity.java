@@ -8,7 +8,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,6 +15,7 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.randomappsinc.padfriendfinder.API.UpdateMonster;
@@ -33,6 +33,8 @@ import com.squareup.picasso.Picasso;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnFocusChange;
+import butterknife.OnTextChanged;
 
 /**
  * Created by alexanderchiou on 7/13/15.
@@ -47,13 +49,14 @@ public class MonsterFormActivity extends AppCompatActivity
     // Views
     @Bind(R.id.monster_search_box) AutoCompleteTextView monsterEditText;
     @Bind(R.id.monster_picture) ImageView monsterPicture;
+    @Bind(R.id.monster_name) TextView monsterName;
     @Bind(R.id.level) EditText level;
     @Bind(R.id.num_awakenings) EditText numAwakenings;
     @Bind(R.id.skill_level) EditText skillLevel;
     @Bind(R.id.num_plus_eggs) EditText numPlusEggs;
 
     private ProgressDialog updatingBoxDialog;
-    private String monsterChosen;
+    private MonsterAttributes monsterChosen;
     private MonsterUpdateReceiver updateReceiver;
     private MonsterSearchAdapter monsterAdapter;
 
@@ -143,12 +146,12 @@ public class MonsterFormActivity extends AppCompatActivity
             String monsterName = intent.getStringExtra(Constants.NAME_KEY);
             if (monsterName != null)
             {
-                MonsterAttributes seededMonster = GodMapper.getGodMapper().getMonsterAttributes(monsterName);
-                if (seededMonster != null)
+                monsterChosen = GodMapper.getGodMapper().getMonsterAttributes(monsterName);
+                if (monsterChosen != null)
                 {
-                    monsterEditText.setText(monsterName);
-                    Picasso.with(context).load(seededMonster.getImageUrl()).into(monsterPicture);
-                    monsterEditText.setAdapter(null);
+                    Picasso.with(context).load(monsterChosen.getImageUrl()).into(monsterPicture);
+                    this.monsterName.setText(monsterName);
+                    monsterEditText.setVisibility(View.GONE);
                     level.requestFocus();
                 }
             }
@@ -179,9 +182,7 @@ public class MonsterFormActivity extends AppCompatActivity
     public void setUpMonsterInput()
     {
         // Text listener for monster search with AC
-        monsterEditText.addTextChangedListener(monsterInputListener);
         monsterEditText.setAdapter(monsterAdapter);
-        monsterEditText.setOnFocusChangeListener(monsterSearchFocusListener);
         FormUtils.showKeyboard(this);
     }
 
@@ -190,13 +191,14 @@ public class MonsterFormActivity extends AppCompatActivity
         setTitle(Constants.UPDATE_MONSTER_LABEL);
         Bundle data = intent.getExtras();
         MonsterAttributes monster = data.getParcelable(Constants.MONSTER_KEY);
+        monsterChosen = GodMapper.getGodMapper().getMonsterAttributes(monster.getName());
         Picasso.with(context).load(monster.getImageUrl()).into(monsterPicture);
-        monsterEditText.setText(monster.getName());
+        monsterEditText.setVisibility(View.GONE);
+        monsterName.setText(monster.getName());
         level.setText(String.valueOf(monster.getLevel()));
         numAwakenings.setText(String.valueOf(monster.getAwakenings()));
         numPlusEggs.setText(String.valueOf(monster.getPlusEggs()));
         skillLevel.setText(String.valueOf(monster.getSkillLevel()));
-        monsterEditText.setEnabled(false);
         updatingBoxDialog.setMessage(Constants.UPDATING_MONSTER);
     }
 
@@ -205,8 +207,8 @@ public class MonsterFormActivity extends AppCompatActivity
         clearForm();
         monsterChosen = null;
         monsterEditText.setText("");
-        monsterEditText.setAdapter(monsterAdapter);
         monsterPicture.setImageResource(R.mipmap.mystery_creature);
+        monsterName.setText(getString(R.string.no_monster_chosen));
         monsterPicture.requestFocus();
     }
 
@@ -218,62 +220,28 @@ public class MonsterFormActivity extends AppCompatActivity
         skillLevel.setText("");
     }
 
-    TextWatcher monsterInputListener = new TextWatcher()
+    @OnTextChanged(value = R.id.monster_search_box, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void afterTextChanged (Editable s)
     {
-        @Override
-        public void afterTextChanged (Editable s){}
-
-        @Override
-        public void beforeTextChanged (CharSequence s, int start, int count, int after){}
-
-        @Override
-        public void onTextChanged (CharSequence s, int start, int before, int count)
+        MonsterAttributes monsterAttributes = GodMapper.getGodMapper().getMonsterAttributes(s.toString());
+        if (monsterAttributes != null)
         {
-            String input = s.toString();
-            if (monsterChosen != null)
-            {
-                // Prevent them from adding to target after it's chosen
-                if (monsterChosen.length() + 1 == input.length())
-                {
-                    monsterEditText.setText(input.substring(0, input.length() - 1));
-                }
-                // If they're deleting and something is there, clear the entire thing
-                else if (monsterChosen.length() - 1 == input.length())
-                {
-                    monsterChosen = null;
-                    monsterEditText.setText("");
-                    monsterEditText.setAdapter(monsterAdapter);
-                }
-            }
-            else
-            {
-                MonsterAttributes monsterAttributes = GodMapper.getGodMapper().getMonsterAttributes(s.toString());
-                if (monsterAttributes != null)
-                {
-                    monsterChosen = input;
-                    Picasso.with(context).load(monsterAttributes.getImageUrl()).into(monsterPicture);
-                    monsterEditText.setAdapter(null);
-                }
-                else
-                {
-                    monsterChosen = null;
-                    monsterPicture.setImageResource(R.mipmap.mystery_creature);
-                    monsterEditText.setAdapter(monsterAdapter);
-                }
-            }
+            monsterChosen = monsterAttributes;
+            Picasso.with(context).load(monsterAttributes.getImageUrl()).into(monsterPicture);
+            monsterName.setText(s.toString());
+            monsterEditText.setText("");
+            level.requestFocus();
         }
-    };
+    }
 
     @OnClick(R.id.hypermax)
     public void hypermax(View v)
     {
-        String monsterName = monsterEditText.getText().toString();
-        MonsterAttributes monsterAttributes = GodMapper.getGodMapper().getMonsterAttributes(monsterName);
-        if (monsterAttributes != null)
+        if (monsterChosen != null)
         {
-            level.setText(String.valueOf(monsterAttributes.getLevel()));
-            numAwakenings.setText(String.valueOf(monsterAttributes.getAwakenings()));
-            skillLevel.setText(String.valueOf(monsterAttributes.getSkillLevel()));
+            level.setText(String.valueOf(monsterChosen.getLevel()));
+            numAwakenings.setText(String.valueOf(monsterChosen.getAwakenings()));
+            skillLevel.setText(String.valueOf(monsterChosen.getSkillLevel()));
             numPlusEggs.setText(String.valueOf(Constants.MAX_PLUS_EGGS));
         }
     }
@@ -287,19 +255,18 @@ public class MonsterFormActivity extends AppCompatActivity
         numPlusEggs.setText(String.valueOf(0));
     }
 
-    @OnClick({R.id.max_level, R.id.max_num_awakenings, R.id.max_plus_eggs, R.id.max_skill_level})
+    @OnClick({R.id.max_level, R.id.max_awakenings, R.id.max_plus_eggs, R.id.max_skill_level})
     public void max(View view)
     {
-        MonsterAttributes monsterAttributes = GodMapper.getGodMapper().getMonsterAttributes(monsterChosen);
-        if (monsterAttributes != null)
+        if (monsterChosen != null)
         {
             if (view.getId() == R.id.max_level)
             {
-                level.setText(String.valueOf(monsterAttributes.getLevel()));
+                level.setText(String.valueOf(monsterChosen.getLevel()));
             }
-            else if (view.getId() == R.id.max_num_awakenings)
+            else if (view.getId() == R.id.max_awakenings)
             {
-                numAwakenings.setText(String.valueOf(monsterAttributes.getAwakenings()));
+                numAwakenings.setText(String.valueOf(monsterChosen.getAwakenings()));
             }
             else if (view.getId() == R.id.max_plus_eggs)
             {
@@ -307,7 +274,7 @@ public class MonsterFormActivity extends AppCompatActivity
             }
             else if (view.getId() == R.id.max_skill_level)
             {
-                skillLevel.setText(String.valueOf(monsterAttributes.getSkillLevel()));
+                skillLevel.setText(String.valueOf(monsterChosen.getSkillLevel()));
             }
         }
     }
@@ -315,9 +282,7 @@ public class MonsterFormActivity extends AppCompatActivity
     @OnClick(R.id.submit_monster)
     public void onClick(View v)
     {
-        String monsterName = monsterEditText.getText().toString();
-        MonsterAttributes monsterAttributes = GodMapper.getGodMapper().getMonsterAttributes(monsterName);
-        if (monsterAttributes != null)
+        if (monsterChosen != null)
         {
             if (level.getText().toString().isEmpty() || skillLevel.getText().toString().isEmpty() ||
                     numAwakenings.getText().toString().isEmpty() || numPlusEggs.getText().toString().isEmpty())
@@ -331,24 +296,24 @@ public class MonsterFormActivity extends AppCompatActivity
                 int monSkillLevel = Integer.parseInt(skillLevel.getText().toString());
                 int monNumPlusEggs = Integer.parseInt(numPlusEggs.getText().toString());
                 String message = MonsterSearchUtils.createMonsterFormMessage(monLevel, monNumAwakenings,
-                        monSkillLevel, monNumPlusEggs, monsterAttributes);
+                        monSkillLevel, monNumPlusEggs, monsterChosen);
                 if (!message.isEmpty())
                 {
                     Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                 }
-                else if (MonsterBoxManager.getInstance().alreadyContainsMonster(monsterName) &&
+                else if (MonsterBoxManager.getInstance().alreadyContainsMonster(monsterName.getText().toString()) &&
                         mode.equals(Constants.ADD_MODE))
                 {
-                    Toast.makeText(context, "Your monster box already has a " + monsterName + ".",
+                    Toast.makeText(context, "Your monster box already has a " + monsterName.getText().toString() + ".",
                             Toast.LENGTH_LONG).show();
                 }
                 // Everything is A-OK
                 else
                 {
                     FormUtils.hideKeyboard(this);
-                    MonsterAttributes monster = new MonsterAttributes(monsterName, monLevel,
+                    MonsterAttributes monster = new MonsterAttributes(monsterName.getText().toString(), monLevel,
                             monNumAwakenings, monNumPlusEggs, monSkillLevel);
-                    monster.setImageUrl(GodMapper.getGodMapper().getMonsterAttributes(monsterName).getImageUrl());
+                    monster.setImageUrl(monsterChosen.getImageUrl());
                     if (mode.equals(Constants.SEARCH_MODE))
                     {
                         Intent intent = new Intent(context, FriendResultsActivity.class);
@@ -370,17 +335,14 @@ public class MonsterFormActivity extends AppCompatActivity
         }
     }
 
-    // Monster AC focus change listener to allow for default suggestions
-    AutoCompleteTextView.OnFocusChangeListener monsterSearchFocusListener = new AutoCompleteTextView.OnFocusChangeListener()
+    @OnFocusChange(R.id.monster_search_box)
+    public void onFocusChange(View v, boolean hasFocus)
     {
-        @Override
-        public void onFocusChange(View v, boolean hasFocus) {
-            if (hasFocus && getWindow().isActive() && monsterChosen == null)
-            {
-                monsterEditText.showDropDown();
-            }
+        if (hasFocus && getWindow().isActive())
+        {
+            monsterEditText.showDropDown();
         }
-    };
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)

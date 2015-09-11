@@ -14,6 +14,11 @@
     <string name="hypermax">Hypermax</string>
     <string name="minimum">Minimum</string>
     <string name="max">Max</string>
+    <string name="lvl">Lvl:</string>
+    <string name="awkns">Awkns:</string>
+    <string name="abbreviated_plus_eggs">+ eggs:</string>
+    <string name="s_lvl">S Lvl:</string>
+    <string name="no_monster_chosen">No monster chosen</string>
 
     <!-- Monster Box -->
     <string name="monster_box_instructions">These are the monsters associated with your PAD ID.
