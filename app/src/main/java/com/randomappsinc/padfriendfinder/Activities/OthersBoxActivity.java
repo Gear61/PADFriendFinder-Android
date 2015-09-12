@@ -69,7 +69,7 @@ public class OthersBoxActivity extends AppCompatActivity
     @OnClick(R.id.star_icon)
     public void onStar(View view) {
         String user_id = ((TextView) findViewById(R.id.entered_id)).getText().toString();
-        if (user_id != null) {
+        if (!user_id.isEmpty()) {
             if (PreferencesManager.get().isFavorited(user_id)) {
                 star.setTextColor(getResources().getColor(R.color.silver));
                 PreferencesManager.get().removeFavorite(user_id);
