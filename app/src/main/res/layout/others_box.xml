@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/enter_pad_id"
+        android:id="@+id/PAD_ID"
         android:singleLine="true"
         android:inputType="number"
         android:maxLength="9"
@@ -34,7 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="Hello"
+            android:id="@+id/entered_id"
+            android:text=""
             android:textSize="32sp"
             android:layout_toLeftOf="@+id/star_icon"/>
     </RelativeLayout>

@@ -6,10 +6,14 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_centerInParent="true"
+        android:layout_marginTop="50dp"
+        android:layout_alignParentTop="true"
+        android:gravity="bottom"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout">
 
         <ImageButton
             android:id="@+id/find_friends"
@@ -24,19 +28,21 @@
             android:id="@+id/monster_box"
             android:contentDescription="@string/monster_box"
             android:background="@null"
-            android:layout_marginTop="25dp"
             android:scaleType="fitXY"
             android:src="@mipmap/monster_box"
             android:layout_width="150dp"
             android:layout_height="150dp"/>
     </LinearLayout>
 
-    <Button
+    <ImageView
         android:id="@+id/id_search"
-        android:text="ID Search"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
+        android:src="@drawable/id_search"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="75dp"
+        android:scaleType="fitXY"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignLeft="@+id/linearLayout"
+        android:layout_alignStart="@+id/linearLayout"
+        android:layout_alignRight="@+id/linearLayout"
+        android:layout_alignEnd="@+id/linearLayout" />
 </RelativeLayout>
