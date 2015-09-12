@@ -7,6 +7,7 @@
     <!-- PAD ID Form -->
     <string name="pad_id_label">PAD ID Form</string>
     <string name="your_pad_id">Your PAD ID</string>
+    <string name="enter_pad_id">Enter in a PAD ID</string>
     <string name="intro">This app needs your PAD ID in order to work, so please enter it below.
         You can only do this once, so make sure that it is correct before submitting!</string>
 
@@ -42,5 +43,12 @@
     <string name="awakenings">Awakenings:&#160;</string>
     <string name="plus_eggs">Plus Eggs:&#160;</string>
     <string name="skill_level">Skill Level:&#160;</string>
+    <string name="title_activity_others_box">Monster Box</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Font Awesome Icons -->
+    <string name="star_icon">fa-star</string>
 
 </resources>
