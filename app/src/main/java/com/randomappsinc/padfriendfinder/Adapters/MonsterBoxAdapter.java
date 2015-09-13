@@ -68,6 +68,10 @@ public class MonsterBoxAdapter extends BaseAdapter
         return monsters.size();
     }
 
+    public void clear() {
+        monsters.clear();
+    }
+
     public MonsterAttributes getItem(int position) {
         return monsters.get(position);
     }

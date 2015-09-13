@@ -115,6 +115,7 @@ public class OthersBoxActivity extends AppCompatActivity
             if (response.getStatusCode() == 200)
             {
                 List<MonsterAttributes> monsterBox = JSONParser.parseMonsterBoxResponse(response.getResponse());
+                boxAdapter.clear();
                 boxAdapter.addMonsters(monsterBox);
                 MonsterBoxManager.getInstance().addMonsters(monsterBox);
                 refreshContent();
