@@ -20,7 +20,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="fill_parent">
 
         <com.beardedhen.androidbootstrap.FontAwesomeText
             android:layout_alignParentRight="true"
@@ -39,6 +39,34 @@
             android:text=""
             android:textSize="32sp"
             android:layout_toLeftOf="@+id/star_icon"/>
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/others_list"
+            android:visibility="gone"
+            android:layout_below="@+id/entered_id"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loading_box"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:visibility="gone"
+            android:text="This PAD ID does not exist or no monsters are associated with the ID."
+            android:id="@+id/nothing"
+            android:layout_below="@+id/star_icon"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
     </RelativeLayout>
 
 </LinearLayout>

@@ -37,6 +37,7 @@ public class Constants
     public static final String MODE_KEY = "mode";
     public static final String MONSTER_UPDATE_KEY = "monsterUpdate";
     public static final String MONSTER_BOX_KEY = "monsterBox";
+    public static final String OTHER_BOX_KEY = "otherBox";
     public static final String REST_CALL_RESPONSE_KEY = "restCallResponse";
 
     // Monster form

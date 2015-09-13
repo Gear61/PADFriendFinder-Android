@@ -24,17 +24,19 @@ public class GetMonsterBox extends AsyncTask<String, Integer, Long>
 {
     private Context context;
     private RestCallResponse restCallResponse;
+    private String pad_id;
 
-    public GetMonsterBox(Context context)
+    public GetMonsterBox(Context context, String pad_id)
     {
         this.context = context;
         restCallResponse = new RestCallResponse();
+        this.pad_id = pad_id;
     }
 
     @Override
     protected Long doInBackground(String... strings)
     {
-        String endpoint = Constants.SERVER_URL + Constants.MONSTERS_KEY + PreferencesManager.get().getPadId();
+        String endpoint = Constants.SERVER_URL + Constants.MONSTERS_KEY + pad_id;
         try
         {
             HttpGet getMonsterBoxRequest = new HttpGet(endpoint);
@@ -62,7 +64,10 @@ public class GetMonsterBox extends AsyncTask<String, Integer, Long>
     {
         super.onPostExecute(aLong);
         Intent intent = new Intent();
-        intent.setAction(Constants.MONSTER_BOX_KEY);
+        if (pad_id.equals(PreferencesManager.get().getPadId()))
+            intent.setAction(Constants.MONSTER_BOX_KEY);
+        else
+            intent.setAction(Constants.OTHER_BOX_KEY);
         intent.putExtra(Constants.REST_CALL_RESPONSE_KEY, restCallResponse);
         context.sendBroadcast(intent);
     }
