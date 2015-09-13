@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -29,7 +31,9 @@ import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.R;
 import com.randomappsinc.padfriendfinder.Adapters.MonsterBoxAdapter;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -41,8 +45,8 @@ public class OthersBoxActivity extends AppCompatActivity
     @Bind(R.id.others_list) ListView othersList;
     @Bind(R.id.loading_box) ProgressBar loadingBox;
     @Bind(R.id.nothing) TextView nothing;
+    @Bind(R.id.PAD_ID) AutoCompleteTextView othersId;
 
-    EditText othersId;
     Context context = this;
     String pad_id = null;
     private MonsterBoxAdapter boxAdapter;
@@ -60,7 +64,8 @@ public class OthersBoxActivity extends AppCompatActivity
         othersBoxReceiver = new OthersBoxReceiver();
         this.registerReceiver(othersBoxReceiver, new IntentFilter(Constants.MONSTER_BOX_KEY));
 
-        othersId = (EditText) findViewById(R.id.PAD_ID);
+        setUpAdapter();
+
         othersId.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -76,6 +81,13 @@ public class OthersBoxActivity extends AppCompatActivity
                 return false;
             }
         });
+    }
+
+    public void setUpAdapter() {
+        Set<String> mySet = PreferencesManager.get().getFavorites();
+        String[] favorites = mySet.toArray(new String[mySet.size()]);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, favorites);
+        othersId.setAdapter(adapter);
     }
 
     public void format_result(TextView id, String pad_id) {

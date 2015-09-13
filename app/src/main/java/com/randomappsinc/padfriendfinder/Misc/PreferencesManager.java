@@ -69,7 +69,7 @@ public class PreferencesManager
         prefs.edit().putStringSet(FAVORITES_KEY, favorites).apply();
     }
 
-    private Set<String> getFavorites() {
+    public Set<String> getFavorites() {
         return new HashSet<>(prefs.getStringSet(FAVORITES_KEY, new HashSet<String>()));
     }
 
