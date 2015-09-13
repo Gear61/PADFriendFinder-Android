@@ -3,6 +3,7 @@ package com.randomappsinc.padfriendfinder.API;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
@@ -64,10 +65,7 @@ public class GetMonsterBox extends AsyncTask<String, Integer, Long>
     {
         super.onPostExecute(aLong);
         Intent intent = new Intent();
-        if (pad_id.equals(PreferencesManager.get().getPadId()))
-            intent.setAction(Constants.MONSTER_BOX_KEY);
-        else
-            intent.setAction(Constants.OTHER_BOX_KEY);
+        intent.setAction(Constants.MONSTER_BOX_KEY);
         intent.putExtra(Constants.REST_CALL_RESPONSE_KEY, restCallResponse);
         context.sendBroadcast(intent);
     }

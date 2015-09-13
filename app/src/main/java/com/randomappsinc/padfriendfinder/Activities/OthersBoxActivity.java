@@ -43,6 +43,7 @@ public class OthersBoxActivity extends AppCompatActivity
     @Bind(R.id.nothing) TextView nothing;
 
     EditText othersId;
+    Context context = this;
     String pad_id = null;
     private MonsterBoxAdapter boxAdapter;
     private OthersBoxReceiver othersBoxReceiver;
@@ -53,10 +54,11 @@ public class OthersBoxActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.others_box);
         ButterKnife.bind(this);
-        boxAdapter = new MonsterBoxAdapter(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        boxAdapter = new MonsterBoxAdapter(this);
+        othersList.setAdapter(boxAdapter);
         othersBoxReceiver = new OthersBoxReceiver();
-        this.registerReceiver(othersBoxReceiver, new IntentFilter(Constants.OTHER_BOX_KEY));
+        this.registerReceiver(othersBoxReceiver, new IntentFilter(Constants.MONSTER_BOX_KEY));
 
         othersId = (EditText) findViewById(R.id.PAD_ID);
         othersId.setOnEditorActionListener(new TextView.OnEditorActionListener() {
