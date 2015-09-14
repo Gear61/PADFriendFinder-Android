@@ -20,7 +20,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="match_parent">
 
         <com.beardedhen.androidbootstrap.FontAwesomeText
             android:layout_alignParentRight="true"
@@ -45,6 +45,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/others_list"
             android:visibility="gone"
+            android:paddingTop="5dp"
             android:layout_below="@+id/entered_id"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
@@ -62,7 +63,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:visibility="gone"
-            android:text="This PAD ID does not exist or no monsters are associated with the ID."
+            android:text="This PAD ID does not exist or no monsters are associated with this ID."
             android:id="@+id/nothing"
             android:layout_below="@+id/star_icon"
             android:layout_alignParentLeft="true"

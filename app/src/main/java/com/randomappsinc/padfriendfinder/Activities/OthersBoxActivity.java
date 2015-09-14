@@ -107,9 +107,11 @@ public class OthersBoxActivity extends AppCompatActivity
     }
 
     @OnClick(R.id.star_icon)
+    //This function does the favoriting and unfavoriting. Because I'm lazy, only favoriting ID interacts with auto-complete.
     public void onStar(View view) {
         String user_id = ((TextView) findViewById(R.id.entered_id)).getText().toString();
         String favorites[] = null;
+        //othersList.getVisibility() == View.VISIBLE
         if (!user_id.isEmpty()) {
             if (PreferencesManager.get().isFavorited(user_id)) {
                 star.setTextColor(getResources().getColor(R.color.silver));
@@ -122,6 +124,8 @@ public class OthersBoxActivity extends AppCompatActivity
                 setUpAdapter();
             }
         }
+        else
+            Toast.makeText(context, Constants.ID_HAS_NOTHING_MESSAGE, Toast.LENGTH_LONG).show();
     }
 
     private class OthersBoxReceiver extends BroadcastReceiver
