@@ -90,7 +90,7 @@ public class MonsterBoxActivity extends AppCompatActivity
         }
         else
         {
-            new GetMonsterBox(context, PreferencesManager.get().getPadId()).execute();
+            new GetMonsterBox(context, PreferencesManager.get().getPadId(), false).execute();
         }
     }
 

@@ -26,12 +26,14 @@ public class GetMonsterBox extends AsyncTask<String, Integer, Long>
     private Context context;
     private RestCallResponse restCallResponse;
     private String pad_id;
+    private boolean OthersBox;
 
-    public GetMonsterBox(Context context, String pad_id)
+    public GetMonsterBox(Context context, String pad_id, boolean OthersBox)
     {
         this.context = context;
         restCallResponse = new RestCallResponse();
         this.pad_id = pad_id;
+        this.OthersBox = OthersBox;
     }
 
     @Override
@@ -65,7 +67,10 @@ public class GetMonsterBox extends AsyncTask<String, Integer, Long>
     {
         super.onPostExecute(aLong);
         Intent intent = new Intent();
-        intent.setAction(Constants.MONSTER_BOX_KEY);
+        if (!OthersBox)
+            intent.setAction(Constants.MONSTER_BOX_KEY);
+        else
+            intent.setAction(Constants.OTHER_BOX_KEY);
         intent.putExtra(Constants.REST_CALL_RESPONSE_KEY, restCallResponse);
         context.sendBroadcast(intent);
     }

@@ -51,6 +51,7 @@ public class OthersBoxActivity extends AppCompatActivity
     String pad_id = null;
     private MonsterBoxAdapter boxAdapter;
     private OthersBoxReceiver othersBoxReceiver;
+    private Set<String> mySet = PreferencesManager.get().getFavorites();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -62,7 +63,7 @@ public class OthersBoxActivity extends AppCompatActivity
         boxAdapter = new MonsterBoxAdapter(this);
         othersList.setAdapter(boxAdapter);
         othersBoxReceiver = new OthersBoxReceiver();
-        this.registerReceiver(othersBoxReceiver, new IntentFilter(Constants.MONSTER_BOX_KEY));
+        this.registerReceiver(othersBoxReceiver, new IntentFilter(Constants.OTHER_BOX_KEY));
 
         setUpAdapter();
 
@@ -73,7 +74,7 @@ public class OthersBoxActivity extends AppCompatActivity
                     TextView id = (TextView) findViewById(R.id.entered_id);
                     pad_id = othersId.getText().toString();
                     if (pad_id.length() == 9 && (pad_id.charAt(0) == '3'))
-                        format_result(id, pad_id);
+                        display_result(id, pad_id);
                     else
                         Toast.makeText(getApplicationContext(), "Error: Invalid Input.", Toast.LENGTH_SHORT).show();
                     return true;
@@ -84,13 +85,13 @@ public class OthersBoxActivity extends AppCompatActivity
     }
 
     public void setUpAdapter() {
-        Set<String> mySet = PreferencesManager.get().getFavorites();
         String[] favorites = mySet.toArray(new String[mySet.size()]);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, favorites);
         othersId.setAdapter(adapter);
     }
 
-    public void format_result(TextView id, String pad_id) {
+    public void display_result(TextView id, String pad_id) {
+        othersList.setVisibility(View.GONE);
         InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mgr.hideSoftInputFromWindow(othersId.getWindowToken(), 0);
         id.setText(pad_id);
@@ -101,12 +102,14 @@ public class OthersBoxActivity extends AppCompatActivity
             star.setTextColor(getResources().getColor(R.color.silver));
 
         loadingBox.setVisibility(View.VISIBLE);
-        new GetMonsterBox(this, pad_id).execute();
+        nothing.setVisibility(View.GONE);
+        new GetMonsterBox(this, pad_id, true).execute();
     }
 
     @OnClick(R.id.star_icon)
     public void onStar(View view) {
         String user_id = ((TextView) findViewById(R.id.entered_id)).getText().toString();
+        String favorites[] = null;
         if (!user_id.isEmpty()) {
             if (PreferencesManager.get().isFavorited(user_id)) {
                 star.setTextColor(getResources().getColor(R.color.silver));
@@ -114,6 +117,9 @@ public class OthersBoxActivity extends AppCompatActivity
             } else {
                 star.setTextColor(getResources().getColor(R.color.gold));
                 PreferencesManager.get().addFavorite(user_id);
+                mySet.add(user_id);
+                //can I use an array list for adapters? I think so.
+                setUpAdapter();
             }
         }
     }
@@ -129,7 +135,6 @@ public class OthersBoxActivity extends AppCompatActivity
                 List<MonsterAttributes> monsterBox = JSONParser.parseMonsterBoxResponse(response.getResponse());
                 boxAdapter.clear();
                 boxAdapter.addMonsters(monsterBox);
-                MonsterBoxManager.getInstance().addMonsters(monsterBox);
                 refreshContent();
             }
             else
