@@ -34,26 +34,28 @@
             android:layout_height="150dp"/>
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/id_search"
-        android:src="@drawable/id_search"
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="75dp"
-        android:scaleType="fitXY"
+        android:text="Favorites"
+        android:textSize="24dp"
+        android:id="@+id/favorites"
         android:layout_below="@+id/linearLayout"
         android:layout_alignLeft="@+id/linearLayout"
         android:layout_alignStart="@+id/linearLayout"
         android:layout_alignRight="@+id/linearLayout"
         android:layout_alignEnd="@+id/linearLayout" />
 
-    <Button
+    <ImageView
+        android:id="@+id/id_search"
+        android:src="@drawable/id_search"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Favorites"
-        android:id="@+id/favorites"
-        android:layout_below="@+id/id_search"
-        android:layout_alignLeft="@+id/id_search"
-        android:layout_alignStart="@+id/id_search"
-        android:layout_alignRight="@+id/id_search"
-        android:layout_alignEnd="@+id/id_search" />
+        android:paddingTop="5dp"
+        android:layout_height="75dp"
+        android:scaleType="fitXY"
+        android:layout_below="@+id/favorites"
+        android:layout_alignLeft="@+id/favorites"
+        android:layout_alignStart="@+id/favorites"
+        android:layout_alignRight="@+id/favorites"
+        android:layout_alignEnd="@+id/favorites" />
 </RelativeLayout>

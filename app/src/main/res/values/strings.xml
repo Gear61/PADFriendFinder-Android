@@ -50,6 +50,10 @@
 
     <!-- Font Awesome Icons -->
     <string name="star_icon">fa-star</string>
-    <string name="title_activity_favorites">FavoritesActivity</string>
+    <string name="title_activity_favorites">Favorites</string>
+
+    <!-- Favorite String(s) -->
+    <string name="favsInstructions">"Press on an ID to access their monster box. Press on the star next to an ID to favorite/unfavorite them"</string>
+    <string name="noFavs">"You do not have any favorited IDs to display."</string>
 
 </resources>

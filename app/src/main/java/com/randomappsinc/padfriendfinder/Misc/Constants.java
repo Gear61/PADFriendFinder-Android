@@ -80,4 +80,7 @@ public class Constants
     public static final String FIND_OTHER = "Find other";
     public static final String EDIT = "Edit";
     public static final String DELETE = "Delete";
+
+    //Intent keys
+    public static final String OTHERS_ID_KEY = "ID";
 }

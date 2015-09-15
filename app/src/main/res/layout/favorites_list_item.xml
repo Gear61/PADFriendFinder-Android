@@ -7,20 +7,24 @@
 
     <com.beardedhen.androidbootstrap.FontAwesomeText
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         fontawesometext:fa_icon="@string/star_icon"
         android:textColor="@color/silver"
+        android:layout_centerVertical="true"
         android:id="@+id/star_icon1"
-        android:textSize="48sp"/>
+        android:textSize="32sp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:id="@+id/favorite_id"
+        android:layout_centerVertical="true"
         android:text=""
         android:layout_toLeftOf="@+id/star_icon1"
+        android:layout_toStartOf="@+id/star_icon1"
         android:textSize="32sp" />
 
 

@@ -45,6 +45,7 @@ public class OthersBoxActivity extends AppCompatActivity
     @Bind(R.id.others_list) ListView othersList;
     @Bind(R.id.loading_box) ProgressBar loadingBox;
     @Bind(R.id.nothing) TextView nothing;
+    @Bind(R.id.entered_id) TextView id;
     @Bind(R.id.PAD_ID) AutoCompleteTextView othersId;
 
     Context context = this;
@@ -67,11 +68,14 @@ public class OthersBoxActivity extends AppCompatActivity
 
         setUpAdapter();
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null)
+            display_result(id, extras.getString(Constants.OTHERS_ID_KEY));
+
         othersId.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    TextView id = (TextView) findViewById(R.id.entered_id);
                     pad_id = othersId.getText().toString();
                     if (pad_id.length() == 9 && (pad_id.charAt(0) == '3'))
                         display_result(id, pad_id);
@@ -90,6 +94,7 @@ public class OthersBoxActivity extends AppCompatActivity
         othersId.setAdapter(adapter);
     }
 
+    //Processes output once I have enetred in a valid 9 digit ID
     public void display_result(TextView id, String pad_id) {
         othersList.setVisibility(View.GONE);
         InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -149,6 +154,7 @@ public class OthersBoxActivity extends AppCompatActivity
         }
     }
 
+    //Updating the layout when I'm loading in new data
     public void refreshContent()
     {
         loadingBox.setVisibility(View.GONE);
