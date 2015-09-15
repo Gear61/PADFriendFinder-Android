@@ -37,6 +37,7 @@ public class Constants
     public static final String MODE_KEY = "mode";
     public static final String MONSTER_UPDATE_KEY = "monsterUpdate";
     public static final String MONSTER_BOX_KEY = "monsterBox";
+    public static final String OTHER_BOX_KEY = "otherBox";
     public static final String REST_CALL_RESPONSE_KEY = "restCallResponse";
 
     // Monster form
@@ -75,7 +76,11 @@ public class Constants
     public static final String MONSTER_DELETE_FAILED_MESSAGE = "We were unable to delete your monster from our database. " +
             "Please try again later.";
     public static final String DELETING_MONSTER_MESSAGE = "Deleting your monster from our database...";
+    public static final String ID_HAS_NOTHING_MESSAGE = "There is no data associated with the given ID.";
     public static final String FIND_OTHER = "Find other";
     public static final String EDIT = "Edit";
     public static final String DELETE = "Delete";
+
+    //Intent keys
+    public static final String OTHERS_ID_KEY = "ID";
 }

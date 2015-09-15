@@ -59,6 +59,19 @@ public class MainActivity extends ActionBarActivity
         startActivity(intent);
     }
 
+
+    @OnClick(R.id.id_search)
+    public void onIdSearchClick(View view) {
+        Intent intent = new Intent(this, OthersBoxActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.favorites)
+    public void onFavClick(View view) {
+        Intent intent = new Intent(this, FavoritesActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
