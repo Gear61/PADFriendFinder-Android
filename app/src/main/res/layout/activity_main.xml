@@ -45,4 +45,15 @@
         android:layout_alignStart="@+id/linearLayout"
         android:layout_alignRight="@+id/linearLayout"
         android:layout_alignEnd="@+id/linearLayout" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Favorites"
+        android:id="@+id/favorites"
+        android:layout_below="@+id/id_search"
+        android:layout_alignLeft="@+id/id_search"
+        android:layout_alignStart="@+id/id_search"
+        android:layout_alignRight="@+id/id_search"
+        android:layout_alignEnd="@+id/id_search" />
 </RelativeLayout>

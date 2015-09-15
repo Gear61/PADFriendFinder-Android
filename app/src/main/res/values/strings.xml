@@ -50,5 +50,6 @@
 
     <!-- Font Awesome Icons -->
     <string name="star_icon">fa-star</string>
+    <string name="title_activity_favorites">FavoritesActivity</string>
 
 </resources>

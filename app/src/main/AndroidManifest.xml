@@ -43,7 +43,11 @@
         <activity
             android:name=".Activities.OthersBoxActivity"
             android:label="@string/title_activity_others_box"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".Activities.FavoritesActivity"
+            android:label="@string/title_activity_favorites" >
         </activity>
     </application>
 
