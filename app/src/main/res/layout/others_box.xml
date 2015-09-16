@@ -20,7 +20,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <com.beardedhen.androidbootstrap.FontAwesomeText
             android:layout_alignParentRight="true"
@@ -33,20 +33,25 @@
 
         <TextView
             android:id="@+id/entered_id"
+            android:layout_centerVertical="true"
             android:text="@string/no_id_chosen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="32sp"
             android:layout_toLeftOf="@+id/star_icon"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/others_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:visibility="gone"
             android:paddingTop="5dp"
-            android:layout_below="@+id/entered_id"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
@@ -55,8 +60,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/loading_box"
             android:visibility="gone"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerInParent="true"/>
 
         <TextView
             android:id="@+id/nothing"
@@ -65,9 +69,8 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:visibility="gone"
             android:text="@string/no_monsters_for_other"
-            android:layout_below="@+id/star_icon"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"/>
     </RelativeLayout>
 
 </LinearLayout>

@@ -46,7 +46,7 @@
     <string name="title_activity_others_box">Monster Box</string>
 
     <!-- Others Box -->
-    <string name="no_id_chosen">No monster ID chosen.</string>
+    <string name="no_id_chosen">No ID chosen.</string>
     <string name="no_monsters_for_other">No monsters to display.</string>
 
     <!-- Font Awesome Icons -->

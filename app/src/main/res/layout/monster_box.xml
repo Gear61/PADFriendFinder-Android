@@ -1,7 +1,9 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="10dp">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
 
     <ProgressBar
         android:id="@+id/loading_monsters"
@@ -15,7 +17,7 @@
         android:text="@string/monster_box_instructions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    
+
     <TextView
         android:id="@+id/no_monsters"
         android:visibility="gone"
@@ -28,12 +30,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <ListView
-        android:id="@+id/monster_list"
-        android:layout_below="@+id/monster_box_instructions"
-        android:visibility="gone"
+
+    <FrameLayout
+        android:id="@+id/monster_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/monster_box_instructions"
+        android:visibility="gone">
+
+        <ListView
+            android:id="@+id/monster_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </ListView>
+
+        <com.getbase.floatingactionbutton.AddFloatingActionButton
+            android:id="@+id/add_monster"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_plusIconColor="@color/white"
+            fab:fab_colorNormal="@color/app_blue"
+            android:layout_gravity="right|bottom"/>
+
+    </FrameLayout>
 
 </RelativeLayout>

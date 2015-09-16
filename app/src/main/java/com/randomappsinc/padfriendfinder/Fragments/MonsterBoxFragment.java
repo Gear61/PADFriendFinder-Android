@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnItemClick;
 
 /**
@@ -48,6 +50,7 @@ public class MonsterBoxFragment extends Fragment
     @Bind(R.id.monster_box_instructions) TextView instructions;
     @Bind(R.id.no_monsters) TextView noMonsters;
     @Bind(R.id.monster_list) ListView monsterList;
+    @Bind(R.id.monster_container) FrameLayout monsterContainer;
 
     private ProgressDialog deletingMonsterDialog;
     private MonsterBoxAdapter boxAdapter;
@@ -176,13 +179,13 @@ public class MonsterBoxFragment extends Fragment
         instructions.setVisibility(View.VISIBLE);
         if (boxAdapter.getCount() == 0)
         {
-            monsterList.setVisibility(View.GONE);
+            monsterContainer.setVisibility(View.GONE);
             noMonsters.setVisibility(View.VISIBLE);
         }
         else
         {
             noMonsters.setVisibility(View.GONE);
-            monsterList.setVisibility(View.VISIBLE);
+            monsterContainer.setVisibility(View.VISIBLE);
         }
     }
 
@@ -228,5 +231,13 @@ public class MonsterBoxFragment extends Fragment
         });
         monsterChosenDialog.setCanceledOnTouchOutside(true);
         monsterChosenDialog.setCancelable(true);
+    }
+
+    @OnClick(R.id.add_monster)
+    public void addMonster(View view)
+    {
+        Intent intent = new Intent(getActivity(), MonsterFormActivity.class);
+        intent.putExtra(Constants.MODE_KEY, Constants.ADD_MODE);
+        startActivity(intent);
     }
 }
