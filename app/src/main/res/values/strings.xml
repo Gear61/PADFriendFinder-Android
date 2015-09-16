@@ -23,7 +23,7 @@
 
     <!-- Monster Box -->
     <string name="monster_box_instructions">These are the monsters associated with your PAD ID.
-        Hit the + in the action bar above to add new monsters.
+        Hit the + in bottom right to add new monsters.
         Click on any monster to see its options.</string>
     <string name="no_monsters">There are no monsters associated with your PAD ID.</string>
     <string name="add_monster">Add Monster</string>
@@ -55,8 +55,9 @@
     <string name="settings_icon">fa-gear</string>
 
     <!-- Favorite String(s) -->
-    <string name="favsInstructions">"Press on an ID to access their monster box. Press on the star next to an ID to favorite/unfavorite them"</string>
-    <string name="noFavs">"You do not have any favorited IDs to display."</string>
+    <string name="favsInstructions">Click on any ID to look at their monster box.
+        Click on the star next to any ID to favorite/unfavorite it.</string>
+    <string name="noFavs">You do not have any favorited IDs to display.</string>
     <string name="title_activity_favorites">Favorites</string>
 
     <!-- Navigation drawer -->

@@ -244,6 +244,7 @@ public class MonsterFormActivity extends AppCompatActivity
             numAwakenings.setText(String.valueOf(monsterChosen.getAwakenings()));
             skillLevel.setText(String.valueOf(monsterChosen.getSkillLevel()));
             numPlusEggs.setText(String.valueOf(Constants.MAX_PLUS_EGGS));
+            monsterPicture.requestFocus();
         }
     }
 
@@ -255,6 +256,7 @@ public class MonsterFormActivity extends AppCompatActivity
         numAwakenings.setText(String.valueOf(0));
         skillLevel.setText(String.valueOf(1));
         numPlusEggs.setText(String.valueOf(0));
+        monsterPicture.requestFocus();
     }
 
     @OnClick({R.id.max_level, R.id.max_awakenings, R.id.max_plus_eggs, R.id.max_skill_level})
