@@ -8,7 +8,7 @@
         android:name=".Misc.Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/CustomActionBarTheme" >
         <activity
             android:name=".Activities.MainActivity"
             android:label="@string/app_name"

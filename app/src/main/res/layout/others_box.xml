@@ -32,11 +32,11 @@
             android:textSize="48sp"/>
 
         <TextView
+            android:id="@+id/entered_id"
+            android:text="@string/no_id_chosen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:id="@+id/entered_id"
-            android:text=""
             android:textSize="32sp"
             android:layout_toLeftOf="@+id/star_icon"/>
 
@@ -59,12 +59,12 @@
             android:layout_centerHorizontal="true" />
 
         <TextView
+            android:id="@+id/nothing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:visibility="gone"
-            android:text="This PAD ID does not exist or no monsters are associated with this ID."
-            android:id="@+id/nothing"
+            android:text="@string/no_monsters_for_other"
             android:layout_below="@+id/star_icon"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />

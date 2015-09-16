@@ -3,7 +3,7 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".MainActivity">
 
-      <item android:id="@+id/action_settings"
+      <item android:id="@+id/find_friends"
             android:title="@string/find_friends"
             android:icon="@mipmap/find_friends"
             app:showAsAction="always"/>
