@@ -45,15 +45,26 @@
     <string name="skill_level">Skill Level:&#160;</string>
     <string name="title_activity_others_box">Monster Box</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-
     <!-- Font Awesome Icons -->
     <string name="star_icon">fa-star</string>
-    <string name="title_activity_favorites">Favorites</string>
+    <string name="search_icon">fa-search</string>
+    <string name="settings_icon">fa-gear</string>
 
     <!-- Favorite String(s) -->
     <string name="favsInstructions">"Press on an ID to access their monster box. Press on the star next to an ID to favorite/unfavorite them"</string>
     <string name="noFavs">"You do not have any favorited IDs to display."</string>
+    <string name="title_activity_favorites">Favorites</string>
+
+    <!-- Navigation drawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="favorites">Favorites</string>
+    <string name="id_search">ID Search</string>
+    <string name="settings">Settings</string>
+    <string-array name="nav_drawer_tabs">
+        <item>@string/favorites</item>
+        <item>@string/id_search</item>
+        <item>@string/settings</item>
+    </string-array>
 
 </resources>

@@ -14,7 +14,6 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,15 +22,13 @@ import android.widget.Toast;
 import com.beardedhen.androidbootstrap.FontAwesomeText;
 import com.randomappsinc.padfriendfinder.API.GetMonsterBox;
 import com.randomappsinc.padfriendfinder.API.JSONParser;
+import com.randomappsinc.padfriendfinder.Adapters.MonsterBoxAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
-import com.randomappsinc.padfriendfinder.Misc.MonsterBoxManager;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.R;
-import com.randomappsinc.padfriendfinder.Adapters.MonsterBoxAdapter;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 

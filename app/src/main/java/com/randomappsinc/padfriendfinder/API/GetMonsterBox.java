@@ -3,10 +3,8 @@ package com.randomappsinc.padfriendfinder.API;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.randomappsinc.padfriendfinder.Misc.Constants;
-import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 
 import org.apache.http.HttpEntity;
