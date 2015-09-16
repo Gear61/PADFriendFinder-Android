@@ -239,6 +239,7 @@ public class MonsterFormActivity extends AppCompatActivity
     {
         if (monsterChosen != null)
         {
+            FormUtils.hideKeyboard(this);
             level.setText(String.valueOf(monsterChosen.getLevel()));
             numAwakenings.setText(String.valueOf(monsterChosen.getAwakenings()));
             skillLevel.setText(String.valueOf(monsterChosen.getSkillLevel()));
@@ -249,6 +250,7 @@ public class MonsterFormActivity extends AppCompatActivity
     @OnClick(R.id.minimum)
     public void minimum(View v)
     {
+        FormUtils.hideKeyboard(this);
         level.setText(String.valueOf(1));
         numAwakenings.setText(String.valueOf(0));
         skillLevel.setText(String.valueOf(1));
@@ -348,7 +350,7 @@ public class MonsterFormActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu)
     {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R.menu.blank_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

@@ -18,12 +18,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.randomappsinc.padfriendfinder.API.DeleteMonster;
+import com.randomappsinc.padfriendfinder.API.GetMonsterBox;
 import com.randomappsinc.padfriendfinder.API.JSONParser;
 import com.randomappsinc.padfriendfinder.Activities.MonsterFormActivity;
 import com.randomappsinc.padfriendfinder.Adapters.MonsterBoxAdapter;
 import com.randomappsinc.padfriendfinder.Adapters.MonsterChoicesAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.MonsterBoxManager;
+import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.R;
@@ -52,6 +54,7 @@ public class MonsterBoxFragment extends Fragment
     private MonsterBoxReceiver boxReceiver;
     private MonsterUpdateReceiver updateReceiver;
     private MonsterDeleteReceiver deleteReceiver;
+    private MonsterListReceiver monsterListReceiver;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,24 +76,12 @@ public class MonsterBoxFragment extends Fragment
         updateReceiver = new MonsterUpdateReceiver();
         boxReceiver = new MonsterBoxReceiver();
         deleteReceiver = new MonsterDeleteReceiver();
+        monsterListReceiver = new MonsterListReceiver();
         context.registerReceiver(updateReceiver, new IntentFilter(Constants.MONSTER_UPDATE_KEY));
         context.registerReceiver(boxReceiver, new IntentFilter(Constants.MONSTER_BOX_KEY));
         context.registerReceiver(deleteReceiver, new IntentFilter(Constants.DELETE_KEY));
+        context.registerReceiver(monsterListReceiver, new IntentFilter(Constants.GET_MONSTERS_KEY));
 
-        List<MonsterAttributes> monsters = MonsterBoxManager.getInstance().getMonsterList();
-        // If we've made the call before, and everything's cached...
-        if (monsters != null)
-        {
-            if (!monsters.isEmpty())
-            {
-                boxAdapter.addMonsters(monsters);
-            }
-            refreshContent();
-        }
-        /* else
-        {
-            new GetMonsterBox(context, PreferencesManager.get().getPadId(), false).execute();
-        } */
         return rootView;
     }
 
@@ -104,8 +95,18 @@ public class MonsterBoxFragment extends Fragment
             context.unregisterReceiver(boxReceiver);
             context.unregisterReceiver(updateReceiver);
             context.unregisterReceiver(deleteReceiver);
+            context.unregisterReceiver(monsterListReceiver);
         }
         catch (IllegalArgumentException ignored) {}
+    }
+
+    private class MonsterListReceiver extends BroadcastReceiver
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            new GetMonsterBox(context, PreferencesManager.get().getPadId(), false).execute();
+        }
     }
 
     private class MonsterDeleteReceiver extends BroadcastReceiver

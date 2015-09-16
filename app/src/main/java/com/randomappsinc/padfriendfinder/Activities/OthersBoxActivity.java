@@ -180,7 +180,7 @@ public class OthersBoxActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu)
     {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_others_box, menu);
+        getMenuInflater().inflate(R.menu.blank_menu, menu);
         return true;
     }
 

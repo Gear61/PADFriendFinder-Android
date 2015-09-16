@@ -31,7 +31,7 @@ public class Constants
     public static final String UPDATE_KEY = "update";
     public static final String DELETE_KEY = "delete";
     public static final String MONSTER_ID_KEY = "monsterId";
-    public static final String GET_MONSTERS = "getMonsters";
+    public static final String GET_MONSTERS_KEY = "getMonsters";
 
     // Activity communication/broadcasts
     public static final String MODE_KEY = "mode";

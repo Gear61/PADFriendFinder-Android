@@ -2,9 +2,11 @@ package com.randomappsinc.padfriendfinder.API;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.randomappsinc.padfriendfinder.Misc.Application;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 
 import org.apache.http.HttpEntity;
@@ -19,21 +21,20 @@ import java.io.IOException;
 /**
  * Created by jman0_000 on 8/27/2015.
  */
-public class GetMonsterList extends AsyncTask<String, Integer, Long> {
-    private Context context;
-    private ProgressDialog progressDialog;
+public class GetMonsterList extends AsyncTask<String, Integer, Long>
+{
     private int statusCode;
+    private ProgressDialog progressDialog;
 
-    public GetMonsterList(Context context, ProgressDialog progressDialog)
+    public GetMonsterList(ProgressDialog progressDialog)
     {
-        this.context = context;
         this.progressDialog = progressDialog;
     }
 
     @Override
     protected Long doInBackground(String... strings)
     {
-        String endpoint = Constants.SERVER_URL + Constants.GET_MONSTERS;
+        String endpoint = Constants.SERVER_URL + Constants.GET_MONSTERS_KEY;
         try
         {
             HttpGet getMonsterBoxRequest = new HttpGet(endpoint);
@@ -61,9 +62,17 @@ public class GetMonsterList extends AsyncTask<String, Integer, Long> {
     {
         super.onPostExecute(aLong);
         progressDialog.dismiss();
+        Context context = Application.get().getApplicationContext();
         if (statusCode == 200)
+        {
             Toast.makeText(context, "Monster list loaded.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent();
+            intent.setAction(Constants.GET_MONSTERS_KEY);
+            context.sendBroadcast(intent);
+        }
         else
+        {
             Toast.makeText(context, "Failed to load monster list. Try using the app later.", Toast.LENGTH_LONG).show();
+        }
     }
 }

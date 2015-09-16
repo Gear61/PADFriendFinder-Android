@@ -46,12 +46,12 @@ public class MainActivity extends AppCompatActivity
         MonsterBoxFragment monsterBoxFragment = new MonsterBoxFragment();
         fragmentManager.beginTransaction().replace(R.id.container, monsterBoxFragment).commit();
 
-        ProgressDialog progress = new ProgressDialog(this);
-        progress.setMessage("Loading monster list...");
-        progress.setCancelable(false);
-        progress.setCanceledOnTouchOutside(false);
-        progress.show();
-        new GetMonsterList(this, progress).execute();
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.loading_monster_list));
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+        new GetMonsterList(progressDialog).execute();
     }
 
     @Override

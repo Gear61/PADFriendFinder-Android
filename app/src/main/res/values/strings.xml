@@ -71,4 +71,6 @@
         <item>@string/settings</item>
     </string-array>
 
+    <!-- Progress -->
+    <string name="loading_monster_list">Loading monster list&#8230;</string>
 </resources>
