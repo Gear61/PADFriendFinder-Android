@@ -5,6 +5,10 @@ import android.content.Context;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
+
+import com.randomappsinc.padfriendfinder.Misc.Application;
+import com.randomappsinc.padfriendfinder.Misc.Constants;
 
 /**
  * Created by alexanderchiou on 9/9/15.
@@ -23,5 +27,21 @@ public class FormUtils
     public static void showKeyboard(Activity activity)
     {
         activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+    }
+
+    public static boolean validatePadId(String padId)
+    {
+        Context context = Application.get().getApplicationContext();
+        if (padId.length() != 9)
+        {
+            Toast.makeText(context, Constants.INCOMPLETE_PAD_ID_MESSAGE, Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (padId.charAt(0) != '3')
+        {
+            Toast.makeText(context, Constants.INCORRECT_FIRST_DIGIT_MESSAGE, Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 }

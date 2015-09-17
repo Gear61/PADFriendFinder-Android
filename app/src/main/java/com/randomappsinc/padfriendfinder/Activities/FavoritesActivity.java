@@ -1,6 +1,5 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,12 +24,10 @@ import butterknife.OnItemClick;
 
 public class FavoritesActivity extends AppCompatActivity {
 
-
     @Bind(R.id.favoritesView) ListView favView;
     @Bind(R.id.no_favs) TextView noFavs;
 
-    Context context = this;
-    Set<String> favs = PreferencesManager.get().getFavorites();
+    private Set<String> favs;
     private FavoritesAdapter favoritesAdapter;
 
     @Override
@@ -39,6 +36,7 @@ public class FavoritesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_favorites);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
+        favs = PreferencesManager.get().getFavorites();
         favoritesAdapter = new FavoritesAdapter(this);
         favoritesAdapter.addFavorites(new ArrayList<>(favs));
         favView.setAdapter(favoritesAdapter);
@@ -73,7 +71,7 @@ public class FavoritesActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.favorites_list, menu);
+        getMenuInflater().inflate(R.menu.blank_menu, menu);
         return true;
     }
 

@@ -1,18 +1,13 @@
-package com.randomappsinc.padfriendfinder.Settings;
+package com.randomappsinc.padfriendfinder.Activities;
 
-import android.content.Context;
-import android.content.Intent;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.randomappsinc.padfriendfinder.Activities.PadIdActivity;
 import com.randomappsinc.padfriendfinder.R;
 
-public class Settings extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +19,7 @@ public class Settings extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_settings, menu);
+        getMenuInflater().inflate(R.menu.blank_menu, menu);
         return true;
     }
 
