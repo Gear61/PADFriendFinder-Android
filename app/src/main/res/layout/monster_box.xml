@@ -31,11 +31,9 @@
         android:layout_height="wrap_content"/>
 
     <FrameLayout
-        android:id="@+id/monster_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/monster_box_instructions"
-        android:visibility="gone">
+        android:layout_below="@+id/monster_box_instructions">
 
         <ListView
             android:id="@+id/monster_list"

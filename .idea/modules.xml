@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PADFriendFinder.iml" filepath="$PROJECT_DIR$/PADFriendFinder.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PADFriendFinder-Android.iml" filepath="$PROJECT_DIR$/PADFriendFinder-Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
