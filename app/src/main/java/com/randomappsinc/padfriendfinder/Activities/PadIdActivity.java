@@ -44,15 +44,7 @@ public class PadIdActivity extends AppCompatActivity
     {
         final String input = padIdInput.getText().toString();
 
-        if (input.length() != 9)
-        {
-            Toast.makeText(getApplicationContext(), Constants.INCOMPLETE_PAD_ID_MESSAGE, Toast.LENGTH_LONG).show();
-        }
-        else if (input.charAt(0) != '3')
-        {
-            Toast.makeText(getApplicationContext(), Constants.INCORRECT_FIRST_DIGIT_MESSAGE, Toast.LENGTH_LONG).show();
-        }
-        else
+        if (FormUtils.validatePadId(padIdInput.getText().toString()))
         {
             FormUtils.hideKeyboard(this);
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
@@ -91,7 +83,7 @@ public class PadIdActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu)
     {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R.menu.blank_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

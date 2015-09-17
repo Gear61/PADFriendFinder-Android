@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
@@ -28,6 +27,7 @@ import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.R;
+import com.randomappsinc.padfriendfinder.Utils.FormUtils;
 
 import java.util.List;
 import java.util.Set;
@@ -35,6 +35,7 @@ import java.util.Set;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 
 public class OthersBoxActivity extends AppCompatActivity
 {
@@ -45,8 +46,6 @@ public class OthersBoxActivity extends AppCompatActivity
     @Bind(R.id.entered_id) TextView id;
     @Bind(R.id.PAD_ID) AutoCompleteTextView othersId;
 
-    Context context = this;
-    String pad_id = null;
     private MonsterBoxAdapter boxAdapter;
     private OthersBoxReceiver othersBoxReceiver;
     private Set<String> mySet = PreferencesManager.get().getFavorites();
@@ -67,67 +66,67 @@ public class OthersBoxActivity extends AppCompatActivity
 
         Bundle extras = getIntent().getExtras();
         if (extras != null)
-            display_result(id, extras.getString(Constants.OTHERS_ID_KEY));
+        {
+            displayResult(extras.getString(Constants.OTHERS_ID_KEY));
+        }
+    }
 
-        othersId.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    pad_id = othersId.getText().toString();
-                    if (pad_id.length() == 9 && (pad_id.charAt(0) == '3'))
-                        display_result(id, pad_id);
-                    else
-                        Toast.makeText(getApplicationContext(), "Error: Invalid Input.", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-                return false;
+    @OnEditorAction(R.id.PAD_ID)
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+    {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH)
+        {
+            if (FormUtils.validatePadId(othersId.getText().toString()))
+            {
+                displayResult(othersId.getText().toString());
             }
-        });
+            return true;
+        }
+        return false;
     }
 
     public void setUpAdapter() {
         String[] favorites = mySet.toArray(new String[mySet.size()]);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, favorites);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, favorites);
         othersId.setAdapter(adapter);
     }
 
-    //Processes output once I have enetred in a valid 9 digit ID
-    public void display_result(TextView id, String pad_id) {
+    // Processes output once I have entered in a valid 9 digit ID
+    public void displayResult(String padId)
+    {
+        FormUtils.hideKeyboard(this);
+        id.setText(padId);
         othersList.setVisibility(View.GONE);
-        InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        mgr.hideSoftInputFromWindow(othersId.getWindowToken(), 0);
-        id.setText(pad_id);
-        othersId.setText(null);
-        if (PreferencesManager.get().isFavorited(pad_id))
-            star.setTextColor(getResources().getColor(R.color.gold));
-        else
-            star.setTextColor(getResources().getColor(R.color.silver));
-
         loadingBox.setVisibility(View.VISIBLE);
         nothing.setVisibility(View.GONE);
-        new GetMonsterBox(this, pad_id, true).execute();
+        othersId.setText("");
+        if (PreferencesManager.get().isFavorited(padId))
+        {
+            star.setTextColor(getResources().getColor(R.color.gold));
+        }
+        else
+        {
+            star.setTextColor(getResources().getColor(R.color.silver));
+        }
+        new GetMonsterBox(this, padId, true).execute();
     }
 
     @OnClick(R.id.star_icon)
-    //This function does the favoriting and unfavoriting. Because I'm lazy, only favoriting ID interacts with auto-complete.
+    // This function does the favoriting and unfavoriting.
+    // Because I'm lazy, only favoriting ID interacts with auto-complete.
     public void onStar(View view) {
-        String user_id = ((TextView) findViewById(R.id.entered_id)).getText().toString();
-        String favorites[] = null;
-        //othersList.getVisibility() == View.VISIBLE
-        if (!user_id.isEmpty()) {
-            if (PreferencesManager.get().isFavorited(user_id)) {
+        String userId = ((TextView) findViewById(R.id.entered_id)).getText().toString();
+        if (!userId.equals(getString(R.string.no_id_chosen))) {
+            if (PreferencesManager.get().isFavorited(userId)) {
                 star.setTextColor(getResources().getColor(R.color.silver));
-                PreferencesManager.get().removeFavorite(user_id);
+                PreferencesManager.get().removeFavorite(userId);
             } else {
                 star.setTextColor(getResources().getColor(R.color.gold));
-                PreferencesManager.get().addFavorite(user_id);
-                mySet.add(user_id);
-                //can I use an array list for adapters? I think so.
+                PreferencesManager.get().addFavorite(userId);
+                mySet.add(userId);
                 setUpAdapter();
             }
         }
-        else
-            Toast.makeText(context, Constants.ID_HAS_NOTHING_MESSAGE, Toast.LENGTH_LONG).show();
     }
 
     private class OthersBoxReceiver extends BroadcastReceiver
@@ -168,9 +167,11 @@ public class OthersBoxActivity extends AppCompatActivity
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroy()
+    {
         super.onDestroy();
-        try {
+        try
+        {
             unregisterReceiver(othersBoxReceiver);
         }
         catch (IllegalArgumentException ignored) {}
@@ -185,12 +186,14 @@ public class OthersBoxActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case android.R.id.home:
                 finish();
-            default:
-                return super.onOptionsItemSelected(item);
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
 }

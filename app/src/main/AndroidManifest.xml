@@ -31,11 +31,6 @@
             android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
-            android:name=".Activities.MonsterBoxActivity"
-            android:label="@string/monster_box_label"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name=".Activities.FriendResultsActivity"
             android:label="@string/friend_results_label"
             android:screenOrientation="portrait" >
@@ -50,7 +45,7 @@
             android:label="@string/title_activity_favorites" >
         </activity>
         <activity
-            android:name=".Settings.Settings"
+            android:name=".Activities.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
     </application>

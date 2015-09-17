@@ -12,10 +12,10 @@ import android.view.MenuItem;
 
 import com.randomappsinc.padfriendfinder.API.GetMonsterList;
 import com.randomappsinc.padfriendfinder.Fragments.MonsterBoxFragment;
+import com.randomappsinc.padfriendfinder.Fragments.NavigationDrawerFragment;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.R;
-import com.randomappsinc.padfriendfinder.Settings.Settings;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks
@@ -34,12 +34,12 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         if (PreferencesManager.get().getPadId().isEmpty()) {
             startActivity(new Intent(this, PadIdActivity.class));
             finish();
         }
         else {
+            setContentView(R.layout.activity_main);
             mNavigationDrawerFragment = (NavigationDrawerFragment)
                     getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
             mTitle = getTitle();
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity
                 intent = new Intent(this, OthersBoxActivity.class);
                 break;
             case 2:
-                intent = new Intent(this, Settings.class);
+                intent = new Intent(this, SettingsActivity.class);
                 break;
         }
         startActivity(intent);

@@ -132,7 +132,7 @@ public class FriendResultsActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu)
     {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R.menu.blank_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

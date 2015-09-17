@@ -1,4 +1,4 @@
-package com.randomappsinc.padfriendfinder.Activities;
+package com.randomappsinc.padfriendfinder.Fragments;
 
 import android.app.Activity;
 import android.content.SharedPreferences;

@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -50,7 +49,6 @@ public class MonsterBoxFragment extends Fragment
     @Bind(R.id.monster_box_instructions) TextView instructions;
     @Bind(R.id.no_monsters) TextView noMonsters;
     @Bind(R.id.monster_list) ListView monsterList;
-    //@Bind(R.id.monster_container) FrameLayout monsterContainer;
 
     private ProgressDialog deletingMonsterDialog;
     private MonsterBoxAdapter boxAdapter;
@@ -179,13 +177,13 @@ public class MonsterBoxFragment extends Fragment
         instructions.setVisibility(View.VISIBLE);
         if (boxAdapter.getCount() == 0)
         {
-            //monsterContainer.setVisibility(View.GONE);
+            monsterList.setVisibility(View.GONE);
             noMonsters.setVisibility(View.VISIBLE);
         }
         else
         {
             noMonsters.setVisibility(View.GONE);
-            //monsterContainer.setVisibility(View.VISIBLE);
+            monsterList.setVisibility(View.VISIBLE);
         }
     }
 
