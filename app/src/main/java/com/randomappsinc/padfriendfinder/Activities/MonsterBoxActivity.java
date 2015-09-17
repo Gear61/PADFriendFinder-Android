@@ -173,13 +173,13 @@ public class MonsterBoxActivity extends AppCompatActivity
         instructions.setVisibility(View.VISIBLE);
         if (boxAdapter.getCount() == 0)
         {
-            monsterList.setVisibility(View.GONE);
+            //monsterList.setVisibility(View.GONE);
             noMonsters.setVisibility(View.VISIBLE);
         }
         else
         {
             noMonsters.setVisibility(View.GONE);
-            monsterList.setVisibility(View.VISIBLE);
+            //monsterList.setVisibility(View.VISIBLE);
         }
     }
 

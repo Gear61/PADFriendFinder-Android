@@ -13,7 +13,9 @@ import android.view.MenuItem;
 import com.randomappsinc.padfriendfinder.API.GetMonsterList;
 import com.randomappsinc.padfriendfinder.Fragments.MonsterBoxFragment;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
+import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.R;
+import com.randomappsinc.padfriendfinder.Settings.Settings;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks
@@ -33,25 +35,30 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (PreferencesManager.get().getPadId().isEmpty()) {
+            startActivity(new Intent(this, PadIdActivity.class));
+            finish();
+        }
+        else {
+            mNavigationDrawerFragment = (NavigationDrawerFragment)
+                    getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+            mTitle = getTitle();
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
+            // Set up the drawer.
+            mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
+            FragmentManager fragmentManager = getFragmentManager();
 
-        FragmentManager fragmentManager = getFragmentManager();
+            MonsterBoxFragment monsterBoxFragment = new MonsterBoxFragment();
+            fragmentManager.beginTransaction().replace(R.id.container, monsterBoxFragment).commit();
 
-        MonsterBoxFragment monsterBoxFragment = new MonsterBoxFragment();
-        fragmentManager.beginTransaction().replace(R.id.container, monsterBoxFragment).commit();
-
-        ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage(getString(R.string.loading_monster_list));
-        progressDialog.setCancelable(false);
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
-        new GetMonsterList(progressDialog).execute();
+            ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage(getString(R.string.loading_monster_list));
+            progressDialog.setCancelable(false);
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+            new GetMonsterList(progressDialog).execute();
+        }
     }
 
     @Override
@@ -65,6 +72,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case 1:
                 intent = new Intent(this, OthersBoxActivity.class);
+                break;
+            case 2:
+                intent = new Intent(this, Settings.class);
                 break;
         }
         startActivity(intent);
@@ -81,14 +91,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        if (!mNavigationDrawerFragment.isDrawerOpen())
-        {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.menu_main, menu);
-            restoreActionBar();
-            return true;
+        if (!PreferencesManager.get().getPadId().isEmpty()) {
+            if (!mNavigationDrawerFragment.isDrawerOpen()) {
+                // Only show items in the action bar relevant to this screen
+                // if the drawer is not showing. Otherwise, let the drawer
+                // decide what to show in the action bar.
+                getMenuInflater().inflate(R.menu.menu_main, menu);
+                restoreActionBar();
+                return true;
+            }
         }
         return super.onCreateOptionsMenu(menu);
     }
