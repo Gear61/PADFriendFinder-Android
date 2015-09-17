@@ -36,7 +36,8 @@ public class PreferencesManager
 
     private static final String PREFS_KEY = "com.randomappsinc.padfriendfinder";
     private static final String PAD_ID_KEY = "com.randomappsinc.padfriendfinder.padId";
-    private static final String FAVORITES_KEY = "com.randomappsinc.padfriendfinder.favorties";
+    private static final String FAVORITES_KEY = "com.randomappsinc.padfriendfinder.favorites";
+    private static final String AVATAR_ID_KEY = "com.randomappsinc.padfriendfinder.avatarId";
 
     private PreferencesManager()
     {
@@ -73,9 +74,18 @@ public class PreferencesManager
         return new HashSet<>(prefs.getStringSet(FAVORITES_KEY, new HashSet<String>()));
     }
 
-    public PreferencesManager setPadId(String padId)
+    public void setPadId(String padId)
     {
         prefs.edit().putString(PAD_ID_KEY, padId).apply();
-        return this;
+    }
+
+    public int getAvatarId()
+    {
+        return prefs.getInt(AVATAR_ID_KEY, 0);
+    }
+
+    public void setAvatarId(int avatarId)
+    {
+        prefs.edit().putInt(AVATAR_ID_KEY, avatarId);
     }
 }

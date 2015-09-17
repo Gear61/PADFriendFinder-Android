@@ -16,15 +16,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.randomappsinc.padfriendfinder.Adapters.NavDrawerAdapter;
+import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnItemClick;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -39,8 +49,11 @@ public class NavigationDrawerFragment extends Fragment {
     private android.support.v7.app.ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
-    private ListView mDrawerListView;
     private View mFragmentContainerView;
+
+    @Bind(R.id.nav_drawer_tabs) ListView mDrawerListView;
+    @Bind(R.id.user_avatar) ImageView userAvatar;
+    @Bind(R.id.pad_id) TextView padId;
 
     private int mCurrentSelectedPosition = 0;
     private boolean mUserLearnedDrawer;
@@ -65,17 +78,10 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        RelativeLayout navDrawer = (RelativeLayout) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
-        mDrawerListView = (ListView) navDrawer.findViewById(R.id.nav_drawer_tabs);
-        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                selectItem(position);
-            }
-        });
+                             Bundle savedInstanceState)
+    {
+        LinearLayout navDrawer = (LinearLayout) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+        ButterKnife.bind(this, navDrawer);
         List<String> tabsList = new ArrayList<>(Arrays.asList(getActivity().getResources().
                 getStringArray(R.array.nav_drawer_tabs)));
         mDrawerListView.setAdapter(new NavDrawerAdapter(getActivity(),
@@ -83,6 +89,29 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 
         return navDrawer;
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        String imageUrl = "http://www.puzzledragonx.com/en/img/book/" +
+                String.valueOf(PreferencesManager.get().getAvatarId()) + ".png";
+        Picasso.with(getActivity()).load(imageUrl).into(userAvatar);
+        padId.setText(PreferencesManager.get().getPadId());
+    }
+
+    @OnItemClick(R.id.nav_drawer_tabs)
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+    {
+        selectItem(position);
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     public boolean isDrawerOpen() {
