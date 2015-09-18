@@ -86,7 +86,7 @@
     <ImageView
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:id="@+id/imageView"
+        android:id="@+id/monsterBox"
         android:src="@mipmap/monster_box"
         android:layout_gravity="center"
         android:layout_centerVertical="true"

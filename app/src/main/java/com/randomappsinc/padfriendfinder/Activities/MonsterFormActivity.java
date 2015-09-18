@@ -92,6 +92,13 @@ public class MonsterFormActivity extends AppCompatActivity
         catch (IllegalArgumentException ignored) {}
     }
 
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        FormUtils.hideKeyboard(this);
+    }
+
     // Processes API call response
     private class MonsterUpdateReceiver extends BroadcastReceiver
     {

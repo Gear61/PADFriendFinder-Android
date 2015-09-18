@@ -30,7 +30,18 @@
             fontawesometext:fa_icon="@string/star_icon"
             android:textColor="@color/silver"
             android:id="@+id/star_icon"
-            android:textSize="48sp"/>
+            android:textSize="48sp"
+            android:layout_centerVertical="true"/>
+
+        <com.beardedhen.androidbootstrap.FontAwesomeText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fontawesometext:fa_icon="@string/clipboard_icon"
+            android:id="@+id/clipboard_icon"
+            android:layout_toLeftOf="@+id/star_icon"
+            android:layout_marginRight="5dp"
+            android:layout_centerVertical="true"
+            android:textSize="43sp"/>
 
         <TextView
             android:id="@+id/entered_id"

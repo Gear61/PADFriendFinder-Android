@@ -1,12 +1,16 @@
 package com.randomappsinc.padfriendfinder.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.randomappsinc.padfriendfinder.Activities.OthersBoxActivity;
+import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Models.Friend;
 import com.randomappsinc.padfriendfinder.R;
 
@@ -52,6 +56,7 @@ public class FriendResultsAdapter extends BaseAdapter
         public TextView awakenings;
         public TextView plusEggs;
         public TextView skillLevel;
+        public ImageView monsterBox;
     }
 
     // Renders the ListView item that the user has scrolled to or is about to scroll to
@@ -69,6 +74,7 @@ public class FriendResultsAdapter extends BaseAdapter
             holder.awakenings = (TextView) v.findViewById(R.id.awakenings);
             holder.plusEggs = (TextView) v.findViewById(R.id.plus_eggs);
             holder.skillLevel = (TextView) v.findViewById(R.id.skill_level);
+            holder.monsterBox = (ImageView) v.findViewById(R.id.monsterBox);
             v.setTag(holder);
         }
         else
@@ -76,12 +82,20 @@ public class FriendResultsAdapter extends BaseAdapter
             holder = (ViewHolder) v.getTag();
         }
 
-        Friend friend = friends.get(position);
+        final Friend friend = friends.get(position);
         holder.padId.setText(friend.getPadId());
         holder.level.setText(String.valueOf(friend.getMonster().getLevel()));
         holder.awakenings.setText(String.valueOf(friend.getMonster().getAwakenings()));
         holder.plusEggs.setText(String.valueOf(friend.getMonster().getPlusEggs()));
         holder.skillLevel.setText(String.valueOf(friend.getMonster().getSkillLevel()));
+        holder.monsterBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, OthersBoxActivity.class);
+                intent.putExtra(Constants.OTHERS_ID_KEY, friend.getPadId());
+                context.startActivity(intent);
+            }
+        });
 
         return v;
     }

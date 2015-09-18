@@ -53,6 +53,7 @@
     <string name="support_icon">fa-support</string>
     <string name="search_icon">fa-search</string>
     <string name="settings_icon">fa-gear</string>
+    <string name="clipboard_icon">fa-clipboard</string>
 
     <!-- Favorite String(s) -->
     <string name="favsInstructions">Click on any ID to look at their monster box.

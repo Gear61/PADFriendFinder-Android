@@ -1,6 +1,8 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
 import android.content.BroadcastReceiver;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -40,6 +42,7 @@ import butterknife.OnEditorAction;
 public class OthersBoxActivity extends AppCompatActivity
 {
     @Bind(R.id.star_icon) FontAwesomeText star;
+    @Bind(R.id.clipboard_icon) FontAwesomeText clipboard;
     @Bind(R.id.others_list) ListView othersList;
     @Bind(R.id.loading_box) ProgressBar loadingBox;
     @Bind(R.id.nothing) TextView nothing;
@@ -54,7 +57,7 @@ public class OthersBoxActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.others_box);
+        setContentView(R.layout.id_search);
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         boxAdapter = new MonsterBoxAdapter(this);
@@ -65,10 +68,11 @@ public class OthersBoxActivity extends AppCompatActivity
         setUpAdapter();
 
         Bundle extras = getIntent().getExtras();
-        if (extras != null)
-        {
+        if (extras != null) {
             displayResult(extras.getString(Constants.OTHERS_ID_KEY));
         }
+        else
+            FormUtils.showKeyboard(this);
     }
 
     @OnEditorAction(R.id.PAD_ID)
@@ -126,6 +130,17 @@ public class OthersBoxActivity extends AppCompatActivity
                 mySet.add(userId);
                 setUpAdapter();
             }
+        }
+    }
+
+    @OnClick(R.id.clipboard_icon)
+    public void onClipboard(View view) {
+        String userId = ((TextView) findViewById(R.id.entered_id)).getText().toString();
+        if (!userId.equals(getString(R.string.no_id_chosen))) {
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText(Constants.PAD_ID_KEY, userId);
+            clipboard.setPrimaryClip(clip);
+            Toast.makeText(this, Constants.PAD_ID_COPIED_MESSAGE, Toast.LENGTH_SHORT).show();
         }
     }
 
