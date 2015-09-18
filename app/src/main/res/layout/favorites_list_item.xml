@@ -14,16 +14,16 @@
         fontawesometext:fa_icon="@string/star_icon"
         android:textColor="@color/silver"
         android:layout_centerVertical="true"
-        android:id="@+id/star_icon1"
-        android:textSize="32sp"/>
+        android:id="@+id/star_icon"
+        android:textSize="48sp"/>
 
     <TextView
         android:id="@+id/favorite_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/star_icon1"
-        android:layout_toStartOf="@+id/star_icon1"
-        android:textSize="24sp" />
+        android:layout_toLeftOf="@+id/star_icon"
+        android:layout_toStartOf="@+id/star_icon"
+        android:textSize="32sp" />
 
 </RelativeLayout>

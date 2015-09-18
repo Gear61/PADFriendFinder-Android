@@ -74,7 +74,7 @@ public class FavoritesAdapter extends BaseAdapter {
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = li.inflate(R.layout.favorites_list_item, null);
             holder = new ViewHolder();
-            holder.star = (FontAwesomeText) v.findViewById(R.id.star_icon1);
+            holder.star = (FontAwesomeText) v.findViewById(R.id.star_icon);
             holder.pad_id = (TextView) v.findViewById(R.id.favorite_id);
             v.setTag(holder);
         }

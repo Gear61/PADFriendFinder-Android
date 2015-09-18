@@ -9,8 +9,8 @@ public class Constants
     public static final String WELCOME_MESSAGE = "Welcome to PAD Friend Finder!";
 
     // PAD ID form
-    public static final String INCOMPLETE_PAD_ID_MESSAGE = "Please enter in all 9 digits of your PAD ID.";
-    public static final String INCORRECT_FIRST_DIGIT_MESSAGE = "We only support NA right now, so your PAD ID's first" +
+    public static final String INCOMPLETE_PAD_ID_MESSAGE = "Please enter in all 9 digits of the PAD ID.";
+    public static final String INCORRECT_FIRST_DIGIT_MESSAGE = "We only support NA right now, so a PAD ID's first" +
             " digit must be 3.";
     public static final String PAD_ID_CONFIRMATION = "PAD ID Confirmation";
 
