@@ -31,7 +31,6 @@
     <!-- Friend Results -->
     <string name="pad_id">PAD ID:&#160;</string>
     <string name="monster_picture">Monster Picture</string>
-    <string name="friend_results_intro">Here are your search results for:</string>
     <string name="no_results">We were unable to find any monsters matching your criteria.</string>
     <string name="friend_results_label">Search Results</string>
     <string name="friend_results_instructions">Click on any friend result to copy the PAD ID for easy pasting in game.</string>

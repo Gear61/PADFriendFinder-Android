@@ -16,7 +16,8 @@ import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.R;
 
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.Collections;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,7 +28,6 @@ public class FavoritesActivity extends AppCompatActivity {
     @Bind(R.id.favoritesView) ListView favView;
     @Bind(R.id.no_favs) TextView noFavs;
 
-    private Set<String> favs;
     private FavoritesAdapter favoritesAdapter;
 
     @Override
@@ -36,9 +36,10 @@ public class FavoritesActivity extends AppCompatActivity {
         setContentView(R.layout.favorites);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
-        favs = PreferencesManager.get().getFavorites();
+        List<String> favorites = new ArrayList<>(PreferencesManager.get().getFavorites());
+        Collections.sort(favorites);
         favoritesAdapter = new FavoritesAdapter(this);
-        favoritesAdapter.addFavorites(new ArrayList<>(favs));
+        favoritesAdapter.addFavorites(favorites);
         favView.setAdapter(favoritesAdapter);
         display_stuff();
     }

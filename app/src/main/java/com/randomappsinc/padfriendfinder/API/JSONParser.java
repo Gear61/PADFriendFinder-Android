@@ -2,6 +2,7 @@ package com.randomappsinc.padfriendfinder.API;
 
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.MonsterServer;
+import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.Models.Friend;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 
@@ -11,6 +12,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by alexanderchiou on 7/20/15.
@@ -53,10 +55,15 @@ public class JSONParser
         try
         {
             JSONArray friendsArray = new JSONArray(response);
+            Set<String> favoritedIds = PreferencesManager.get().getFavorites();
             for (int i = 0; i < friendsArray.length(); i++)
             {
                 JSONObject friendJson = friendsArray.getJSONObject(i);
                 String padId = friendJson.getString(Constants.PAD_ID_KEY);
+                if (favoritedIds.contains(padId))
+                {
+                    continue;
+                }
                 Friend friend = new Friend(padId, parseMonsterJson(friendJson));
                 friends.add(friend);
             }
