@@ -36,13 +36,16 @@ public class MonsterServer
 
     public static void setUpMonsterMap(List<MonsterAttributes> monsters)
     {
-        for (MonsterAttributes monster: monsters)
+        if (allMonsters.isEmpty())
         {
-            nameToAttributes.put(monster.getName(), monster);
-            allMonsters.add(monster);
+            for (MonsterAttributes monster : monsters)
+            {
+                nameToAttributes.put(monster.getName(), monster);
+                allMonsters.add(monster);
+            }
+            Collections.sort(allMonsters);
+            setUpFriendFinderMonsterList();
         }
-        Collections.sort(allMonsters);
-        setUpFriendFinderMonsterList();
     }
 
     private static void setUpFriendFinderMonsterList()

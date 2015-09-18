@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -103,6 +104,11 @@ public class FriendResultsActivity extends AppCompatActivity
                 Toast.makeText(context, Constants.FETCH_FRIENDS_FAILED_MESSAGE, Toast.LENGTH_LONG).show();
             }
             loadingFriendResults.setVisibility(View.GONE);
+            String isAre = friendResultsAdapter.getCount() == 1 ? "is" : "are";
+            String results = friendResultsAdapter.getCount() == 1 ? "result" : "results";
+            String introText = "Here " + isAre + " your <b>" + String.valueOf(friendResultsAdapter.getCount())+ "</b>" +
+                    "</b> search " + results + " for:";
+            intro.setText(Html.fromHtml(introText));
             intro.setVisibility(View.VISIBLE);
             monsterPicture.setVisibility(View.VISIBLE);
             monsterName.setVisibility(View.VISIBLE);

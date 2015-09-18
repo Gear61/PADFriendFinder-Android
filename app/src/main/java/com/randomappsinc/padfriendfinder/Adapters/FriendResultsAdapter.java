@@ -17,6 +17,9 @@ import com.randomappsinc.padfriendfinder.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by alexanderchiou on 7/21/15.
  */
@@ -51,35 +54,33 @@ public class FriendResultsAdapter extends BaseAdapter
 
     public static class ViewHolder
     {
-        public TextView padId;
-        public TextView level;
-        public TextView awakenings;
-        public TextView plusEggs;
-        public TextView skillLevel;
-        public ImageView monsterBox;
+        @Bind(R.id.pad_id) TextView padId;
+        @Bind(R.id.level) TextView level;
+        @Bind(R.id.awakenings) TextView awakenings;
+        @Bind(R.id.plus_eggs) TextView plusEggs;
+        @Bind(R.id.skill_level) TextView skillLevel;
+        @Bind(R.id.monster_box) ImageView monsterBox;
+
+        public ViewHolder(View view)
+        {
+            ButterKnife.bind(this, view);
+        }
     }
 
     // Renders the ListView item that the user has scrolled to or is about to scroll to
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View getView(int position, View view, ViewGroup parent)
     {
-        View v = convertView;
         ViewHolder holder;
-        if (v == null)
+        if (view == null)
         {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(R.layout.friend_result_list_item, null);
-            holder = new ViewHolder();
-            holder.padId = (TextView) v.findViewById(R.id.pad_id);
-            holder.level = (TextView) v.findViewById(R.id.level);
-            holder.awakenings = (TextView) v.findViewById(R.id.awakenings);
-            holder.plusEggs = (TextView) v.findViewById(R.id.plus_eggs);
-            holder.skillLevel = (TextView) v.findViewById(R.id.skill_level);
-            holder.monsterBox = (ImageView) v.findViewById(R.id.monsterBox);
-            v.setTag(holder);
+            view = vi.inflate(R.layout.friend_result_list_item, null);
+            holder = new ViewHolder(view);
+            view.setTag(holder);
         }
         else
         {
-            holder = (ViewHolder) v.getTag();
+            holder = (ViewHolder) view.getTag();
         }
 
         final Friend friend = friends.get(position);
@@ -97,6 +98,6 @@ public class FriendResultsAdapter extends BaseAdapter
             }
         });
 
-        return v;
+        return view;
     }
 }
