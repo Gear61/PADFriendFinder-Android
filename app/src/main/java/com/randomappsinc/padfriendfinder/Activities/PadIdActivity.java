@@ -1,6 +1,8 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.randomappsinc.padfriendfinder.Misc.Constants;
@@ -27,8 +30,11 @@ import butterknife.OnClick;
  */
 public class PadIdActivity extends AppCompatActivity
 {
+    @Bind(R.id.padID_textView) TextView padID_textView;
     @Bind(R.id.pad_id_input) EditText padIdInput;
     private Context context;
+    private boolean settingsMode = checkSettingsMode();
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,6 +43,20 @@ public class PadIdActivity extends AppCompatActivity
         context = this;
         setContentView(R.layout.pad_id_form);
         ButterKnife.bind(this);
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage(Constants.CHANGING_ID);
+        if (settingsMode) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            padID_textView.setText(Constants.CHANGE_ID_STRING);
+        }
+    }
+
+    private boolean checkSettingsMode() {
+        Bundle extras= getIntent().getExtras();
+        if (extras == null)
+            return false;
+        else
+            return true;
     }
 
     @OnClick(R.id.submit_pad_id)
@@ -50,10 +70,8 @@ public class PadIdActivity extends AppCompatActivity
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                     context);
             alertDialogBuilder.setTitle(Constants.PAD_ID_CONFIRMATION);
-            alertDialogBuilder
-                    .setMessage("You have entered " + input + " as your PAD ID. " +
-                            "Are you absolutely sure that this is correct?")
-                    .setCancelable(true)
+            alertDialogBuilder.setMessage("You have entered " + input + " as your PAD ID. " +
+                            "Are you absolutely sure that this is correct?").setCancelable(true)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener()
                     {
                         public void onClick(DialogInterface dialog, int id)
@@ -78,6 +96,20 @@ public class PadIdActivity extends AppCompatActivity
         }
     }
 
+    private class idCheckReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int status = intent.getIntExtra(Constants.ID_STATUS_KEY, 0);
+            if (status == 200) {
+            }
+            else if (status == 400) {
+            }
+            else {
+                Toast.makeText(context, "Error: Unable to check ID", Toast.LENGTH_SHORT);
+            }
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -86,9 +118,16 @@ public class PadIdActivity extends AppCompatActivity
         return super.onCreateOptionsMenu(menu);
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
