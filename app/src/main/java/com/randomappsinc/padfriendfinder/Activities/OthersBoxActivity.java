@@ -145,12 +145,12 @@ public class OthersBoxActivity extends AppCompatActivity
             else
             {
                 refreshContent();
-                Toast.makeText(context, Constants.BOX_FETCH_FAILED_MESSAGE, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, Constants.OTHERS_BOX_FETCH_FAILED_MESSAGE, Toast.LENGTH_LONG).show();
             }
         }
     }
 
-    //Updating the layout when I'm loading in new data
+    // Updating the layout when I'm loading in new data
     public void refreshContent()
     {
         loadingBox.setVisibility(View.GONE);

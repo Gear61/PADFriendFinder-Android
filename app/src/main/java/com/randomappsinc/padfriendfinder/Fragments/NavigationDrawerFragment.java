@@ -19,7 +19,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.randomappsinc.padfriendfinder.Adapters.NavDrawerAdapter;
@@ -33,7 +32,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.OnItemClick;
 
 /**
@@ -97,7 +95,7 @@ public class NavigationDrawerFragment extends Fragment {
         super.onResume();
         String imageUrl = "http://www.puzzledragonx.com/en/img/book/" +
                 String.valueOf(PreferencesManager.get().getAvatarId()) + ".png";
-        Picasso.with(getActivity()).load(imageUrl).into(userAvatar);
+        Picasso.with(getActivity()).load(imageUrl).placeholder(R.mipmap.mystery_creature).into(userAvatar);
         padId.setText(PreferencesManager.get().getPadId());
     }
 

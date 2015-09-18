@@ -29,7 +29,7 @@ public class GetMonsterBox extends AsyncTask<String, Integer, Long>
     public GetMonsterBox(Context context, String pad_id, boolean OthersBox)
     {
         this.context = context;
-        restCallResponse = new RestCallResponse();
+        this.restCallResponse = new RestCallResponse();
         this.pad_id = pad_id;
         this.OthersBox = OthersBox;
     }
