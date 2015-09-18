@@ -1,16 +1,23 @@
 package com.randomappsinc.padfriendfinder;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.randomappsinc.padfriendfinder.Activities.MonsterFormActivity;
 import com.randomappsinc.padfriendfinder.Adapters.SupportedLeadsAdapter;
+import com.randomappsinc.padfriendfinder.Misc.Constants;
+import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnItemClick;
 import butterknife.OnTextChanged;
 
 public class SupportedLeadsActivity extends AppCompatActivity
@@ -35,6 +42,16 @@ public class SupportedLeadsActivity extends AppCompatActivity
     public void afterTextChanged(Editable s)
     {
         supportedLeadsAdapter.updateWithPrefix(s.toString());
+    }
+
+    @OnItemClick(R.id.monster_matches)
+    public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id)
+    {
+        MonsterAttributes monster = supportedLeadsAdapter.getItem(position);
+        Intent intent = new Intent(this, MonsterFormActivity.class);
+        intent.putExtra(Constants.NAME_KEY, monster.getName());
+        intent.putExtra(Constants.MODE_KEY, Constants.SEARCH_MODE);
+        startActivity(intent);
     }
 
     @Override

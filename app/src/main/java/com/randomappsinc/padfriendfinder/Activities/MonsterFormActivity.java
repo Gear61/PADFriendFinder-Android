@@ -209,6 +209,7 @@ public class MonsterFormActivity extends AppCompatActivity
         monsterEditText.setText("");
         monsterPicture.setImageResource(R.mipmap.mystery_creature);
         monsterName.setText(getString(R.string.no_monster_chosen));
+        monsterEditText.setVisibility(View.VISIBLE);
         monsterPicture.requestFocus();
     }
 

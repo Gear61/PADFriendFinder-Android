@@ -52,8 +52,7 @@ public class PadIdActivity extends AppCompatActivity
             alertDialogBuilder.setTitle(Constants.PAD_ID_CONFIRMATION);
             alertDialogBuilder
                     .setMessage("You have entered " + input + " as your PAD ID. " +
-                            "Are you absolutely sure that this is correct? " +
-                            "Remember, you can only enter your ID in once.")
+                            "Are you absolutely sure that this is correct?")
                     .setCancelable(true)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener()
                     {
