@@ -56,13 +56,20 @@ public class NavDrawerAdapter extends ArrayAdapter<String> {
         String tabName = tabNames.get(position);
         holder.tabName.setText(tabName);
 
-        if (tabName.equals(context.getString(R.string.favorites))) {
+        if (tabName.equals(context.getString(R.string.favorites)))
+        {
             holder.tabIcon.setIcon(context.getString(R.string.star_icon));
         }
-        else if (tabName.equals(context.getString(R.string.id_search))) {
+        else if (tabName.equals(context.getString(R.string.supported_leads)))
+        {
+            holder.tabIcon.setIcon(context.getString(R.string.support_icon));
+        }
+        else if (tabName.equals(context.getString(R.string.id_search)))
+        {
             holder.tabIcon.setIcon(context.getString(R.string.search_icon));
         }
-        else if (tabName.equals(context.getString(R.string.settings))) {
+        else if (tabName.equals(context.getString(R.string.settings)))
+        {
             holder.tabIcon.setIcon(context.getString(R.string.settings_icon));
         }
         return view;

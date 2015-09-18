@@ -7,13 +7,14 @@ import android.os.Parcelable;
  * Created by alexanderchiou on 7/13/15.
  */
 
-public class MonsterAttributes implements Parcelable
+public class MonsterAttributes implements Parcelable, Comparable<MonsterAttributes>
 {
     private String name;
     private int level;
     private int skillLevel;
     private int awakenings;
     private int plusEggs;
+    private int monsterId;
     private String imageUrl;
 
     // Default constructor
@@ -31,6 +32,7 @@ public class MonsterAttributes implements Parcelable
     }
 
     public void setImageUrl(int monsterId) {
+        this.monsterId = monsterId;
         this.imageUrl = "http://www.puzzledragonx.com/en/img/book/" + String.valueOf(monsterId) + ".png";
     }
 
@@ -146,5 +148,11 @@ public class MonsterAttributes implements Parcelable
             return new MonsterAttributes[size];
         }
     };
+
+    @Override
+    public int compareTo(MonsterAttributes another)
+    {
+        return another.monsterId - this.monsterId;
+    }
 }
 

@@ -16,28 +16,32 @@ import java.util.Set;
 /**
  * Created by Alex on 11/1/2014.
  */
-public class GodMapper
+public class MonsterServer
 {
-    private static GodMapper instance = null;
+    private static MonsterServer instance = null;
     private static HashMap<String, MonsterAttributes> nameToAttributes = new HashMap<>();
+    private static List<MonsterAttributes> allMonsters = new ArrayList<>();
     private static Set<String> friendFinderMonsterList = new HashSet<>();
 
-    private GodMapper() {}
+    private MonsterServer() {}
 
-    public static GodMapper getGodMapper()
+    public static MonsterServer getMonsterServer()
     {
         if (instance == null)
         {
-            instance = new GodMapper();
+            instance = new MonsterServer();
         }
         return instance;
     }
 
     public static void setUpMonsterMap(List<MonsterAttributes> monsters)
     {
-        for (MonsterAttributes monster: monsters) {
+        for (MonsterAttributes monster: monsters)
+        {
             nameToAttributes.put(monster.getName(), monster);
+            allMonsters.add(monster);
         }
+        Collections.sort(allMonsters);
         setUpFriendFinderMonsterList();
     }
 
@@ -64,6 +68,24 @@ public class GodMapper
             return null;
         }
         return nameToAttributes.get(monsterName);
+    }
+
+    public List<MonsterAttributes> getMatches(String prefix)
+    {
+        if (prefix.isEmpty())
+        {
+            return allMonsters;
+        }
+        List<MonsterAttributes> matches = new ArrayList<>();
+        for (MonsterAttributes monster : nameToAttributes.values())
+        {
+            if (monster.getName().toLowerCase().contains(prefix.toLowerCase()))
+            {
+                matches.add(monster);
+            }
+        }
+        Collections.sort(matches);
+        return matches;
     }
 }
 

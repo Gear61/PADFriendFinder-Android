@@ -44,7 +44,6 @@ public class GetMonsterBox extends AsyncTask<String, Integer, Long>
             HttpClient httpclient = new DefaultHttpClient();
             HttpResponse response = httpclient.execute(getMonsterBoxRequest);
 
-            // StatusLine stat = response.getStatusLine();
             restCallResponse.setStatusCode(response.getStatusLine().getStatusCode());
 
             if (restCallResponse.getStatusCode() == 200)

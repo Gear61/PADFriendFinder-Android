@@ -9,7 +9,7 @@ import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.randomappsinc.padfriendfinder.Misc.GodMapper;
+import com.randomappsinc.padfriendfinder.Misc.MonsterServer;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.R;
 import com.squareup.picasso.Picasso;
@@ -31,7 +31,7 @@ public class MonsterSearchAdapter extends ArrayAdapter<String>
     private ArrayList<String> items;
     private ArrayList<String> itemsAll;
     private ArrayList<String> suggestions;
-    private GodMapper godMapper;
+    private MonsterServer monsterServer;
 
     private Context context;
 
@@ -43,7 +43,7 @@ public class MonsterSearchAdapter extends ArrayAdapter<String>
         this.items = items;
         this.itemsAll = (ArrayList<String>) items.clone();
         this.suggestions = new ArrayList<>();
-        godMapper = GodMapper.getGodMapper();
+        monsterServer = MonsterServer.getMonsterServer();
     }
 
     public static class ViewHolder
@@ -74,7 +74,7 @@ public class MonsterSearchAdapter extends ArrayAdapter<String>
         if (monsterName != null)
         {
             holder.monsterName.setText(monsterName.trim());
-            MonsterAttributes monsterAttributes = godMapper.getMonsterAttributes(monsterName);
+            MonsterAttributes monsterAttributes = monsterServer.getMonsterAttributes(monsterName);
             holder.monsterName.setText(monsterName.trim());
             Picasso.with(context).load(monsterAttributes.getImageUrl()).into(holder.monsterIcon);
         }
@@ -105,7 +105,6 @@ public class MonsterSearchAdapter extends ArrayAdapter<String>
                 int constraintLen = constraint.toString().length();
                 if (constraintLen == 0)
                 {
-                    System.out.println("NARNIA EMPTY!");
                     suggestions.addAll(Arrays.asList(DEFAULT_LEADERS));
                 }
                 else if (constraintLen > 1)

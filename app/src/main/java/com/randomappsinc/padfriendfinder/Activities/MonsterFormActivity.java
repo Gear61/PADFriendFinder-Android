@@ -21,8 +21,8 @@ import android.widget.Toast;
 import com.randomappsinc.padfriendfinder.API.UpdateMonster;
 import com.randomappsinc.padfriendfinder.Adapters.MonsterSearchAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
-import com.randomappsinc.padfriendfinder.Misc.GodMapper;
 import com.randomappsinc.padfriendfinder.Misc.MonsterBoxManager;
+import com.randomappsinc.padfriendfinder.Misc.MonsterServer;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.R;
@@ -71,7 +71,7 @@ public class MonsterFormActivity extends AppCompatActivity
 
         context = this;
         monsterAdapter = new MonsterSearchAdapter(context, android.R.layout.simple_dropdown_item_1line,
-                GodMapper.getGodMapper().getFriendFinderMonsterList());
+                MonsterServer.getMonsterServer().getFriendFinderMonsterList());
         updatingBoxDialog = new ProgressDialog(context);
 
         Intent intent = getIntent();
@@ -146,7 +146,7 @@ public class MonsterFormActivity extends AppCompatActivity
             String monsterName = intent.getStringExtra(Constants.NAME_KEY);
             if (monsterName != null)
             {
-                monsterChosen = GodMapper.getGodMapper().getMonsterAttributes(monsterName);
+                monsterChosen = MonsterServer.getMonsterServer().getMonsterAttributes(monsterName);
                 if (monsterChosen != null)
                 {
                     Picasso.with(context).load(monsterChosen.getImageUrl()).into(monsterPicture);
@@ -191,7 +191,7 @@ public class MonsterFormActivity extends AppCompatActivity
         setTitle(Constants.UPDATE_MONSTER_LABEL);
         Bundle data = intent.getExtras();
         MonsterAttributes monster = data.getParcelable(Constants.MONSTER_KEY);
-        monsterChosen = GodMapper.getGodMapper().getMonsterAttributes(monster.getName());
+        monsterChosen = MonsterServer.getMonsterServer().getMonsterAttributes(monster.getName());
         Picasso.with(context).load(monster.getImageUrl()).into(monsterPicture);
         monsterEditText.setVisibility(View.GONE);
         monsterName.setText(monster.getName());
@@ -223,7 +223,7 @@ public class MonsterFormActivity extends AppCompatActivity
     @OnTextChanged(value = R.id.monster_search_box, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterTextChanged (Editable s)
     {
-        MonsterAttributes monsterAttributes = GodMapper.getGodMapper().getMonsterAttributes(s.toString());
+        MonsterAttributes monsterAttributes = MonsterServer.getMonsterServer().getMonsterAttributes(s.toString());
         if (monsterAttributes != null)
         {
             monsterChosen = monsterAttributes;

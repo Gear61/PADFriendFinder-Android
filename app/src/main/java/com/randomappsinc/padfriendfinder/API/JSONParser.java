@@ -1,7 +1,7 @@
 package com.randomappsinc.padfriendfinder.API;
 
 import com.randomappsinc.padfriendfinder.Misc.Constants;
-import com.randomappsinc.padfriendfinder.Misc.GodMapper;
+import com.randomappsinc.padfriendfinder.Misc.MonsterServer;
 import com.randomappsinc.padfriendfinder.Models.Friend;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 
@@ -24,7 +24,7 @@ public class JSONParser
         {
             String monsterName = monsterJson.getString(Constants.NAME_KEY);
             monster.setName(monsterName);
-            MonsterAttributes mappedMonster = GodMapper.getGodMapper().getMonsterAttributes(monsterName);
+            MonsterAttributes mappedMonster = MonsterServer.getMonsterServer().getMonsterAttributes(monsterName);
             if (mappedMonster != null)
                 monster.setImageUrl(mappedMonster.getImageUrl());
             else  {
@@ -92,6 +92,6 @@ public class JSONParser
             }
         }
         catch (JSONException e) {}
-        GodMapper.getGodMapper().setUpMonsterMap(monsters);
+        MonsterServer.getMonsterServer().setUpMonsterMap(monsters);
     }
 }

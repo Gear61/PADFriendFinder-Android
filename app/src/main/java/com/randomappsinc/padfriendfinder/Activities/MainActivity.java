@@ -16,6 +16,7 @@ import com.randomappsinc.padfriendfinder.Fragments.NavigationDrawerFragment;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.R;
+import com.randomappsinc.padfriendfinder.SupportedLeadsActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks
@@ -71,9 +72,12 @@ public class MainActivity extends AppCompatActivity
                 intent = new Intent(this, FavoritesActivity.class);
                 break;
             case 1:
-                intent = new Intent(this, OthersBoxActivity.class);
+                intent = new Intent(this, SupportedLeadsActivity.class);
                 break;
             case 2:
+                intent = new Intent(this, OthersBoxActivity.class);
+                break;
+            case 3:
                 intent = new Intent(this, SettingsActivity.class);
                 break;
         }
