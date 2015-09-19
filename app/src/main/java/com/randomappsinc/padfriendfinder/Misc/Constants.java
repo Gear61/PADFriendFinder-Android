@@ -94,4 +94,5 @@ public class Constants
     // Intent keys
     public static final String OTHERS_ID_KEY = "ID";
     public static final String SETTINGS_KEY = "SETTINGS_MODE";
+    public static final String CHOOSE_AVATAR_MODE = "chooseAvatarMode";
 }

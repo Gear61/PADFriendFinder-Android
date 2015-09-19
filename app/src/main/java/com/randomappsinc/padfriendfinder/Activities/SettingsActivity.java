@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.randomappsinc.padfriendfinder.Adapters.SettingsAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.R;
+import com.randomappsinc.padfriendfinder.SupportedLeadsActivity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -46,6 +47,8 @@ public class SettingsActivity extends AppCompatActivity {
                 intent.putExtra(Constants.SETTINGS_KEY, true);
                 break;
             case 1:
+                intent = new Intent(this, SupportedLeadsActivity.class);
+                intent.putExtra(Constants.CHOOSE_AVATAR_MODE, true);
                 break;
             case 2:
                 break;

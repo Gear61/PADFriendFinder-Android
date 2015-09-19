@@ -27,6 +27,7 @@ import com.randomappsinc.padfriendfinder.Adapters.NavDrawerAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.R;
+import com.randomappsinc.padfriendfinder.SupportedLeadsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
@@ -98,8 +99,17 @@ public class NavigationDrawerFragment extends Fragment {
         super.onResume();
         String imageUrl = "http://www.puzzledragonx.com/en/img/book/" +
                 String.valueOf(PreferencesManager.get().getAvatarId()) + ".png";
-        Picasso.with(getActivity()).load(imageUrl).placeholder(R.mipmap.mystery_creature).into(userAvatar);
+        Picasso.with(getActivity()).load(imageUrl).error(R.mipmap.mystery_creature)
+                .placeholder(R.mipmap.mystery_creature).into(userAvatar);
         padId.setText(PreferencesManager.get().getPadId());
+    }
+
+    @OnClick(R.id.user_avatar)
+    public void onAvatarClick(View view)
+    {
+        Intent intent = new Intent(getActivity(), SupportedLeadsActivity.class);
+        intent.putExtra(Constants.CHOOSE_AVATAR_MODE, true);
+        startActivity(intent);
     }
 
     @OnClick(R.id.pad_id)

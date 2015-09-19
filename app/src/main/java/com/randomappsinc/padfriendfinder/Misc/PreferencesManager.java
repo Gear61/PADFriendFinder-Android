@@ -86,6 +86,6 @@ public class PreferencesManager
 
     public void setAvatarId(int avatarId)
     {
-        prefs.edit().putInt(AVATAR_ID_KEY, avatarId);
+        prefs.edit().putInt(AVATAR_ID_KEY, avatarId).apply();
     }
 }

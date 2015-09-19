@@ -93,4 +93,5 @@
         <item>@string/choose_avatar</item>
         <item>@string/rate_us</item>
     </string-array>
+    <string name="choose_avatar_label">Choose Avatar</string>
 </resources>
