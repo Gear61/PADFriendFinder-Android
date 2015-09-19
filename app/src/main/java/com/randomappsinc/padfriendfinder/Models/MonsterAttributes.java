@@ -37,8 +37,6 @@ public class MonsterAttributes implements Parcelable, Comparable<MonsterAttribut
     }
 
     public void setImageUrl(String imageUrl) {
-        String monsterId = imageUrl.replace("http://www.puzzledragonx.com/en/img/book/", "").replace(".png", "");
-        this.monsterId = Integer.valueOf(monsterId);
         this.imageUrl = imageUrl;
     }
 
@@ -84,6 +82,11 @@ public class MonsterAttributes implements Parcelable, Comparable<MonsterAttribut
 
     public int getMonsterId()
     {
+        if (monsterId == 0)
+        {
+            String idString = imageUrl.replace("http://www.puzzledragonx.com/en/img/book/", "").replace(".png", "");
+            return Integer.valueOf(idString);
+        }
         return monsterId;
     }
 

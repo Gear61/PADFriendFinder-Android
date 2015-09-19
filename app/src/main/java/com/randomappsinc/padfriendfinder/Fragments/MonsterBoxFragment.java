@@ -223,16 +223,16 @@ public class MonsterBoxFragment extends Fragment
                     intent.putExtra(Constants.MODE_KEY, Constants.UPDATE_MODE);
                     startActivity(intent);
                 }
-                else if (action.startsWith(Constants.DELETE))
-                {
-                    showMonsterDeleteDialog(monsterName);
-                }
                 else if (action.startsWith(Constants.SET)) {
                     int monsterId = boxAdapter.getItem(position).getMonsterId();
                     PreferencesManager.get().setAvatarId(monsterId);
                     EventBus.getDefault().post(new MessageEvent(Constants.UPDATE_AVATAR_KEY));
                     Toast.makeText(getActivity(), "Your avatar is now " + boxAdapter.getItem(position).getName() + ".",
                             Toast.LENGTH_SHORT).show();
+                }
+                else if (action.startsWith(Constants.DELETE))
+                {
+                    showMonsterDeleteDialog(monsterName);
                 }
             }
         });
