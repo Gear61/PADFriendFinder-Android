@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.randomappsinc.padfriendfinder.Adapters.SettingsAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
@@ -16,6 +17,7 @@ import com.randomappsinc.padfriendfinder.SupportedLeadsActivity;
 
 import java.util.Arrays;
 import java.util.List;
+import android.net.Uri;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -51,6 +53,12 @@ public class SettingsActivity extends AppCompatActivity {
                 intent.putExtra(Constants.CHOOSE_AVATAR_MODE, true);
                 break;
             case 2:
+                Uri uri =  Uri.parse("market://details?id=" + getApplicationContext().getPackageName());
+                intent = new Intent(Intent.ACTION_VIEW, uri);
+                if (!(getPackageManager().queryIntentActivities(intent, 0).size() > 0)) {
+                    Toast.makeText(this, "Unable to open up the AppStore.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 break;
         }
         startActivity(intent);
