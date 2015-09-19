@@ -1,12 +1,16 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.randomappsinc.padfriendfinder.Adapters.SettingsAdapter;
+import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.R;
 
 import java.util.Arrays;
@@ -14,6 +18,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnItemClick;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -28,6 +33,24 @@ public class SettingsActivity extends AppCompatActivity {
 
         List<String> optionsList = Arrays.asList(getResources().getStringArray(R.array.settings_options));
         settingsOptions.setAdapter(new SettingsAdapter(this, android.R.layout.simple_dropdown_item_1line, optionsList));
+    }
+
+    @OnItemClick(R.id.settings_options)
+    public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id)
+    {
+        Intent intent = null;
+        switch (position)
+        {
+            case 0:
+                intent = new Intent(this, PadIdActivity.class);
+                intent.putExtra(Constants.SETTINGS_KEY, true);
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+        }
+        startActivity(intent);
     }
 
     @Override

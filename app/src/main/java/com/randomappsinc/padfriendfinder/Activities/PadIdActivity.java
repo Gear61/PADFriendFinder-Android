@@ -34,6 +34,7 @@ public class PadIdActivity extends AppCompatActivity
 {
     @Bind(R.id.padID_textView) TextView padID_textView;
     @Bind(R.id.pad_id_input) EditText padIdInput;
+
     private Context context;
     private boolean settingsMode;
     private idChangeReceiver idChangeReceiver;
@@ -54,7 +55,9 @@ public class PadIdActivity extends AppCompatActivity
         progressDialog = new ProgressDialog(context);
         progressDialog.setMessage(Constants.CHANGING_ID);
         if (settingsMode) {
-            padIdInput.setText(PreferencesManager.get().getPadId());
+            String currentPadId = PreferencesManager.get().getPadId();
+            padIdInput.setText(currentPadId);
+            padIdInput.setSelection(currentPadId.length());
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             padID_textView.setText(Constants.CHANGE_ID_STRING);
         }

@@ -1,6 +1,7 @@
 package com.randomappsinc.padfriendfinder.Fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -21,7 +22,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.randomappsinc.padfriendfinder.Activities.PadIdActivity;
 import com.randomappsinc.padfriendfinder.Adapters.NavDrawerAdapter;
+import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.R;
 import com.squareup.picasso.Picasso;
@@ -31,6 +34,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnItemClick;
 
 /**
@@ -96,6 +100,14 @@ public class NavigationDrawerFragment extends Fragment {
                 String.valueOf(PreferencesManager.get().getAvatarId()) + ".png";
         Picasso.with(getActivity()).load(imageUrl).placeholder(R.mipmap.mystery_creature).into(userAvatar);
         padId.setText(PreferencesManager.get().getPadId());
+    }
+
+    @OnClick(R.id.pad_id)
+    public void onPadIdClick(View view)
+    {
+        Intent intent = new Intent(getActivity(), PadIdActivity.class);
+        intent.putExtra(Constants.SETTINGS_KEY, true);
+        startActivity(intent);
     }
 
     @OnItemClick(R.id.nav_drawer_tabs)
