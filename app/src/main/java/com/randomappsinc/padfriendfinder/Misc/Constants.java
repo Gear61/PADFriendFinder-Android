@@ -13,12 +13,12 @@ public class Constants
     public static final String INCORRECT_FIRST_DIGIT_MESSAGE = "We only support NA right now, so a PAD ID's first" +
             " digit must be 3.";
     public static final String PAD_ID_CONFIRMATION = "PAD ID Confirmation";
-    public static final String CHANGE_ID_STRING = "Please enter in a new ID. Note: You may not change to an ID that's already in use.";
+    public static final String CHANGE_ID_STRING = "Please enter in your new PAD ID.";
     public static final String CHANGING_ID = "Changing your PAD ID...";
     public static final String ID_CHANGED = "PAD ID successfully changed.";
-    public static final String ID_INUSE = "PAD ID already in use.";
-    public static final String CANT_CHECK_ID = "Unable to change ID.";
-    public static final String ID_THE_SAME = "Can't change ID into itself.";
+    public static final String ID_ALREADY_IN_USE = "This PAD ID is already in use.";
+    public static final String CANT_CHANGE_ID = "We are unable to change your PAD ID at this time.";
+    public static final String ID_THE_SAME = "This is what your PAD ID already is.";
 
     // Monster search
     public static final String MONSTER_FORM_INCOMPLETE_MESSAGE = "Please fill in every field before submitting!";
@@ -93,4 +93,5 @@ public class Constants
 
     // Intent keys
     public static final String OTHERS_ID_KEY = "ID";
+    public static final String SETTINGS_KEY = "SETTINGS_MODE";
 }

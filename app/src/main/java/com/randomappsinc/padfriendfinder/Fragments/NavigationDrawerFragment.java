@@ -26,7 +26,6 @@ import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -80,8 +79,8 @@ public class NavigationDrawerFragment extends Fragment {
     {
         LinearLayout navDrawer = (LinearLayout) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         ButterKnife.bind(this, navDrawer);
-        List<String> tabsList = new ArrayList<>(Arrays.asList(getActivity().getResources().
-                getStringArray(R.array.nav_drawer_tabs)));
+        List<String> tabsList = Arrays.asList(getActivity().getResources().
+                getStringArray(R.array.nav_drawer_tabs));
         mDrawerListView.setAdapter(new NavDrawerAdapter(getActivity(),
                 android.R.layout.simple_dropdown_item_1line, tabsList));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);

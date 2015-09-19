@@ -46,7 +46,7 @@ public class PadIdActivity extends AppCompatActivity
         context = this;
         setContentView(R.layout.pad_id_form);
         ButterKnife.bind(this);
-        settingsMode = checkSettingsMode();
+        settingsMode = getIntent().getBooleanExtra(Constants.SETTINGS_KEY, false);
 
         idChangeReceiver = new idChangeReceiver();
         this.registerReceiver(idChangeReceiver, new IntentFilter(Constants.ID_CHECKED_KEY));
@@ -60,32 +60,28 @@ public class PadIdActivity extends AppCompatActivity
         }
     }
 
-    private boolean checkSettingsMode() {
-        Bundle extras= getIntent().getExtras();
-        if (extras == null)
-            return false;
-        else
-            return true;
-    }
-
     @OnClick(R.id.submit_pad_id)
     public void onClick(View v)
     {
         final String input = padIdInput.getText().toString();
-
         if (FormUtils.validatePadId(padIdInput.getText().toString()))
         {
             FormUtils.hideKeyboard(this);
             if (!settingsMode)
+            {
                 showDialog(input);
+            }
             else
             {
-                if (!input.equals(PreferencesManager.get().getPadId())) {
+                if (!input.equals(PreferencesManager.get().getPadId()))
+                {
                     progressDialog.show();
                     new ChangeID(context, input).execute();
                 }
                 else
+                {
                     Toast.makeText(context, Constants.ID_THE_SAME, Toast.LENGTH_LONG).show();
+                }
             }
         }
     }
@@ -129,10 +125,10 @@ public class PadIdActivity extends AppCompatActivity
                 finish();
             }
             else if (status == 400) {
-                Toast.makeText(context, Constants.ID_INUSE, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, Constants.ID_ALREADY_IN_USE, Toast.LENGTH_SHORT).show();
             }
             else {
-                Toast.makeText(context,  Constants.CANT_CHECK_ID, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,  Constants.CANT_CHANGE_ID, Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -1,29 +1,33 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
+import android.widget.ListView;
 
+import com.randomappsinc.padfriendfinder.Adapters.SettingsAdapter;
 import com.randomappsinc.padfriendfinder.R;
+
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    @Bind(R.id.change_id) TextView changeId;
+    @Bind(R.id.settings_options) ListView settingsOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_layout);
+        setContentView(R.layout.settings);
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        List<String> optionsList = Arrays.asList(getResources().getStringArray(R.array.settings_options));
+        settingsOptions.setAdapter(new SettingsAdapter(this, android.R.layout.simple_dropdown_item_1line, optionsList));
     }
 
     @Override
@@ -31,13 +35,6 @@ public class SettingsActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.blank_menu, menu);
         return true;
-    }
-
-    @OnClick(R.id.change_id)
-    public void onClick(View view) {
-        Intent intent = new Intent(this, PadIdActivity.class);
-        intent.putExtra("SETTINGS_MODE", true);
-        startActivity(intent);
     }
 
     @Override
