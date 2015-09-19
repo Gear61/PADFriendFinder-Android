@@ -90,10 +90,12 @@ public class Constants
     public static final String FIND_OTHER = "Find other";
     public static final String EDIT = "Edit";
     public static final String DELETE = "Delete";
+    public static final String SET = "Set";
     public static final String DELETE_MONSTER_CONFIRMATION = "Delete Monster Confirmation";
 
     // Intent keys
     public static final String OTHERS_ID_KEY = "ID";
     public static final String SETTINGS_KEY = "SETTINGS_MODE";
     public static final String CHOOSE_AVATAR_MODE = "chooseAvatarMode";
+    public static final String UPDATE_AVATAR_KEY = "update_avatar";
 }

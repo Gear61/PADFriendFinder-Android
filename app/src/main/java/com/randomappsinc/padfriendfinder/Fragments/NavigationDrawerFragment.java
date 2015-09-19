@@ -2,10 +2,8 @@ package com.randomappsinc.padfriendfinder.Fragments;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -26,6 +24,7 @@ import com.randomappsinc.padfriendfinder.Activities.PadIdActivity;
 import com.randomappsinc.padfriendfinder.Adapters.NavDrawerAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
+import com.randomappsinc.padfriendfinder.Models.MessageEvent;
 import com.randomappsinc.padfriendfinder.R;
 import com.randomappsinc.padfriendfinder.SupportedLeadsActivity;
 import com.squareup.picasso.Picasso;
@@ -37,6 +36,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -46,7 +46,6 @@ import butterknife.OnItemClick;
 public class NavigationDrawerFragment extends Fragment {
 
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
-    private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
     private NavigationDrawerCallbacks mCallbacks;
     private android.support.v7.app.ActionBarDrawerToggle mDrawerToggle;
 
@@ -58,7 +57,6 @@ public class NavigationDrawerFragment extends Fragment {
     @Bind(R.id.pad_id) TextView padId;
 
     private int mCurrentSelectedPosition = 0;
-    private boolean mUserLearnedDrawer;
 
     public NavigationDrawerFragment() {
     }
@@ -68,6 +66,27 @@ public class NavigationDrawerFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    public void onEvent(MessageEvent event){
+        if (event.title.equals(Constants.UPDATE_AVATAR_KEY)) {
+            String imageUrl = "http://www.puzzledragonx.com/en/img/book/" +
+                    String.valueOf(PreferencesManager.get().getAvatarId()) + ".png";
+            Picasso.with(getActivity()).load(imageUrl).error(R.mipmap.mystery_creature)
+                    .placeholder(R.mipmap.mystery_creature).into(userAvatar);
         }
     }
 
@@ -168,7 +187,6 @@ public class NavigationDrawerFragment extends Fragment {
                 if (!isAdded()) {
                     return;
                 }
-
                 getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
 
@@ -178,16 +196,6 @@ public class NavigationDrawerFragment extends Fragment {
                 if (!isAdded()) {
                     return;
                 }
-
-                if (!mUserLearnedDrawer) {
-                    // The user manually opened the drawer; store this flag to prevent auto-showing
-                    // the navigation drawer automatically in the future.
-                    mUserLearnedDrawer = true;
-                    SharedPreferences sp = PreferenceManager
-                            .getDefaultSharedPreferences(getActivity());
-                    sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).apply();
-                }
-
                 getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
         };

@@ -27,4 +27,5 @@ dependencies {
     compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
     compile 'com.beardedhen:androidbootstrap:1.2.3'
     compile 'com.getbase:floatingactionbutton:1.10.0'
+    compile 'de.greenrobot:eventbus:2.4.0'
 }
