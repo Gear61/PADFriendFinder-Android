@@ -50,7 +50,11 @@ public class SettingsAdapter extends ArrayAdapter<String>
         {
             holder.itemIcon.setIcon(context.getString(R.string.choose_avatar_icon));
         }
-        else if (tabName.equals(context.getString(R.string.rate_us)))
+        else if (tabName.equals(context.getString(R.string.send_feedback)))
+        {
+            holder.itemIcon.setIcon(context.getString(R.string.email_icon));
+        }
+        else if (tabName.equals(context.getString(R.string.rate_this_app)))
         {
             holder.itemIcon.setIcon(context.getString(R.string.rate_us_icon));
         }

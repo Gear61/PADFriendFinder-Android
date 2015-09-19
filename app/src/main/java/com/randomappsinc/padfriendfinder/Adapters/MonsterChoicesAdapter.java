@@ -26,7 +26,7 @@ public class MonsterChoicesAdapter extends BaseAdapter
         this.context = context;
         this.monsterChoices = new ArrayList<>();
         this.monsterChoices.add(Constants.FIND_OTHER + " \"" + monsterName + "\"");
-        this.monsterChoices.add(Constants.EDIT + " \"" + monsterName + "\"");
+        this.monsterChoices.add(Constants.UPDATE + " \"" + monsterName + "\"");
         this.monsterChoices.add(Constants.SET + " \"" + monsterName + "\"" + " as your avatar");
         this.monsterChoices.add(Constants.DELETE + " \"" + monsterName + "\"");
     }

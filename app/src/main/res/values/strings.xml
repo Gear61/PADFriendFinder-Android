@@ -57,6 +57,7 @@
     <string name="choose_avatar_icon">fa-file-picture-o</string>
     <string name="rate_us_icon">fa-thumbs-up</string>
     <string name="delete_icon">fa-remove</string>
+    <string name="email_icon">fa-envelope</string>
 
     <!-- Favorite String(s) -->
     <string name="favsInstructions">Click on any ID to look at their monster box.
@@ -88,11 +89,16 @@
     <!-- Settings -->
     <string name="change_pad_id">Change your PAD ID</string>
     <string name="choose_avatar">Choose your avatar</string>
-    <string name="rate_us">Rate this app</string>
+    <string name="send_feedback">Send feedback</string>
+    <string name="rate_this_app">Rate this app</string>
     <string-array name="settings_options">
         <item>@string/change_pad_id</item>
         <item>@string/choose_avatar</item>
-        <item>@string/rate_us</item>
+        <item>@string/send_feedback</item>
+        <item>@string/rate_this_app</item>
     </string-array>
     <string name="choose_avatar_label">Choose Avatar</string>
+    <string name="play_store_error">Unable to open the Play Store.</string>
+    <string name="support_email">chessnone@gmail.com</string>
+    <string name="email_subject">PAD Friend Finder Feedback (Android)</string>
 </resources>

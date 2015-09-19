@@ -216,7 +216,7 @@ public class MonsterBoxFragment extends Fragment
                     intent.putExtra(Constants.MODE_KEY, Constants.SEARCH_MODE);
                     startActivity(intent);
                 }
-                else if (action.startsWith(Constants.EDIT))
+                else if (action.startsWith(Constants.UPDATE))
                 {
                     Intent intent = new Intent(context, MonsterFormActivity.class);
                     intent.putExtra(Constants.MONSTER_KEY, boxAdapter.getItem(position));

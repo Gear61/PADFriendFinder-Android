@@ -53,10 +53,19 @@ public class SettingsActivity extends AppCompatActivity {
                 intent.putExtra(Constants.CHOOSE_AVATAR_MODE, true);
                 break;
             case 2:
+                String uriText = "mailto:" + getString(R.string.support_email) +
+                                 "?subject=" + Uri.encode(getString(R.string.email_subject));
+                Uri mailUri = Uri.parse(uriText);
+                Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
+                sendIntent.setData(mailUri);
+                startActivity(Intent.createChooser(sendIntent, "Send email"));
+                return;
+            case 3:
                 Uri uri =  Uri.parse("market://details?id=" + getApplicationContext().getPackageName());
                 intent = new Intent(Intent.ACTION_VIEW, uri);
-                if (!(getPackageManager().queryIntentActivities(intent, 0).size() > 0)) {
-                    Toast.makeText(this, "Unable to open up the AppStore.", Toast.LENGTH_SHORT).show();
+                if (!(getPackageManager().queryIntentActivities(intent, 0).size() > 0))
+                {
+                    Toast.makeText(this, getString(R.string.play_store_error), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 break;

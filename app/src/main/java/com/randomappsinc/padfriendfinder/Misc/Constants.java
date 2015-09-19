@@ -88,7 +88,7 @@ public class Constants
             "Please try again later.";
     public static final String DELETING_MONSTER_MESSAGE = "Deleting your monster from our database...";
     public static final String FIND_OTHER = "Find other";
-    public static final String EDIT = "Edit";
+    public static final String UPDATE = "Update";
     public static final String DELETE = "Delete";
     public static final String SET = "Set";
     public static final String DELETE_MONSTER_CONFIRMATION = "Delete Monster Confirmation";
