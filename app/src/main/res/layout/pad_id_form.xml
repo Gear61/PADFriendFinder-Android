@@ -8,7 +8,8 @@
     <TextView
         android:text="@string/intro"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/padID_textView"/>
 
     <EditText
         android:id="@+id/pad_id_input"
