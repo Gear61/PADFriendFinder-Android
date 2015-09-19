@@ -42,7 +42,6 @@ import butterknife.OnEditorAction;
 public class OthersBoxActivity extends AppCompatActivity
 {
     @Bind(R.id.star_icon) FontAwesomeText star;
-    @Bind(R.id.clipboard_icon) FontAwesomeText clipboard;
     @Bind(R.id.others_list) ListView othersList;
     @Bind(R.id.loading_box) ProgressBar loadingBox;
     @Bind(R.id.nothing) TextView nothing;

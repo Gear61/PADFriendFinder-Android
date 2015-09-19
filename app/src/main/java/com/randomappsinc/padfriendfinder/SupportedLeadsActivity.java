@@ -9,10 +9,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.randomappsinc.padfriendfinder.Activities.MonsterFormActivity;
 import com.randomappsinc.padfriendfinder.Adapters.SupportedLeadsAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
+import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 
 import butterknife.Bind;
@@ -25,6 +27,7 @@ public class SupportedLeadsActivity extends AppCompatActivity
     @Bind(R.id.monster_matches) ListView monsterMatches;
 
     private SupportedLeadsAdapter supportedLeadsAdapter;
+    private boolean chooseAvatarMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,6 +37,11 @@ public class SupportedLeadsActivity extends AppCompatActivity
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        chooseAvatarMode = getIntent().getBooleanExtra(Constants.CHOOSE_AVATAR_MODE, false);
+        if (chooseAvatarMode)
+        {
+            setTitle(getString(R.string.choose_avatar_label));
+        }
         supportedLeadsAdapter = new SupportedLeadsAdapter(this);
         monsterMatches.setAdapter(supportedLeadsAdapter);
     }
@@ -47,11 +55,20 @@ public class SupportedLeadsActivity extends AppCompatActivity
     @OnItemClick(R.id.monster_matches)
     public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id)
     {
-        MonsterAttributes monster = supportedLeadsAdapter.getItem(position);
-        Intent intent = new Intent(this, MonsterFormActivity.class);
-        intent.putExtra(Constants.NAME_KEY, monster.getName());
-        intent.putExtra(Constants.MODE_KEY, Constants.SEARCH_MODE);
-        startActivity(intent);
+        if (chooseAvatarMode)
+        {
+            PreferencesManager.get().setAvatarId(supportedLeadsAdapter.getItem(position).getMonsterId());
+            Toast.makeText(this, "Your avatar is now " + supportedLeadsAdapter.getItem(position).getName() + ".",
+                    Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            MonsterAttributes monster = supportedLeadsAdapter.getItem(position);
+            Intent intent = new Intent(this, MonsterFormActivity.class);
+            intent.putExtra(Constants.NAME_KEY, monster.getName());
+            intent.putExtra(Constants.MODE_KEY, Constants.SEARCH_MODE);
+            startActivity(intent);
+        }
     }
 
     @Override

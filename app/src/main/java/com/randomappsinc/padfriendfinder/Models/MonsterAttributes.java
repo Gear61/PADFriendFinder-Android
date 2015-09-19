@@ -80,6 +80,11 @@ public class MonsterAttributes implements Parcelable, Comparable<MonsterAttribut
         return name;
     }
 
+    public int getMonsterId()
+    {
+        return monsterId;
+    }
+
     // Setters
     public void setName(String name)
     {

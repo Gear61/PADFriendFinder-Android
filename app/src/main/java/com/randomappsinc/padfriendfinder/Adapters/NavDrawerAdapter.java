@@ -22,7 +22,8 @@ import butterknife.ButterKnife;
 /**
  * Created by Alex on 1/18/2015.
  */
-public class NavDrawerAdapter extends ArrayAdapter<String> {
+public class NavDrawerAdapter extends ArrayAdapter<String>
+{
     private List<String> tabNames;
     private Context context;
 

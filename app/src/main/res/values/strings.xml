@@ -53,6 +53,9 @@
     <string name="search_icon">fa-search</string>
     <string name="settings_icon">fa-gear</string>
     <string name="clipboard_icon">fa-clipboard</string>
+    <string name="change_pad_id_icon">fa-edit</string>
+    <string name="choose_avatar_icon">fa-file-picture-o</string>
+    <string name="rate_us_icon">fa-thumbs-up</string>
 
     <!-- Favorite String(s) -->
     <string name="favsInstructions">Click on any ID to look at their monster box.
@@ -76,9 +79,19 @@
 
     <!-- Progress -->
     <string name="loading_monster_list">Loading monster list&#8230;</string>
-    <string name="title_activity_settings">Settings</string>
 
     <!-- Supported leads -->
     <string name="supported_leads_label">Supported Leads</string>
     <string name="search">Search</string>
+
+    <!-- Settings -->
+    <string name="change_pad_id">Change your PAD ID</string>
+    <string name="choose_avatar">Choose your avatar</string>
+    <string name="rate_us">Rate this app</string>
+    <string-array name="settings_options">
+        <item>@string/change_pad_id</item>
+        <item>@string/choose_avatar</item>
+        <item>@string/rate_us</item>
+    </string-array>
+    <string name="choose_avatar_label">Choose Avatar</string>
 </resources>

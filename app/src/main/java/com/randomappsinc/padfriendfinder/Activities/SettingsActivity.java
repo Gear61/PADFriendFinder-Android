@@ -6,24 +6,54 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
+import com.randomappsinc.padfriendfinder.Adapters.SettingsAdapter;
+import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.R;
+import com.randomappsinc.padfriendfinder.SupportedLeadsActivity;
+
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import butterknife.OnItemClick;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    @Bind(R.id.change_id) TextView changeId;
+    @Bind(R.id.settings_options) ListView settingsOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_layout);
+        setContentView(R.layout.settings);
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        List<String> optionsList = Arrays.asList(getResources().getStringArray(R.array.settings_options));
+        settingsOptions.setAdapter(new SettingsAdapter(this, android.R.layout.simple_dropdown_item_1line, optionsList));
+    }
+
+    @OnItemClick(R.id.settings_options)
+    public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id)
+    {
+        Intent intent = null;
+        switch (position)
+        {
+            case 0:
+                intent = new Intent(this, PadIdActivity.class);
+                intent.putExtra(Constants.SETTINGS_KEY, true);
+                break;
+            case 1:
+                intent = new Intent(this, SupportedLeadsActivity.class);
+                intent.putExtra(Constants.CHOOSE_AVATAR_MODE, true);
+                break;
+            case 2:
+                break;
+        }
+        startActivity(intent);
     }
 
     @Override
@@ -31,13 +61,6 @@ public class SettingsActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.blank_menu, menu);
         return true;
-    }
-
-    @OnClick(R.id.change_id)
-    public void onClick(View view) {
-        Intent intent = new Intent(this, PadIdActivity.class);
-        intent.putExtra("SETTINGS_MODE", true);
-        startActivity(intent);
     }
 
     @Override
