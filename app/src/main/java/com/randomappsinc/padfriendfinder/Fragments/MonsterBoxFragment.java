@@ -27,6 +27,7 @@ import com.randomappsinc.padfriendfinder.Adapters.MonsterChoicesAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.MonsterBoxManager;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
+import com.randomappsinc.padfriendfinder.Models.MessageEvent;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.R;
@@ -37,6 +38,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by alexanderchiou on 9/15/15.
@@ -224,6 +226,13 @@ public class MonsterBoxFragment extends Fragment
                 else if (action.startsWith(Constants.DELETE))
                 {
                     showMonsterDeleteDialog(monsterName);
+                }
+                else if (action.startsWith(Constants.SET)) {
+                    int monsterId = boxAdapter.getItem(position).getMonsterId();
+                    PreferencesManager.get().setAvatarId(monsterId);
+                    EventBus.getDefault().post(new MessageEvent(Constants.UPDATE_AVATAR_KEY));
+                    Toast.makeText(getActivity(), "Your avatar is now " + boxAdapter.getItem(position).getName() + ".",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });

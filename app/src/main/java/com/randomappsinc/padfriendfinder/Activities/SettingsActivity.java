@@ -1,6 +1,7 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -17,7 +18,6 @@ import com.randomappsinc.padfriendfinder.SupportedLeadsActivity;
 
 import java.util.Arrays;
 import java.util.List;
-import android.net.Uri;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

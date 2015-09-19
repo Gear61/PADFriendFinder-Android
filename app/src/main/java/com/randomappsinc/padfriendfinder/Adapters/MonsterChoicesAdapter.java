@@ -27,6 +27,7 @@ public class MonsterChoicesAdapter extends BaseAdapter
         this.monsterChoices = new ArrayList<>();
         this.monsterChoices.add(Constants.FIND_OTHER + " \"" + monsterName + "\"");
         this.monsterChoices.add(Constants.EDIT + " \"" + monsterName + "\"");
+        this.monsterChoices.add(Constants.SET + " \"" + monsterName + "\"" + " as your avatar");
         this.monsterChoices.add(Constants.DELETE + " \"" + monsterName + "\"");
     }
 
@@ -69,6 +70,9 @@ public class MonsterChoicesAdapter extends BaseAdapter
                 iconKey = context.getString(R.string.edit_icon);
                 break;
             case 2:
+                iconKey = context.getString(R.string.choose_avatar_icon);
+                break;
+            case 3:
                 iconKey = context.getString(R.string.delete_icon);
                 break;
         }
