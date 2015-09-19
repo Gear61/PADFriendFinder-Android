@@ -53,15 +53,16 @@
     <string name="search_icon">fa-search</string>
     <string name="settings_icon">fa-gear</string>
     <string name="clipboard_icon">fa-clipboard</string>
-    <string name="change_pad_id_icon">fa-edit</string>
+    <string name="edit_icon">fa-edit</string>
     <string name="choose_avatar_icon">fa-file-picture-o</string>
     <string name="rate_us_icon">fa-thumbs-up</string>
+    <string name="delete_icon">fa-remove</string>
 
     <!-- Favorite String(s) -->
     <string name="favsInstructions">Click on any ID to look at their monster box.
         Click on the star next to any ID to favorite/unfavorite it.</string>
     <string name="noFavs">You do not have any favorited IDs to display.</string>
-    <string name="title_activity_favorites">Favorites</string>
+    <string name="favorites_label">Favorites</string>
 
     <!-- Navigation drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>

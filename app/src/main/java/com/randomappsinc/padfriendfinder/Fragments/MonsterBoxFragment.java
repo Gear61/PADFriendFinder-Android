@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -222,13 +223,38 @@ public class MonsterBoxFragment extends Fragment
                 }
                 else if (action.startsWith(Constants.DELETE))
                 {
-                    deletingMonsterDialog.show();
-                    new DeleteMonster(context, monsterName).execute();
+                    showMonsterDeleteDialog(monsterName);
                 }
             }
         });
         monsterChosenDialog.setCanceledOnTouchOutside(true);
         monsterChosenDialog.setCancelable(true);
+    }
+
+    private void showMonsterDeleteDialog(final String monsterName) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
+        alertDialogBuilder.setTitle(Constants.DELETE_MONSTER_CONFIRMATION);
+        alertDialogBuilder.setMessage("Are you sure you want to delete \"" + monsterName + "\" from your box?")
+                .setCancelable(true)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        deletingMonsterDialog.show();
+                        new DeleteMonster(context, monsterName).execute();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.setCanceledOnTouchOutside(true);
+        alertDialog.show();
     }
 
     @OnClick(R.id.add_monster)
