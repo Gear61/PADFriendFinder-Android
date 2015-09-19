@@ -74,7 +74,10 @@ public class MonsterChoicesAdapter extends BaseAdapter
         }
         holder.itemIcon.setIcon(iconKey);
 
-        view.setPadding(5, 5, 5, 5);
+        float scale = context.getResources().getDisplayMetrics().density;
+        int fiveDp = (int) (5 * scale + 0.5f);
+        int tenDp = (int) (10 * scale + 0.5f);
+        view.setPadding(fiveDp, fiveDp, tenDp, fiveDp);
         return view;
     }
 }
