@@ -15,6 +15,10 @@ public class Constants
     public static final String PAD_ID_CONFIRMATION = "PAD ID Confirmation";
     public static final String CHANGE_ID_STRING = "Please enter in a new ID. Note: You may not change to an ID that's already in use.";
     public static final String CHANGING_ID = "Changing your PAD ID...";
+    public static final String ID_CHANGED = "PAD ID successfully changed.";
+    public static final String ID_INUSE = "PAD ID already in use.";
+    public static final String CANT_CHECK_ID = "Unable to change ID.";
+    public static final String ID_THE_SAME = "Can't change ID into itself.";
 
     // Monster search
     public static final String MONSTER_FORM_INCOMPLETE_MESSAGE = "Please fill in every field before submitting!";
