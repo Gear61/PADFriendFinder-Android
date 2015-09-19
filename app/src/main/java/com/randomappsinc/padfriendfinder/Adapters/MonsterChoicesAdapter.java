@@ -5,9 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 import com.randomappsinc.padfriendfinder.Misc.Constants;
+import com.randomappsinc.padfriendfinder.Models.FontAwesomeViewHolder;
 import com.randomappsinc.padfriendfinder.R;
 
 import java.util.ArrayList;
@@ -42,31 +42,39 @@ public class MonsterChoicesAdapter extends BaseAdapter
         return position;
     }
 
-    public static class ViewHolder
-    {
-        public TextView action;
-    }
-
     // Renders the ListView item that the user has scrolled to or is about to scroll to
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View getView(int position, View view, ViewGroup parent)
     {
-        View v = convertView;
-        final ViewHolder holder;
-        if (v == null)
+        FontAwesomeViewHolder holder;
+        if (view == null)
         {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(R.layout.choices_dialog_item, parent, false);
-            holder = new ViewHolder();
-            holder.action = (TextView) v.findViewById(R.id.action);
-            v.setTag(holder);
+            view = vi.inflate(R.layout.font_awesome_list_item, parent, false);
+            holder = new FontAwesomeViewHolder(view);
+            view.setTag(holder);
         }
         else
         {
-            holder = (ViewHolder) v.getTag();
+            holder = (FontAwesomeViewHolder) view.getTag();
         }
 
-        holder.action.setText(monsterChoices.get(position));
+        holder.itemName.setText(monsterChoices.get(position));
+        String iconKey = null;
+        switch (position)
+        {
+            case 0:
+                iconKey = context.getString(R.string.search_icon);
+                break;
+            case 1:
+                iconKey = context.getString(R.string.edit_icon);
+                break;
+            case 2:
+                iconKey = context.getString(R.string.delete_icon);
+                break;
+        }
+        holder.itemIcon.setIcon(iconKey);
 
-        return v;
+        view.setPadding(5, 5, 5, 5);
+        return view;
     }
 }

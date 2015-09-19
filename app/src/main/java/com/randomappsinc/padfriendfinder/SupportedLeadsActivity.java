@@ -16,6 +16,7 @@ import com.randomappsinc.padfriendfinder.Adapters.SupportedLeadsAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
+import com.randomappsinc.padfriendfinder.Utils.FormUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -57,6 +58,7 @@ public class SupportedLeadsActivity extends AppCompatActivity
     {
         if (chooseAvatarMode)
         {
+            FormUtils.hideKeyboard(this);
             PreferencesManager.get().setAvatarId(supportedLeadsAdapter.getItem(position).getMonsterId());
             Toast.makeText(this, "Your avatar is now " + supportedLeadsAdapter.getItem(position).getName() + ".",
                     Toast.LENGTH_SHORT).show();

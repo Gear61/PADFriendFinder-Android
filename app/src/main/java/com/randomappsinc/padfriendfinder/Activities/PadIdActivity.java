@@ -102,7 +102,7 @@ public class PadIdActivity extends AppCompatActivity
                         PreferencesManager.get().setPadId(input);
                         Intent intent = new Intent(context, MainActivity.class);
                         startActivity(intent);
-                        Toast.makeText(getApplicationContext(), Constants.WELCOME_MESSAGE, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, Constants.WELCOME_MESSAGE, Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 })
