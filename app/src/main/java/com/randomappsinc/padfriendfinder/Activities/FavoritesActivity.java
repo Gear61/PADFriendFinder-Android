@@ -46,7 +46,8 @@ public class FavoritesActivity extends AppCompatActivity {
 
     @Override
     public void onResume() {
-        favoritesAdapter.notifyDataSetChanged();
+        List<String> favorites = new ArrayList<>(PreferencesManager.get().getFavorites());
+        favoritesAdapter.addFavorites(favorites);
         super.onResume();
     }
 
