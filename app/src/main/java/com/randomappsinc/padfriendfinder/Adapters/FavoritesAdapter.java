@@ -29,7 +29,7 @@ public class FavoritesAdapter extends BaseAdapter {
         this.favorites = new ArrayList<>();
     }
 
-    public void addFavorites(List<String> favorites) {
+    public void setFavorites(List<String> favorites) {
         this.favorites = favorites;
         notifyDataSetChanged();
     }
@@ -87,6 +87,7 @@ public class FavoritesAdapter extends BaseAdapter {
             holder.star.setTextColor(context.getResources().getColor(R.color.gold));
         else
             holder.star.setTextColor(context.getResources().getColor(R.color.silver));
+
         holder.star.setOnClickListener(new FontAwesomeText.OnClickListener() {
             @Override
             public void onClick(View view) {

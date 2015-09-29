@@ -12,18 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <com.beardedhen.androidbootstrap.FontAwesomeText
-            android:id="@+id/search_icon"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginRight="10dp"
-            fontawesometext:fa_icon="@string/search_icon"
-            android:textColor="@color/dark_grey"
-            android:textSize="22sp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
-
         <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,6 +21,17 @@
             android:inputType="number"
             android:maxLength="9"
             android:imeOptions="actionSearch"/>
+
+        <com.beardedhen.androidbootstrap.FontAwesomeText
+            android:id="@+id/search_icon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="5dp"
+            fontawesometext:fa_icon="@string/search_icon"
+            android:textColor="@color/dark_grey"
+            android:textSize="22sp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
 
     </RelativeLayout>
 
