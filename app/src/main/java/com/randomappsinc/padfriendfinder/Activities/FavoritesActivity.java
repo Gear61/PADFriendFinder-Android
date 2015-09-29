@@ -39,14 +39,15 @@ public class FavoritesActivity extends AppCompatActivity {
         List<String> favorites = new ArrayList<>(PreferencesManager.get().getFavorites());
         Collections.sort(favorites);
         favoritesAdapter = new FavoritesAdapter(this);
-        favoritesAdapter.addFavorites(favorites);
+        favoritesAdapter.setFavorites(favorites);
         favView.setAdapter(favoritesAdapter);
         display_stuff();
     }
 
     @Override
     public void onResume() {
-        favoritesAdapter.notifyDataSetChanged();
+        List<String> favorites = new ArrayList<>(PreferencesManager.get().getFavorites());
+        favoritesAdapter.setFavorites(favorites);
         super.onResume();
     }
 

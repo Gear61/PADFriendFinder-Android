@@ -143,6 +143,13 @@ public class OthersBoxActivity extends AppCompatActivity
         }
     }
 
+    //For when you're copy-pastaing an ID in instead of typing it.
+    @OnClick(R.id.search_icon)
+    public void onSearch(View view) {
+        if (FormUtils.validatePadId(othersId.getText().toString()))
+            displayResult(othersId.getText().toString());
+    }
+
     private class OthersBoxReceiver extends BroadcastReceiver
     {
         @Override
