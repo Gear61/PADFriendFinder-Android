@@ -52,6 +52,10 @@ public class NavDrawerAdapter extends ArrayAdapter<String>
         {
             holder.itemIcon.setIcon(context.getString(R.string.support_icon));
         }
+        else if (tabName.equals(context.getString(R.string.top_leaders)))
+        {
+            holder.itemIcon.setIcon(context.getString(R.string.rankings_icon));
+        }
         else if (tabName.equals(context.getString(R.string.id_search)))
         {
             holder.itemIcon.setIcon(context.getString(R.string.search_icon));

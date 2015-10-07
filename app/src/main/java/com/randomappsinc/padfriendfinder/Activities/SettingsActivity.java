@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.randomappsinc.padfriendfinder.Adapters.SettingsAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.R;
-import com.randomappsinc.padfriendfinder.SupportedLeadsActivity;
 
 import java.util.Arrays;
 import java.util.List;

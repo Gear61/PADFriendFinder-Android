@@ -41,6 +41,7 @@ public class Constants
     public static final String CHECK_ID_KEY = "changeID";
     public static final String ID_CHECKED_KEY ="ID_Checked";
     public static final String ID_STATUS_KEY = "status";
+    public static final String TOP_LEADERS_KEY = "topLeaders";
 
     // Activity communication/broadcasts
     public static final String MODE_KEY = "mode";
@@ -92,6 +93,9 @@ public class Constants
     public static final String DELETE = "Delete";
     public static final String SET = "Set";
     public static final String DELETE_MONSTER_CONFIRMATION = "Delete Monster Confirmation";
+
+    // Popular Leaders
+    public static final String FAILED_TO_FETCH = "We were unable to fetch the top leaders.";
 
     // Intent keys
     public static final String OTHERS_ID_KEY = "ID";

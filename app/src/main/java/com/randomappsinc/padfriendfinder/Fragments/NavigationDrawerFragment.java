@@ -21,12 +21,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.randomappsinc.padfriendfinder.Activities.PadIdActivity;
+import com.randomappsinc.padfriendfinder.Activities.SupportedLeadsActivity;
 import com.randomappsinc.padfriendfinder.Adapters.NavDrawerAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.Models.MessageEvent;
 import com.randomappsinc.padfriendfinder.R;
-import com.randomappsinc.padfriendfinder.SupportedLeadsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
