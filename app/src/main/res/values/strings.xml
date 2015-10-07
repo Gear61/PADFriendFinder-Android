@@ -47,6 +47,10 @@
     <string name="no_id_chosen">No ID chosen.</string>
     <string name="no_monsters_for_other">No monsters to display.</string>
 
+    <!-- Top Leaders -->
+    <string name="leader_count">Count:&#160;</string>
+    <string name="lvinstructions">Press on any leader to search for hypermaxed ones.</string>
+
     <!-- Font Awesome Icons -->
     <string name="star_icon">fa-star</string>
     <string name="support_icon">fa-support</string>
@@ -58,6 +62,7 @@
     <string name="rate_us_icon">fa-thumbs-up</string>
     <string name="delete_icon">fa-remove</string>
     <string name="email_icon">fa-envelope</string>
+    <string name="rankings_icon">fa-bar-chart</string>
 
     <!-- Favorite String(s) -->
     <string name="favsInstructions">Click on any ID to look at their monster box.
@@ -70,11 +75,13 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="favorites">Favorites</string>
     <string name="supported_leads">Supported Leads</string>
+    <string name ="top_leaders">Popular Leaders</string>
     <string name="id_search">ID Search</string>
     <string name="settings">Settings</string>
     <string-array name="nav_drawer_tabs">
         <item>@string/favorites</item>
         <item>@string/supported_leads</item>
+        <item>@string/top_leaders</item>
         <item>@string/id_search</item>
         <item>@string/settings</item>
     </string-array>
@@ -101,4 +108,5 @@
     <string name="play_store_error">Unable to open the Play Store.</string>
     <string name="support_email">chessnone@gmail.com</string>
     <string name="email_subject">PAD Friend Finder Feedback (Android)</string>
+    <string name="title_activity_top_leaders">Popular Leaders</string>
 </resources>

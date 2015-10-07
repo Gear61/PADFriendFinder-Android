@@ -23,38 +23,43 @@
             android:name=".Activities.PadIdActivity"
             android:label="@string/pad_id_label"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible">
+            android:windowSoftInputMode="stateVisible" >
         </activity>
         <activity
             android:name=".Activities.MonsterFormActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
             android:name=".Activities.FriendResultsActivity"
             android:label="@string/friend_results_label"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".Activities.OthersBoxActivity"
             android:label="@string/title_activity_others_box"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".Activities.FavoritesActivity"
             android:label="@string/favorites_label"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".Activities.SettingsActivity"
             android:label="@string/settings"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".SupportedLeadsActivity"
-            android:windowSoftInputMode="stateHidden"
+            android:name=".Activities.SupportedLeadsActivity"
             android:label="@string/supported_leads_label"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name=".Activities.TopLeadersActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_top_leaders" >
         </activity>
     </application>
 
