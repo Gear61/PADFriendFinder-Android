@@ -25,7 +25,7 @@ public class MonsterItemAdapter extends BaseAdapter {
     {
         this.context = context;
         this.options = new ArrayList<>();
-        this.options.add(Constants.ANY + " \"" + monsterName + "\"");
+        this.options.add(Constants.SEARCH + " \"" + monsterName + "\"");
         this.options.add(Constants.HYPERMAXD + " \"" + monsterName + "\"");
     }
 

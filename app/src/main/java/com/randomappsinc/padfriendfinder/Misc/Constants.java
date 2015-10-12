@@ -95,7 +95,7 @@ public class Constants
     public static final String DELETE_MONSTER_CONFIRMATION = "Delete Monster Confirmation";
 
     //Monster Item (For Supported Leaders and Popular Leaders ListViews)
-    public static final String ANY = "Display all";
+    public static final String SEARCH = "Search for";
     public static final String HYPERMAXD = "Display hypermax";
 
     // Popular Leaders

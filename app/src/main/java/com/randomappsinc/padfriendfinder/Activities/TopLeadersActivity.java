@@ -16,13 +16,10 @@ import android.widget.Toast;
 
 import com.randomappsinc.padfriendfinder.API.GetTopLeaders;
 import com.randomappsinc.padfriendfinder.API.JSONParser;
-import com.randomappsinc.padfriendfinder.Adapters.MonsterChoicesAdapter;
 import com.randomappsinc.padfriendfinder.Adapters.MonsterItemAdapter;
 import com.randomappsinc.padfriendfinder.Adapters.TopMonsterAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.MonsterServer;
-import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
-import com.randomappsinc.padfriendfinder.Models.MessageEvent;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.Models.TopLeader;
@@ -79,6 +76,7 @@ public class TopLeadersActivity extends AppCompatActivity {
         final MonsterItemAdapter adapter = new MonsterItemAdapter(context, monsterName);
         monsterChoices.setAdapter(adapter);
         final AlertDialog monsterChosenDialog = alertDialogBuilder.show();
+        //Setting up the AlertDialog above.
         monsterChoices.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
@@ -87,7 +85,6 @@ public class TopLeadersActivity extends AppCompatActivity {
                 monsterChosenDialog.dismiss();
                 String action = adapter.getItem(dialogPosition);
                 String name = topMonsterAdapter.getItem(position).getName();
-                MonsterAttributes monster;
                 MonsterAttributes monsterChosen = MonsterServer.getMonsterServer().getMonsterAttributes(name);
                 openSearchResults(action, name, monsterChosen, context);
             }
@@ -100,20 +97,23 @@ public class TopLeadersActivity extends AppCompatActivity {
     //Made its own separate function since SupportedLeadsActivity has the same onClick for its ListView
     static public void openSearchResults(String action, String name, MonsterAttributes monsterChosen, Context context) {
         MonsterAttributes monster;
-        if (action.startsWith(Constants.ANY)) {
-            monster = new MonsterAttributes(name, 1, 0, 0, 1);
-            monster.setImageUrl(monsterChosen.getImageUrl());
+        Intent intent;
+        if (action.startsWith(Constants.SEARCH)) {
+            intent = new Intent(context, MonsterFormActivity.class);
+            intent.putExtra(Constants.NAME_KEY, name);
+            intent.putExtra(Constants.MODE_KEY, Constants.SEARCH_MODE);
         }
         else {
             monster = monsterChosen;
             monster.setPlusEggs(Constants.MAX_PLUS_EGGS);
+            intent = new Intent(context, FriendResultsActivity.class);
+            intent.putExtra(Constants.MONSTER_KEY, monster);
         }
-        Intent intent = new Intent(context, FriendResultsActivity.class);
-        intent.putExtra(Constants.MONSTER_KEY, monster);
         context.startActivity(intent);
     }
 
 
+    //EventBus listener. Listens for a class to be broadcast, then executes onEcent() code once it receives the class
     public void onEvent(RestCallResponse restCallResponse) {
         topLeadersPB.setVisibility(View.GONE);
         if (restCallResponse.getStatusCode() == 200) {
