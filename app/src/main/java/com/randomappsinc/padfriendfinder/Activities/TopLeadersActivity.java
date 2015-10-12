@@ -89,22 +89,30 @@ public class TopLeadersActivity extends AppCompatActivity {
                 String name = topMonsterAdapter.getItem(position).getName();
                 MonsterAttributes monster;
                 MonsterAttributes monsterChosen = MonsterServer.getMonsterServer().getMonsterAttributes(name);
-                if (action.startsWith(Constants.ANY)) {
-                    monster = new MonsterAttributes(name, 1, 0, 0, 1);
-                    monster.setImageUrl(monsterChosen.getImageUrl());
-                }
-                else {
-                    monster = monsterChosen;
-                    monster.setPlusEggs(Constants.MAX_PLUS_EGGS);
-                }
-                Intent intent = new Intent(context, FriendResultsActivity.class);
-                intent.putExtra(Constants.MONSTER_KEY, monster);
-                startActivity(intent);
+                openSearchResults(action, name, monsterChosen, context);
             }
         });
         monsterChosenDialog.setCanceledOnTouchOutside(true);
         monsterChosenDialog.setCancelable(true);
     }
+
+    //This function loads the search resulsts once an item has been clicked on.
+    //Made its own separate function since SupportedLeadsActivity has the same onClick for its ListView
+    static public void openSearchResults(String action, String name, MonsterAttributes monsterChosen, Context context) {
+        MonsterAttributes monster;
+        if (action.startsWith(Constants.ANY)) {
+            monster = new MonsterAttributes(name, 1, 0, 0, 1);
+            monster.setImageUrl(monsterChosen.getImageUrl());
+        }
+        else {
+            monster = monsterChosen;
+            monster.setPlusEggs(Constants.MAX_PLUS_EGGS);
+        }
+        Intent intent = new Intent(context, FriendResultsActivity.class);
+        intent.putExtra(Constants.MONSTER_KEY, monster);
+        context.startActivity(intent);
+    }
+
 
     public void onEvent(RestCallResponse restCallResponse) {
         topLeadersPB.setVisibility(View.GONE);
