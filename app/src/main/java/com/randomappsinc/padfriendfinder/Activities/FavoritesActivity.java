@@ -3,10 +3,8 @@ package com.randomappsinc.padfriendfinder.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -63,18 +61,11 @@ public class FavoritesActivity extends AppCompatActivity {
     }
 
     @OnItemClick(R.id.favoritesView)
-    public void onItemClick(AdapterView<?> adapterView, View v, final int position, long id) {
+    public void onItemClick(int position) {
         String fav_id = favoritesAdapter.getItem(position); //I didn't create an adapter of a custom class so this is fine
         Intent intent = new Intent(this, OthersBoxActivity.class);
         intent.putExtra(Constants.OTHERS_ID_KEY, fav_id);
         startActivity(intent);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.blank_menu, menu);
-        return true;
     }
 
     @Override

@@ -13,10 +13,8 @@ import com.randomappsinc.padfriendfinder.Misc.MyApplication;
 /**
  * Created by alexanderchiou on 9/9/15.
  */
-public class FormUtils
-{
-    public static void hideKeyboard(Activity activity)
-    {
+public class FormUtils {
+    public static void hideKeyboard(Activity activity) {
         View view = activity.getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -24,8 +22,7 @@ public class FormUtils
         }
     }
 
-    public static void showKeyboard(Activity activity)
-    {
+    public static void showKeyboard(Activity activity) {
         activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 

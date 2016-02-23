@@ -36,7 +36,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.OnItemClick;
 import de.greenrobot.event.EventBus;
 
@@ -66,8 +65,7 @@ public class MonsterBoxFragment extends Fragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.monster_box, container, false);
         ButterKnife.bind(this, rootView);
         context = getActivity();
@@ -191,8 +189,7 @@ public class MonsterBoxFragment extends Fragment
     }
 
     @OnItemClick(R.id.monster_list)
-    public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id)
-    {
+    public void onItemClick(final int position) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View convertView = inflater.inflate(R.layout.ordinary_listview, null);
@@ -264,13 +261,5 @@ public class MonsterBoxFragment extends Fragment
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.setCanceledOnTouchOutside(true);
         alertDialog.show();
-    }
-
-    @OnClick(R.id.add_monster)
-    public void addMonster(View view)
-    {
-        Intent intent = new Intent(getActivity(), MonsterFormActivity.class);
-        intent.putExtra(Constants.MODE_KEY, Constants.ADD_MODE);
-        startActivity(intent);
     }
 }

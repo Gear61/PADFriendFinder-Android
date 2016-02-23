@@ -17,12 +17,10 @@ import java.util.List;
  * Created by jman0_000 on 10/11/2015.
  */
 public class MonsterItemAdapter extends BaseAdapter {
-
     private Context context;
     private List<String> options;
 
-    public MonsterItemAdapter(Context context, String monsterName)
-    {
+    public MonsterItemAdapter(Context context, String monsterName) {
         this.context = context;
         this.options = new ArrayList<>();
         this.options.add(Constants.SEARCH + " \"" + monsterName + "\"");
@@ -41,25 +39,21 @@ public class MonsterItemAdapter extends BaseAdapter {
         return position;
     }
 
-    public View getView(int position, View view, ViewGroup parent)
-    {
+    public View getView(int position, View view, ViewGroup parent) {
         FontAwesomeViewHolder holder;
-        if (view == null)
-        {
+        if (view == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = vi.inflate(R.layout.font_awesome_list_item, parent, false);
             holder = new FontAwesomeViewHolder(view);
             view.setTag(holder);
         }
-        else
-        {
+        else {
             holder = (FontAwesomeViewHolder) view.getTag();
         }
 
         holder.itemName.setText(getItem(position));
         String iconKey = null;
-        switch (position)
-        {
+        switch (position) {
             case 0:
                 iconKey = context.getString(R.string.search_icon);
                 break;
@@ -75,5 +69,4 @@ public class MonsterItemAdapter extends BaseAdapter {
         view.setPadding(fiveDp, fiveDp, tenDp, fiveDp);
         return view;
     }
-
 }

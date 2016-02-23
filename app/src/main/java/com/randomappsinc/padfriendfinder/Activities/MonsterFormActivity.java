@@ -8,8 +8,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -354,14 +352,6 @@ public class MonsterFormActivity extends AppCompatActivity
         {
             monsterEditText.showDropDown();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.blank_menu, menu);
-        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

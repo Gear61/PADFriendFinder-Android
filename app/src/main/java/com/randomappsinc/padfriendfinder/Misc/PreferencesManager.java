@@ -9,29 +9,23 @@ import java.util.Set;
 /**
  * Created by alexanderchiou on 7/14/15.
  */
-public class PreferencesManager
-{
+public class PreferencesManager {
     private static PreferencesManager instance;
 
-    public static PreferencesManager get()
-    {
-        if (instance == null)
-        {
+    public static PreferencesManager get() {
+        if (instance == null) {
             instance = getSync();
         }
         return instance;
     }
 
-    private static synchronized PreferencesManager getSync()
-    {
-        if (instance == null)
-        {
+    private static synchronized PreferencesManager getSync() {
+        if (instance == null) {
             instance = new PreferencesManager();
         }
         return instance;
     }
 
-    private Context context;
     private SharedPreferences prefs;
 
     private static final String PREFS_KEY = "com.randomappsinc.padfriendfinder";
@@ -40,8 +34,7 @@ public class PreferencesManager
     private static final String AVATAR_ID_KEY = "com.randomappsinc.padfriendfinder.avatarId";
 
     private PreferencesManager() {
-        this.context = MyApplication.getAppContext();
-        prefs = context.getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE);
+        prefs = MyApplication.getAppContext().getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE);
     }
 
     public String getPadId()
@@ -73,18 +66,15 @@ public class PreferencesManager
         return new HashSet<>(prefs.getStringSet(FAVORITES_KEY, new HashSet<String>()));
     }
 
-    public void setPadId(String padId)
-    {
+    public void setPadId(String padId) {
         prefs.edit().putString(PAD_ID_KEY, padId).apply();
     }
 
-    public int getAvatarId()
-    {
+    public int getAvatarId() {
         return prefs.getInt(AVATAR_ID_KEY, 0);
     }
 
-    public void setAvatarId(int avatarId)
-    {
+    public void setAvatarId(int avatarId) {
         prefs.edit().putInt(AVATAR_ID_KEY, avatarId).apply();
     }
 }
