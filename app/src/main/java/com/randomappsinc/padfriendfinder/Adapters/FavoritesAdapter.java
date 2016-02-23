@@ -7,20 +7,21 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.beardedhen.androidbootstrap.FontAwesomeText;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by jman0_000 on 9/14/2015.
  */
 
-//Adapter I wrote for favorites functionality. Simple layout: a star and an EditText.
+// Adapter I wrote for favorites functionality. Simple layout: a star and an EditText.
 public class FavoritesAdapter extends BaseAdapter {
-
     private Context context;
     private List<String> favorites;
 
@@ -46,13 +47,17 @@ public class FavoritesAdapter extends BaseAdapter {
         return position;
     }
 
-    public static class ViewHolder {
-        public FontAwesomeText star;
-        public TextView pad_id;
+    public static class FavoriteViewHolder {
+        @Bind(R.id.star_icon) TextView star;
+        @Bind(R.id.favorite_id) TextView pad_id;
+
+        public FavoriteViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 
     public void onStar_Click(View view, String id) {
-        FontAwesomeText star = (FontAwesomeText) view;
+        TextView star = (TextView) view;
         if (star.getCurrentTextColor() == context.getResources().getColor(R.color.gold)) {
             star.setTextColor(context.getResources().getColor(R.color.silver));
             PreferencesManager.get().removeFavorite(id);
@@ -63,32 +68,25 @@ public class FavoritesAdapter extends BaseAdapter {
         }
     }
 
-    //This function sets up + recycles the individual views for the ListView
-    //First I get the components that I'm filling up my ListView with (if I haven't already)
-    //Then I fill up the views with the appropriate items
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
-        ViewHolder holder;
-        //recycling
-        if (v == null) {
-            LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = li.inflate(R.layout.favorites_list_item, null);
-            holder = new ViewHolder();
-            holder.star = (FontAwesomeText) v.findViewById(R.id.star_icon);
-            holder.pad_id = (TextView) v.findViewById(R.id.favorite_id);
-            v.setTag(holder);
+    public View getView(int position, View view, ViewGroup parent) {
+        FavoriteViewHolder holder;
+        if (view == null) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.favorites_list_item, parent, false);
+            holder = new FavoriteViewHolder(view);
+            view.setTag(holder);
         }
-        else
-            holder = (ViewHolder) v.getTag();
+        else {
+            holder = (FavoriteViewHolder) view.getTag();
+        }
 
-        //set up
         final String id = favorites.get(position);
         if (PreferencesManager.get().isFavorited(id))
             holder.star.setTextColor(context.getResources().getColor(R.color.gold));
         else
             holder.star.setTextColor(context.getResources().getColor(R.color.silver));
 
-        holder.star.setOnClickListener(new FontAwesomeText.OnClickListener() {
+        holder.star.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onStar_Click(view, id);
@@ -96,7 +94,6 @@ public class FavoritesAdapter extends BaseAdapter {
         });
         holder.pad_id.setText(id);
 
-        return v;
+        return view;
     }
-
 }

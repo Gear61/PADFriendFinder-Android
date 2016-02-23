@@ -16,13 +16,11 @@ import java.util.List;
 /**
  * Created by alexanderchiou on 7/28/15.
  */
-public class MonsterChoicesAdapter extends BaseAdapter
-{
+public class MonsterChoicesAdapter extends BaseAdapter {
     private Context context;
     private List<String> monsterChoices;
 
-    public MonsterChoicesAdapter(Context context, String monsterName)
-    {
+    public MonsterChoicesAdapter(Context context, String monsterName) {
         this.context = context;
         this.monsterChoices = new ArrayList<>();
         this.monsterChoices.add(Constants.FIND_OTHER + " \"" + monsterName + "\"");
@@ -43,26 +41,21 @@ public class MonsterChoicesAdapter extends BaseAdapter
         return position;
     }
 
-    // Renders the ListView item that the user has scrolled to or is about to scroll to
-    public View getView(int position, View view, ViewGroup parent)
-    {
+    public View getView(int position, View view, ViewGroup parent) {
         FontAwesomeViewHolder holder;
-        if (view == null)
-        {
+        if (view == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = vi.inflate(R.layout.font_awesome_list_item, parent, false);
             holder = new FontAwesomeViewHolder(view);
             view.setTag(holder);
         }
-        else
-        {
+        else {
             holder = (FontAwesomeViewHolder) view.getTag();
         }
 
         holder.itemName.setText(monsterChoices.get(position));
         String iconKey = null;
-        switch (position)
-        {
+        switch (position) {
             case 0:
                 iconKey = context.getString(R.string.search_icon);
                 break;
@@ -76,7 +69,7 @@ public class MonsterChoicesAdapter extends BaseAdapter
                 iconKey = context.getString(R.string.delete_icon);
                 break;
         }
-        holder.itemIcon.setIcon(iconKey);
+        holder.itemIcon.setText(iconKey);
 
         float scale = context.getResources().getDisplayMetrics().density;
         int fiveDp = (int) (5 * scale + 0.5f);

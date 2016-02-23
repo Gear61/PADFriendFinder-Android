@@ -14,7 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -22,15 +21,12 @@ import android.widget.TextView;
 
 import com.randomappsinc.padfriendfinder.Activities.PadIdActivity;
 import com.randomappsinc.padfriendfinder.Activities.SupportedLeadsActivity;
-import com.randomappsinc.padfriendfinder.Adapters.NavDrawerAdapter;
+import com.randomappsinc.padfriendfinder.Adapters.FontAwesomeAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.Models.MessageEvent;
 import com.randomappsinc.padfriendfinder.R;
 import com.squareup.picasso.Picasso;
-
-import java.util.Arrays;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -99,22 +95,19 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
-    {
+                             Bundle savedInstanceState) {
         LinearLayout navDrawer = (LinearLayout) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         ButterKnife.bind(this, navDrawer);
-        List<String> tabsList = Arrays.asList(getActivity().getResources().
-                getStringArray(R.array.nav_drawer_tabs));
-        mDrawerListView.setAdapter(new NavDrawerAdapter(getActivity(),
-                android.R.layout.simple_dropdown_item_1line, tabsList));
+        String[] tabOptions = getResources().getStringArray(R.array.nav_drawer_tabs);
+        String[] icons = getResources().getStringArray(R.array.nav_drawer_icons);
+        mDrawerListView.setAdapter(new FontAwesomeAdapter(getActivity(), tabOptions, icons));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 
         return navDrawer;
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         String imageUrl = "http://www.puzzledragonx.com/en/img/book/" +
                 String.valueOf(PreferencesManager.get().getAvatarId()) + ".png";
@@ -124,30 +117,26 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     @OnClick(R.id.user_avatar)
-    public void onAvatarClick(View view)
-    {
+    public void onAvatarClick() {
         Intent intent = new Intent(getActivity(), SupportedLeadsActivity.class);
         intent.putExtra(Constants.CHOOSE_AVATAR_MODE, true);
         startActivity(intent);
     }
 
     @OnClick(R.id.pad_id)
-    public void onPadIdClick(View view)
-    {
+    public void onPadIdClick() {
         Intent intent = new Intent(getActivity(), PadIdActivity.class);
         intent.putExtra(Constants.SETTINGS_KEY, true);
         startActivity(intent);
     }
 
     @OnItemClick(R.id.nav_drawer_tabs)
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-    {
+    public void onItemClick(int position) {
         selectItem(position);
     }
 
     @Override
-    public void onDestroyView()
-    {
+    public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
@@ -255,8 +244,6 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // If the drawer is open, show the global app actions in the action bar. See also
-        // showGlobalContextActionBar, which controls the top-left area of the action bar.
         if (mDrawerLayout != null && isDrawerOpen()) {
             inflater.inflate(R.menu.menu_main, menu);
             showGlobalContextActionBar();

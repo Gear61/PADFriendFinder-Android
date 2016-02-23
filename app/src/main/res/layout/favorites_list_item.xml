@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fontawesometext="http://schemas.android.com/apk/res-auto"
     android:padding="5dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.beardedhen.androidbootstrap.FontAwesomeText
+    <com.joanzapata.iconify.widget.IconTextView
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        fontawesometext:fa_icon="@string/star_icon"
+        android:text="@string/star_icon"
         android:textColor="@color/silver"
         android:layout_centerVertical="true"
         android:id="@+id/star_icon"
@@ -25,5 +23,4 @@
         android:layout_toLeftOf="@+id/star_icon"
         android:layout_toStartOf="@+id/star_icon"
         android:textSize="32sp" />
-
 </RelativeLayout>

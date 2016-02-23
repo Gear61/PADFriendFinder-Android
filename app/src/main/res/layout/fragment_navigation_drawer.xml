@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:background="#FFFFFF"
-    tools:context="randomappsinc.com.describe.Fragments.NavigationDrawerFragment">
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:padding="10dp">
 
         <ImageView
@@ -22,7 +21,7 @@
         <TextView
             android:id="@+id/pad_id"
             android:textSize="20sp"
-            android:textColor="@color/dark_grey"
+            android:textColor="@color/dark_gray"
             android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -31,14 +30,12 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/app_blue">
-    </View>
+        android:background="@color/app_blue"/>
 
     <ListView
         android:id="@+id/nav_drawer_tabs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"/>
 </LinearLayout>

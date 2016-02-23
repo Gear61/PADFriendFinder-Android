@@ -39,9 +39,8 @@ public class PreferencesManager
     private static final String FAVORITES_KEY = "com.randomappsinc.padfriendfinder.favorites";
     private static final String AVATAR_ID_KEY = "com.randomappsinc.padfriendfinder.avatarId";
 
-    private PreferencesManager()
-    {
-        this.context = Application.get().getApplicationContext();
+    private PreferencesManager() {
+        this.context = MyApplication.getAppContext();
         prefs = context.getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE);
     }
 

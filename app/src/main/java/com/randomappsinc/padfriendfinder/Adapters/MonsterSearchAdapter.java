@@ -16,12 +16,15 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by alexanderchiou on 7/13/15.
  */
-public class MonsterSearchAdapter extends ArrayAdapter<String>
-{
+public class MonsterSearchAdapter extends ArrayAdapter<String> {
     private static final String[] DEFAULT_LEADERS = {"Marvelous Red Dragon Caller, Sonia",
                                                      "Sparkling Goddess of Secrets, Kali",
                                                      "Chaotic Flying General, Lu Bu",
@@ -36,8 +39,7 @@ public class MonsterSearchAdapter extends ArrayAdapter<String>
     private Context context;
 
     @SuppressWarnings("unchecked")
-    public MonsterSearchAdapter(Context context, int viewResourceId, ArrayList<String> items)
-    {
+    public MonsterSearchAdapter(Context context, int viewResourceId, ArrayList<String> items) {
         super(context, viewResourceId, items);
         this.context = context;
         this.items = items;
@@ -46,39 +48,33 @@ public class MonsterSearchAdapter extends ArrayAdapter<String>
         monsterServer = MonsterServer.getMonsterServer();
     }
 
-    public static class ViewHolder
-    {
-        public ImageView monsterIcon;
-        public TextView monsterName;
+    public static class MonsterSuggestionViewHolder {
+        @Bind(R.id.monster_icon) ImageView monsterIcon;
+        @Bind(R.id.monster_name) TextView monsterName;
+
+        public MonsterSuggestionViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
-        View v = convertView;
-        ViewHolder holder;
-        if (v == null)
-        {
+    public View getView(int position, View view, ViewGroup parent) {
+        MonsterSuggestionViewHolder holder;
+        if (view == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(R.layout.monster_ac_item, null);
-            holder = new ViewHolder();
-            holder.monsterIcon = (ImageView) v.findViewById(R.id.monster_icon);
-            holder.monsterName = (TextView) v.findViewById(R.id.monster_name);
-            v.setTag(holder);
+            view = vi.inflate(R.layout.monster_ac_item, parent, false);
+            holder = new MonsterSuggestionViewHolder(view);
+            holder.monsterIcon = (ImageView) view.findViewById(R.id.monster_icon);
+            holder.monsterName = (TextView) view.findViewById(R.id.monster_name);
+            view.setTag(holder);
         }
-        else
-        {
-            holder = (ViewHolder)v.getTag();
+        else {
+            holder = (MonsterSuggestionViewHolder) view.getTag();
         }
 
-        final String monsterName = (items.get(position)).toString();
-        if (monsterName != null)
-        {
-            holder.monsterName.setText(monsterName.trim());
-            MonsterAttributes monsterAttributes = monsterServer.getMonsterAttributes(monsterName);
-            holder.monsterName.setText(monsterName.trim());
-            Picasso.with(context).load(monsterAttributes.getImageUrl()).into(holder.monsterIcon);
-        }
-        return v;
+        holder.monsterName.setText(items.get(position));
+        MonsterAttributes monsterAttributes = monsterServer.getMonsterAttributes(items.get(position));
+        Picasso.with(context).load(monsterAttributes.getImageUrl()).into(holder.monsterIcon);
+        return view;
     }
 
     @Override
@@ -87,32 +83,23 @@ public class MonsterSearchAdapter extends ArrayAdapter<String>
         return nameFilter;
     }
 
-    Filter nameFilter = new Filter()
-    {
-        public String convertResultToString(Object resultValue)
-        {
-            String str = (resultValue).toString();
-            return str;
+    Filter nameFilter = new Filter() {
+        public String convertResultToString(Object resultValue) {
+            return (resultValue).toString();
         }
 
         @Override
-        protected FilterResults performFiltering(CharSequence constraint)
-        {
-            if (constraint != null)
-            {
+        protected FilterResults performFiltering(CharSequence constraint) {
+            if (constraint != null) {
                 suggestions.clear();
 
                 int constraintLen = constraint.toString().length();
-                if (constraintLen == 0)
-                {
+                if (constraintLen == 0) {
                     suggestions.addAll(Arrays.asList(DEFAULT_LEADERS));
                 }
-                else if (constraintLen > 1)
-                {
-                    for (int i = 0, j = 0; i < itemsAll.size() && j <= 10; i++)
-                    {
-                        if (itemsAll.get(i).toString().toLowerCase().contains(constraint.toString().toLowerCase()))
-                        {
+                else if (constraintLen > 1) {
+                    for (int i = 0, j = 0; i < itemsAll.size() && j <= 10; i++) {
+                        if (itemsAll.get(i).toLowerCase().contains(constraint.toString().toLowerCase())) {
                             j++;
                             suggestions.add(itemsAll.get(i));
                         }
@@ -124,21 +111,17 @@ public class MonsterSearchAdapter extends ArrayAdapter<String>
                 filterResults.count = suggestions.size();
                 return filterResults;
             }
-            else
-            {
+            else {
                 return new FilterResults();
             }
         }
 
         @Override
-        protected void publishResults(CharSequence constraint, FilterResults results)
-        {
+        protected void publishResults(CharSequence constraint, FilterResults results) {
             clear();
-            ArrayList<String> filteredList = (ArrayList<String>) results.values;
-            if (results != null && results.count > 0)
-            {
-                for (String c : filteredList)
-                {
+            List<String> filteredList = (ArrayList<String>) results.values;
+            if (results.count > 0) {
+                for (String c : filteredList) {
                     add(c);
                 }
                 notifyDataSetChanged();

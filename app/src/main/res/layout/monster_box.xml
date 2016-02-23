@@ -47,7 +47,6 @@
             android:layout_height="wrap_content"
             fab:fab_plusIconColor="@color/white"
             fab:fab_colorNormal="@color/app_blue"
-            android:layout_gravity="right|bottom"/>
+            android:layout_gravity="end|bottom"/>
     </FrameLayout>
-
 </RelativeLayout>

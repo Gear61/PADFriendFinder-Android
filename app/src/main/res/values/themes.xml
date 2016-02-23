@@ -10,7 +10,6 @@
 
         <!-- Define global font-->
         <item name="android:typeface">normal</item>
-
         <item name="android:popupMenuStyle">@style/PopupMenu</item>
     </style>
 

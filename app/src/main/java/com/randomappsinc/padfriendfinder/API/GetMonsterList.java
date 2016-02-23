@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.randomappsinc.padfriendfinder.Misc.Application;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
+import com.randomappsinc.padfriendfinder.Misc.MyApplication;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -62,7 +62,7 @@ public class GetMonsterList extends AsyncTask<String, Integer, Long>
     {
         super.onPostExecute(aLong);
         progressDialog.dismiss();
-        Context context = Application.get().getApplicationContext();
+        Context context = MyApplication.getAppContext();
         if (statusCode == 200)
         {
             Toast.makeText(context, "Monster list loaded.", Toast.LENGTH_SHORT).show();

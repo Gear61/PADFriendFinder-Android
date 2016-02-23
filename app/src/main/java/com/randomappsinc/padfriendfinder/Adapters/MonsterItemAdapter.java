@@ -67,7 +67,7 @@ public class MonsterItemAdapter extends BaseAdapter {
                 iconKey = context.getString(R.string.plus_icon);
                 break;
         }
-        holder.itemIcon.setIcon(iconKey);
+        holder.itemIcon.setText(iconKey);
 
         float scale = context.getResources().getDisplayMetrics().density;
         int fiveDp = (int) (5 * scale + 0.5f);

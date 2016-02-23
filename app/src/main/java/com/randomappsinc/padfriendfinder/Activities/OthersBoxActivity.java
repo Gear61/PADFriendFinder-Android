@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -20,7 +18,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.beardedhen.androidbootstrap.FontAwesomeText;
 import com.randomappsinc.padfriendfinder.API.GetMonsterBox;
 import com.randomappsinc.padfriendfinder.API.JSONParser;
 import com.randomappsinc.padfriendfinder.Adapters.MonsterBoxAdapter;
@@ -39,9 +36,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 
-public class OthersBoxActivity extends AppCompatActivity
-{
-    @Bind(R.id.star_icon) FontAwesomeText star;
+public class OthersBoxActivity extends AppCompatActivity {
+    @Bind(R.id.star_icon) TextView star;
     @Bind(R.id.others_list) ListView othersList;
     @Bind(R.id.loading_box) ProgressBar loadingBox;
     @Bind(R.id.nothing) TextView nothing;
@@ -53,8 +49,7 @@ public class OthersBoxActivity extends AppCompatActivity
     private Set<String> mySet = PreferencesManager.get().getFavorites();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.id_search);
         ButterKnife.bind(this);
@@ -70,17 +65,15 @@ public class OthersBoxActivity extends AppCompatActivity
         if (extras != null) {
             displayResult(extras.getString(Constants.OTHERS_ID_KEY));
         }
-        else
+        else {
             FormUtils.showKeyboard(this);
+        }
     }
 
     @OnEditorAction(R.id.PAD_ID)
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
-    {
-        if (actionId == EditorInfo.IME_ACTION_SEARCH)
-        {
-            if (FormUtils.validatePadId(othersId.getText().toString()))
-            {
+    public boolean onEditorAction(int actionId) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            if (FormUtils.validatePadId(othersId.getText().toString())) {
                 displayResult(othersId.getText().toString());
             }
             return true;
@@ -95,20 +88,17 @@ public class OthersBoxActivity extends AppCompatActivity
     }
 
     // Processes output once I have entered in a valid 9 digit ID
-    public void displayResult(String padId)
-    {
+    public void displayResult(String padId) {
         FormUtils.hideKeyboard(this);
         id.setText(padId);
         othersList.setVisibility(View.GONE);
         loadingBox.setVisibility(View.VISIBLE);
         nothing.setVisibility(View.GONE);
         othersId.setText("");
-        if (PreferencesManager.get().isFavorited(padId))
-        {
+        if (PreferencesManager.get().isFavorited(padId)) {
             star.setTextColor(getResources().getColor(R.color.gold));
         }
-        else
-        {
+        else {
             star.setTextColor(getResources().getColor(R.color.silver));
         }
         new GetMonsterBox(this, padId, true).execute();
@@ -199,18 +189,8 @@ public class OthersBoxActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.blank_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 break;
