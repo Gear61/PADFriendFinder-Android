@@ -38,9 +38,9 @@ public class OthersBoxActivity extends StandardActivity {
     @Bind(R.id.star_icon) TextView star;
     @Bind(R.id.others_list) ListView othersList;
     @Bind(R.id.loading_box) ProgressBar loadingBox;
-    @Bind(R.id.nothing) TextView nothing;
+    @Bind(R.id.no_monsters) TextView nothing;
     @Bind(R.id.entered_id) TextView id;
-    @Bind(R.id.PAD_ID) AutoCompleteTextView othersId;
+    @Bind(R.id.pad_id_input) AutoCompleteTextView othersId;
 
     private MonsterBoxAdapter boxAdapter;
     private OthersBoxReceiver othersBoxReceiver;
@@ -68,7 +68,7 @@ public class OthersBoxActivity extends StandardActivity {
         }
     }
 
-    @OnEditorAction(R.id.PAD_ID)
+    @OnEditorAction(R.id.pad_id_input)
     public boolean onEditorAction(int actionId) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
             if (FormUtils.validatePadId(othersId.getText().toString())) {

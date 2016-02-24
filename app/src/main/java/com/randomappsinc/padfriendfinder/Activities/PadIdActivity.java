@@ -26,7 +26,7 @@ import butterknife.OnClick;
  * Created by alexanderchiou on 7/14/15.
  */
 public class PadIdActivity extends StandardActivity {
-    @Bind(R.id.padID_textView) TextView padID_textView;
+    @Bind(R.id.pad_id_instructions) TextView padID_textView;
     @Bind(R.id.pad_id_input) EditText padIdInput;
 
     private Context context;

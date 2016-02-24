@@ -1,36 +1,29 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
-    tools:context="com.randomappsinc.padfriendfinder.Activities.FavoritesActivity">
+    android:padding="10dp">
 
     <TextView
+        android:id="@+id/fav_instructions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/favsInstructions"
-        android:id="@+id/fav_instruct"/>
+        android:text="@string/favsInstructions" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/favoritesView"
-        android:layout_below="@+id/fav_instruct"
-        android:visibility="gone"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/favorites_list"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/no_favs"
         android:gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/noFavs"
         android:textSize="28sp"
         android:layout_marginTop="25dp"
-        android:visibility="gone"
-        android:layout_below="@+id/fav_instruct"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-</RelativeLayout>
+        android:visibility="gone"/>
+</LinearLayout>

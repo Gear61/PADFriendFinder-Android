@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 
 public class FavoritesActivity extends StandardActivity {
-    @Bind(R.id.favoritesView) ListView favView;
+    @Bind(R.id.favorites_list) ListView favView;
     @Bind(R.id.no_favs) TextView noFavs;
 
     private FavoritesAdapter favoritesAdapter;
@@ -58,7 +58,7 @@ public class FavoritesActivity extends StandardActivity {
         }
     }
 
-    @OnItemClick(R.id.favoritesView)
+    @OnItemClick(R.id.favorites_list)
     public void onItemClick(int position) {
         String fav_id = favoritesAdapter.getItem(position); //I didn't create an adapter of a custom class so this is fine
         Intent intent = new Intent(this, OthersBoxActivity.class);
