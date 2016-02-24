@@ -4,9 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -31,9 +29,8 @@ import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 import de.greenrobot.event.EventBus;
 
-public class TopLeadersActivity extends AppCompatActivity {
-
-    Context context;
+public class TopLeadersActivity extends StandardActivity {
+    private Context context;
     @Bind(R.id.topLeadersLV) ListView topLeadersLV;
     @Bind(R.id.topLeadersPB) ProgressBar topLeadersPB;
 
@@ -65,7 +62,7 @@ public class TopLeadersActivity extends AppCompatActivity {
     }
 
     @OnItemClick(R.id.topLeadersLV)
-    public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id) {
+    public void onItemClick(final int position) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View convertView = inflater.inflate(R.layout.ordinary_listview, null);
@@ -123,16 +120,5 @@ public class TopLeadersActivity extends AppCompatActivity {
         }
         else
             Toast.makeText(context, Constants.FAILED_TO_FETCH, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 }

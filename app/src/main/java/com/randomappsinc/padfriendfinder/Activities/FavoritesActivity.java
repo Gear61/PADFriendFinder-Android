@@ -2,8 +2,6 @@ package com.randomappsinc.padfriendfinder.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,8 +19,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 
-public class FavoritesActivity extends AppCompatActivity {
-
+public class FavoritesActivity extends StandardActivity {
     @Bind(R.id.favoritesView) ListView favView;
     @Bind(R.id.no_favs) TextView noFavs;
 
@@ -34,6 +31,7 @@ public class FavoritesActivity extends AppCompatActivity {
         setContentView(R.layout.favorites);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
+
         List<String> favorites = new ArrayList<>(PreferencesManager.get().getFavorites());
         Collections.sort(favorites);
         favoritesAdapter = new FavoritesAdapter(this);
@@ -44,9 +42,9 @@ public class FavoritesActivity extends AppCompatActivity {
 
     @Override
     public void onResume() {
+        super.onResume();
         List<String> favorites = new ArrayList<>(PreferencesManager.get().getFavorites());
         favoritesAdapter.setFavorites(favorites);
-        super.onResume();
     }
 
     public void display_stuff() {
@@ -66,16 +64,5 @@ public class FavoritesActivity extends AppCompatActivity {
         Intent intent = new Intent(this, OthersBoxActivity.class);
         intent.putExtra(Constants.OTHERS_ID_KEY, fav_id);
         startActivity(intent);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 }

@@ -100,27 +100,6 @@
     <!-- Supported leads -->
     <string name="supported_leads_label">Supported Leads</string>
     <string name="search">Search</string>
-
-    <!-- Settings -->
-    <string name="change_pad_id">Change your PAD ID</string>
-    <string name="choose_avatar">Choose your avatar</string>
-    <string name="send_feedback">Send feedback</string>
-    <string name="rate_this_app">Rate this app</string>
-    <string-array name="settings_options">
-        <item>@string/change_pad_id</item>
-        <item>@string/choose_avatar</item>
-        <item>@string/send_feedback</item>
-        <item>@string/rate_this_app</item>
-    </string-array>
-    <string-array name="settings_icons">
-        <item>@string/edit_icon</item>
-        <item>@string/choose_avatar_icon</item>
-        <item>@string/email_icon</item>
-        <item>@string/rate_us_icon</item>
-    </string-array>
     <string name="choose_avatar_label">Choose Avatar</string>
-    <string name="play_store_error">Unable to open the Play Store.</string>
-    <string name="support_email">chessnone@gmail.com</string>
-    <string name="email_subject">PAD Friend Finder Feedback (Android)</string>
     <string name="title_activity_top_leaders">Popular Leaders</string>
 </resources>

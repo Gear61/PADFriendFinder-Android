@@ -8,9 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,8 +25,7 @@ import butterknife.OnClick;
 /**
  * Created by alexanderchiou on 7/14/15.
  */
-public class PadIdActivity extends AppCompatActivity
-{
+public class PadIdActivity extends StandardActivity {
     @Bind(R.id.padID_textView) TextView padID_textView;
     @Bind(R.id.pad_id_input) EditText padIdInput;
 
@@ -39,8 +35,7 @@ public class PadIdActivity extends AppCompatActivity
     private ProgressDialog progressDialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
         setContentView(R.layout.pad_id_form);
@@ -62,25 +57,19 @@ public class PadIdActivity extends AppCompatActivity
     }
 
     @OnClick(R.id.submit_pad_id)
-    public void onClick(View v)
-    {
+    public void onClick() {
         final String input = padIdInput.getText().toString();
-        if (FormUtils.validatePadId(padIdInput.getText().toString()))
-        {
+        if (FormUtils.validatePadId(padIdInput.getText().toString())) {
             FormUtils.hideKeyboard(this);
-            if (!settingsMode)
-            {
+            if (!settingsMode) {
                 showDialog(input);
             }
-            else
-            {
-                if (!input.equals(PreferencesManager.get().getPadId()))
-                {
+            else {
+                if (!input.equals(PreferencesManager.get().getPadId())) {
                     progressDialog.show();
                     new ChangeID(context, input).execute();
                 }
-                else
-                {
+                else {
                     Toast.makeText(context, Constants.ID_THE_SAME, Toast.LENGTH_LONG).show();
                 }
             }
@@ -141,17 +130,5 @@ public class PadIdActivity extends AppCompatActivity
             unregisterReceiver(idChangeReceiver);
         }
         catch (IllegalArgumentException ignored) {}
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 }

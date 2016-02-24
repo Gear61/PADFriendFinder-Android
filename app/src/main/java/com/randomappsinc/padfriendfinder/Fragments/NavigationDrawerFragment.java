@@ -1,11 +1,13 @@
 package com.randomappsinc.padfriendfinder.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -31,15 +33,10 @@ import butterknife.OnClick;
 import butterknife.OnItemClick;
 import de.greenrobot.event.EventBus;
 
-/**
- * Fragment used for managing interactions for and presentation of a navigation drawer.
- * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
- * design guidelines</a> for a complete explanation of the behaviors implemented here.
- */
 public class NavigationDrawerFragment extends Fragment {
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
     private NavigationDrawerCallbacks mCallbacks;
-    private android.support.v7.app.ActionBarDrawerToggle mDrawerToggle;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
     private View mFragmentContainerView;
@@ -50,42 +47,18 @@ public class NavigationDrawerFragment extends Fragment {
 
     private int mCurrentSelectedPosition = 0;
 
-    public NavigationDrawerFragment() {
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         if (savedInstanceState != null) {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
         }
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        EventBus.getDefault().unregister(this);
-        super.onStop();
-    }
-
-    public void onEvent(MessageEvent event){
-        if (event.title.equals(Constants.UPDATE_AVATAR_KEY)) {
-            String imageUrl = "http://www.puzzledragonx.com/en/img/book/" +
-                    String.valueOf(PreferencesManager.get().getAvatarId()) + ".png";
-            Picasso.with(getActivity()).load(imageUrl).error(R.mipmap.mystery_creature)
-                    .placeholder(R.mipmap.mystery_creature).into(userAvatar);
-        }
-    }
-
-    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        // Indicate that this fragment would like to influence the set of actions in the action bar.
         setHasOptionsMenu(true);
     }
 
@@ -115,14 +88,14 @@ public class NavigationDrawerFragment extends Fragment {
     public void onAvatarClick() {
         Intent intent = new Intent(getActivity(), SupportedLeadsActivity.class);
         intent.putExtra(Constants.CHOOSE_AVATAR_MODE, true);
-        startActivity(intent);
+        getActivity().startActivity(intent);
     }
 
     @OnClick(R.id.pad_id)
     public void onPadIdClick() {
         Intent intent = new Intent(getActivity(), PadIdActivity.class);
         intent.putExtra(Constants.SETTINGS_KEY, true);
-        startActivity(intent);
+        getActivity().startActivity(intent);
     }
 
     @OnItemClick(R.id.nav_drawer_tabs)
@@ -130,10 +103,20 @@ public class NavigationDrawerFragment extends Fragment {
         selectItem(position);
     }
 
+    public void onEvent(MessageEvent event){
+        if (event.title.equals(Constants.UPDATE_AVATAR_KEY)) {
+            String imageUrl = "http://www.puzzledragonx.com/en/img/book/" +
+                    String.valueOf(PreferencesManager.get().getAvatarId()) + ".png";
+            Picasso.with(getActivity()).load(imageUrl).error(R.mipmap.mystery_creature)
+                    .placeholder(R.mipmap.mystery_creature).into(userAvatar);
+        }
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
     }
 
     public void setUp(int fragmentId, DrawerLayout drawerLayout) {
@@ -199,6 +182,12 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (NavigationDrawerCallbacks) context;
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         mCallbacks = null;
@@ -213,7 +202,6 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // Forward the new configuration the drawer toggle component.
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 

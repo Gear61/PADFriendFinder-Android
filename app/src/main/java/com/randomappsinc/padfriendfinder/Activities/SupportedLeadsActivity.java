@@ -3,10 +3,8 @@ package com.randomappsinc.padfriendfinder.Activities;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -26,8 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 import butterknife.OnTextChanged;
 
-public class SupportedLeadsActivity extends AppCompatActivity
-{
+public class SupportedLeadsActivity extends StandardActivity {
     @Bind(R.id.monster_matches) ListView monsterMatches;
 
     private Context context;
@@ -35,17 +32,15 @@ public class SupportedLeadsActivity extends AppCompatActivity
     private boolean chooseAvatarMode;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         setContentView(R.layout.supported_leads);
         ButterKnife.bind(this);
-        context = this;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         chooseAvatarMode = getIntent().getBooleanExtra(Constants.CHOOSE_AVATAR_MODE, false);
-        if (chooseAvatarMode)
-        {
+        if (chooseAvatarMode) {
             setTitle(getString(R.string.choose_avatar_label));
         }
         supportedLeadsAdapter = new SupportedLeadsAdapter(this);
@@ -53,25 +48,21 @@ public class SupportedLeadsActivity extends AppCompatActivity
     }
 
     @OnTextChanged(value = R.id.search_input, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterTextChanged(Editable s)
-    {
+    public void afterTextChanged(Editable s) {
         supportedLeadsAdapter.updateWithPrefix(s.toString());
     }
 
     @OnItemClick(R.id.monster_matches)
-    public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id)
-    {
-        if (chooseAvatarMode)
-        {
+    public void onItemClick(final int position) {
+        if (chooseAvatarMode) {
             FormUtils.hideKeyboard(this);
             PreferencesManager.get().setAvatarId(supportedLeadsAdapter.getItem(position).getMonsterId());
             Toast.makeText(this, "Your avatar is now " + supportedLeadsAdapter.getItem(position).getName() + ".",
                     Toast.LENGTH_SHORT).show();
         }
-        else
-        {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        else {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View convertView = inflater.inflate(R.layout.ordinary_listview, null);
             alertDialogBuilder.setView(convertView);
             final String monsterName = supportedLeadsAdapter.getItem(position).getName();
@@ -95,16 +86,5 @@ public class SupportedLeadsActivity extends AppCompatActivity
             monsterChosenDialog.setCanceledOnTouchOutside(true);
             monsterChosenDialog.setCancelable(true);
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        int id = item.getItemId();
-        if (id == android.R.id.home)
-        {
-            onBackPressed();
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -7,8 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
@@ -36,7 +34,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 
-public class OthersBoxActivity extends AppCompatActivity {
+public class OthersBoxActivity extends StandardActivity {
     @Bind(R.id.star_icon) TextView star;
     @Bind(R.id.others_list) ListView othersList;
     @Bind(R.id.loading_box) ProgressBar loadingBox;
@@ -186,15 +184,5 @@ public class OthersBoxActivity extends AppCompatActivity {
             unregisterReceiver(othersBoxReceiver);
         }
         catch (IllegalArgumentException ignored) {}
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
