@@ -12,22 +12,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.padfriendfinder.API.DeleteMonster;
 import com.randomappsinc.padfriendfinder.API.GetMonsterBox;
 import com.randomappsinc.padfriendfinder.API.JSONParser;
 import com.randomappsinc.padfriendfinder.Activities.MonsterFormActivity;
 import com.randomappsinc.padfriendfinder.Adapters.MonsterBoxAdapter;
-import com.randomappsinc.padfriendfinder.Adapters.MonsterChoicesAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.MonsterBoxManager;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
-import com.randomappsinc.padfriendfinder.Models.MessageEvent;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.R;
@@ -37,16 +35,11 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by alexanderchiou on 9/15/15.
  */
-public class MonsterBoxFragment extends Fragment
-{
-    private Context context;
-
-    // Views
+public class MonsterBoxFragment extends Fragment {
     @Bind(R.id.loading_monsters) ProgressBar loadingMonsters;
     @Bind(R.id.monster_box_instructions) TextView instructions;
     @Bind(R.id.no_monsters) TextView noMonsters;
@@ -68,36 +61,34 @@ public class MonsterBoxFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.monster_box, container, false);
         ButterKnife.bind(this, rootView);
-        context = getActivity();
 
-        deletingMonsterDialog = new ProgressDialog(context);
+        deletingMonsterDialog = new ProgressDialog(getActivity());
         deletingMonsterDialog.setMessage(Constants.DELETING_MONSTER_MESSAGE);
-        boxAdapter = new MonsterBoxAdapter(context);
+        boxAdapter = new MonsterBoxAdapter(getActivity());
         monsterList.setAdapter(boxAdapter);
 
         updateReceiver = new MonsterUpdateReceiver();
         boxReceiver = new MonsterBoxReceiver();
         deleteReceiver = new MonsterDeleteReceiver();
         monsterListReceiver = new MonsterListReceiver();
-        context.registerReceiver(updateReceiver, new IntentFilter(Constants.MONSTER_UPDATE_KEY));
-        context.registerReceiver(boxReceiver, new IntentFilter(Constants.MONSTER_BOX_KEY));
-        context.registerReceiver(deleteReceiver, new IntentFilter(Constants.DELETE_KEY));
-        context.registerReceiver(monsterListReceiver, new IntentFilter(Constants.GET_MONSTERS_KEY));
+        getActivity().registerReceiver(updateReceiver, new IntentFilter(Constants.MONSTER_UPDATE_KEY));
+        getActivity().registerReceiver(boxReceiver, new IntentFilter(Constants.MONSTER_BOX_KEY));
+        getActivity().registerReceiver(deleteReceiver, new IntentFilter(Constants.DELETE_KEY));
+        getActivity().registerReceiver(monsterListReceiver, new IntentFilter(Constants.GET_MONSTERS_KEY));
 
         return rootView;
     }
 
     @Override
-    public void onDestroyView()
-    {
+    public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
         try
         {
-            context.unregisterReceiver(boxReceiver);
-            context.unregisterReceiver(updateReceiver);
-            context.unregisterReceiver(deleteReceiver);
-            context.unregisterReceiver(monsterListReceiver);
+            getActivity().unregisterReceiver(boxReceiver);
+            getActivity().unregisterReceiver(updateReceiver);
+            getActivity().unregisterReceiver(deleteReceiver);
+            getActivity().unregisterReceiver(monsterListReceiver);
         }
         catch (IllegalArgumentException ignored) {}
     }
@@ -172,17 +163,14 @@ public class MonsterBoxFragment extends Fragment
     }
 
     // Refresh the page after an API call is made (or after initial loading)
-    public void refreshContent()
-    {
+    public void refreshContent() {
         loadingMonsters.setVisibility(View.GONE);
         instructions.setVisibility(View.VISIBLE);
-        if (boxAdapter.getCount() == 0)
-        {
+        if (boxAdapter.getCount() == 0) {
             monsterList.setVisibility(View.GONE);
             noMonsters.setVisibility(View.VISIBLE);
         }
-        else
-        {
+        else {
             noMonsters.setVisibility(View.GONE);
             monsterList.setVisibility(View.VISIBLE);
         }
@@ -190,56 +178,43 @@ public class MonsterBoxFragment extends Fragment
 
     @OnItemClick(R.id.monster_list)
     public void onItemClick(final int position) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View convertView = inflater.inflate(R.layout.ordinary_listview, null);
-        alertDialogBuilder.setView(convertView);
+        final Context context = getActivity();
         final String monsterName = boxAdapter.getItem(position).getName();
-        ListView monsterChoices = (ListView) convertView.findViewById(R.id.listView1);
-        final MonsterChoicesAdapter adapter = new MonsterChoicesAdapter(context, monsterName);
-        monsterChoices.setAdapter(adapter);
-        final AlertDialog monsterChosenDialog = alertDialogBuilder.show();
-        monsterChoices.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, final int dialogPosition, long id)
-            {
-                monsterChosenDialog.dismiss();
-                String action = adapter.getItem(dialogPosition);
-                if (action.startsWith(Constants.FIND_OTHER))
-                {
-                    Intent intent = new Intent(context, MonsterFormActivity.class);
-                    intent.putExtra(Constants.NAME_KEY, monsterName);
-                    intent.putExtra(Constants.MODE_KEY, Constants.SEARCH_MODE);
-                    startActivity(intent);
-                }
-                else if (action.startsWith(Constants.UPDATE))
-                {
-                    Intent intent = new Intent(context, MonsterFormActivity.class);
-                    intent.putExtra(Constants.MONSTER_KEY, boxAdapter.getItem(position));
-                    intent.putExtra(Constants.MODE_KEY, Constants.UPDATE_MODE);
-                    startActivity(intent);
-                }
-                else if (action.startsWith(Constants.SET)) {
-                    int monsterId = boxAdapter.getItem(position).getMonsterId();
-                    PreferencesManager.get().setAvatarId(monsterId);
-                    EventBus.getDefault().post(new MessageEvent(Constants.UPDATE_AVATAR_KEY));
-                    Toast.makeText(getActivity(), "Your avatar is now " + boxAdapter.getItem(position).getName() + ".",
-                            Toast.LENGTH_SHORT).show();
-                }
-                else if (action.startsWith(Constants.DELETE))
-                {
-                    showMonsterDeleteDialog(monsterName);
-                }
-            }
-        });
-        monsterChosenDialog.setCanceledOnTouchOutside(true);
-        monsterChosenDialog.setCancelable(true);
+
+        String[] choices = new String[3];
+        choices[0] = getString(R.string.find_other) + "\"" + monsterName + "\"";
+        choices[1] = getString(R.string.update) + "\"" + monsterName + "\"";
+        choices[2] = getString(R.string.delete) + "\"" + monsterName + "\"";
+
+        new MaterialDialog.Builder(getActivity())
+                .items(choices)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        switch (which) {
+                            case 0:
+                                Intent searchIntent = new Intent(context, MonsterFormActivity.class);
+                                searchIntent.putExtra(Constants.NAME_KEY, monsterName);
+                                searchIntent.putExtra(Constants.MODE_KEY, Constants.SEARCH_MODE);
+                                getActivity().startActivity(searchIntent);
+                                break;
+                            case 1:
+                                Intent updateIntent = new Intent(context, MonsterFormActivity.class);
+                                updateIntent.putExtra(Constants.MONSTER_KEY, boxAdapter.getItem(position));
+                                updateIntent.putExtra(Constants.MODE_KEY, Constants.UPDATE_MODE);
+                                getActivity().startActivity(updateIntent);
+                                break;
+                            case 2:
+                                showMonsterDeleteDialog(monsterName);
+                        }
+                    }
+                })
+                .show();
     }
 
     private void showMonsterDeleteDialog(final String monsterName) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                context);
+        final Context context = getActivity();
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setTitle(Constants.DELETE_MONSTER_CONFIRMATION);
         alertDialogBuilder.setMessage("Are you sure you want to delete \"" + monsterName + "\" from your box?")
                 .setCancelable(true)

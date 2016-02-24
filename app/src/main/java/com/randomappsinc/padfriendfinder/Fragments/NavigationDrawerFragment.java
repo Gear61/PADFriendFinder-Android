@@ -23,7 +23,6 @@ import com.randomappsinc.padfriendfinder.Activities.SupportedLeadsActivity;
 import com.randomappsinc.padfriendfinder.Adapters.FontAwesomeAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
-import com.randomappsinc.padfriendfinder.Models.MessageEvent;
 import com.randomappsinc.padfriendfinder.R;
 import com.squareup.picasso.Picasso;
 
@@ -31,7 +30,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
-import de.greenrobot.event.EventBus;
 
 public class NavigationDrawerFragment extends Fragment {
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
@@ -50,7 +48,6 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
         if (savedInstanceState != null) {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
         }
@@ -103,20 +100,10 @@ public class NavigationDrawerFragment extends Fragment {
         selectItem(position);
     }
 
-    public void onEvent(MessageEvent event){
-        if (event.title.equals(Constants.UPDATE_AVATAR_KEY)) {
-            String imageUrl = "http://www.puzzledragonx.com/en/img/book/" +
-                    String.valueOf(PreferencesManager.get().getAvatarId()) + ".png";
-            Picasso.with(getActivity()).load(imageUrl).error(R.mipmap.mystery_creature)
-                    .placeholder(R.mipmap.mystery_creature).into(userAvatar);
-        }
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-        EventBus.getDefault().unregister(this);
     }
 
     public void setUp(int fragmentId, DrawerLayout drawerLayout) {

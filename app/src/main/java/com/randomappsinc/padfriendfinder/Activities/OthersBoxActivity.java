@@ -39,7 +39,7 @@ public class OthersBoxActivity extends StandardActivity {
     @Bind(R.id.others_list) ListView othersList;
     @Bind(R.id.loading_box) ProgressBar loadingBox;
     @Bind(R.id.no_monsters) TextView nothing;
-    @Bind(R.id.entered_id) TextView id;
+    @Bind(R.id.entered_id) TextView chosenId;
     @Bind(R.id.pad_id_input) AutoCompleteTextView othersId;
 
     private MonsterBoxAdapter boxAdapter;
@@ -88,7 +88,7 @@ public class OthersBoxActivity extends StandardActivity {
     // Processes output once I have entered in a valid 9 digit ID
     public void displayResult(String padId) {
         FormUtils.hideKeyboard(this);
-        id.setText(padId);
+        chosenId.setText(padId);
         othersList.setVisibility(View.GONE);
         loadingBox.setVisibility(View.VISIBLE);
         nothing.setVisibility(View.GONE);
@@ -103,10 +103,8 @@ public class OthersBoxActivity extends StandardActivity {
     }
 
     @OnClick(R.id.star_icon)
-    // This function does the favoriting and unfavoriting.
-    // Because I'm lazy, only favoriting ID interacts with auto-complete.
-    public void onStar(View view) {
-        String userId = ((TextView) findViewById(R.id.entered_id)).getText().toString();
+    public void onStar() {
+        String userId = chosenId.getText().toString();
         if (!userId.equals(getString(R.string.no_id_chosen))) {
             if (PreferencesManager.get().isFavorited(userId)) {
                 star.setTextColor(getResources().getColor(R.color.silver));
@@ -121,8 +119,8 @@ public class OthersBoxActivity extends StandardActivity {
     }
 
     @OnClick(R.id.clipboard_icon)
-    public void onClipboard(View view) {
-        String userId = ((TextView) findViewById(R.id.entered_id)).getText().toString();
+    public void onClipboard() {
+        String userId = chosenId.getText().toString();
         if (!userId.equals(getString(R.string.no_id_chosen))) {
             ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText(Constants.PAD_ID_KEY, userId);
@@ -131,11 +129,12 @@ public class OthersBoxActivity extends StandardActivity {
         }
     }
 
-    //For when you're copy-pastaing an ID in instead of typing it.
+    // For when you're copy-pasting an ID in instead of typing it.
     @OnClick(R.id.search_icon)
-    public void onSearch(View view) {
-        if (FormUtils.validatePadId(othersId.getText().toString()))
+    public void onSearch() {
+        if (FormUtils.validatePadId(othersId.getText().toString())) {
             displayResult(othersId.getText().toString());
+        }
     }
 
     private class OthersBoxReceiver extends BroadcastReceiver
@@ -160,16 +159,13 @@ public class OthersBoxActivity extends StandardActivity {
     }
 
     // Updating the layout when I'm loading in new data
-    public void refreshContent()
-    {
+    public void refreshContent() {
         loadingBox.setVisibility(View.GONE);
-        if (boxAdapter.getCount() == 0)
-        {
+        if (boxAdapter.getCount() == 0) {
             othersList.setVisibility(View.GONE);
             nothing.setVisibility(View.VISIBLE);
         }
-        else
-        {
+        else {
             nothing.setVisibility(View.GONE);
             othersList.setVisibility(View.VISIBLE);
         }

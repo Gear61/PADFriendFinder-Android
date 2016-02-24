@@ -1,16 +1,14 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
-import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.randomappsinc.padfriendfinder.Adapters.MonsterItemAdapter;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.padfriendfinder.Adapters.SupportedLeadsAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.MonsterServer;
@@ -53,7 +51,7 @@ public class SupportedLeadsActivity extends StandardActivity {
     }
 
     @OnItemClick(R.id.monster_matches)
-    public void onItemClick(final int position) {
+    public void onItemClick(int position) {
         if (chooseAvatarMode) {
             FormUtils.hideKeyboard(this);
             PreferencesManager.get().setAvatarId(supportedLeadsAdapter.getItem(position).getMonsterId());
@@ -61,30 +59,34 @@ public class SupportedLeadsActivity extends StandardActivity {
                     Toast.LENGTH_SHORT).show();
         }
         else {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View convertView = inflater.inflate(R.layout.ordinary_listview, null);
-            alertDialogBuilder.setView(convertView);
             final String monsterName = supportedLeadsAdapter.getItem(position).getName();
-            ListView monsterChoices = (ListView) convertView.findViewById(R.id.listView1);
-            final MonsterItemAdapter adapter = new MonsterItemAdapter(context, monsterName);
-            monsterChoices.setAdapter(adapter);
-            final AlertDialog monsterChosenDialog = alertDialogBuilder.show();
-            monsterChoices.setOnItemClickListener(new AdapterView.OnItemClickListener()
-            {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, final int dialogPosition, long id)
-                {
-                    monsterChosenDialog.dismiss();
-                    String action = adapter.getItem(dialogPosition);
-                    String name = supportedLeadsAdapter.getItem(position).getName();
-                    MonsterAttributes monster;
-                    MonsterAttributes monsterChosen = MonsterServer.getMonsterServer().getMonsterAttributes(name);
-                    TopLeadersActivity.openSearchResults(action, name, monsterChosen, context);
-                }
-            });
-            monsterChosenDialog.setCanceledOnTouchOutside(true);
-            monsterChosenDialog.setCancelable(true);
+
+            String[] choices = new String[2];
+            choices[0] = getString(R.string.search_for) + "\"" + monsterName + "\"";
+            choices[1] = getString(R.string.find_hypermaxed) + "\"" + monsterName + "\"";
+
+            new MaterialDialog.Builder(this)
+                    .items(choices)
+                    .itemsCallback(new MaterialDialog.ListCallback() {
+                        @Override
+                        public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                            Intent intent = null;
+                            switch (which) {
+                                case 0:
+                                    intent = new Intent(context, MonsterFormActivity.class);
+                                    intent.putExtra(Constants.NAME_KEY, monsterName);
+                                    intent.putExtra(Constants.MODE_KEY, Constants.SEARCH_MODE);
+                                    break;
+                                case 1:
+                                    MonsterAttributes chosenMonster =
+                                            MonsterServer.getMonsterServer().getMonsterAttributes(monsterName);
+                                    intent = new Intent(context, FriendResultsActivity.class);
+                                    intent.putExtra(Constants.MONSTER_KEY, chosenMonster);
+                            }
+                            startActivity(intent);
+                        }
+                    })
+                    .show();
         }
     }
 }
