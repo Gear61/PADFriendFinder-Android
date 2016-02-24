@@ -2,13 +2,13 @@ package com.randomappsinc.padfriendfinder.Models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 /**
  * Created by alexanderchiou on 7/13/15.
  */
 
-public class MonsterAttributes implements Parcelable, Comparable<MonsterAttributes>
-{
+public class MonsterAttributes implements Parcelable, Comparable<MonsterAttributes> {
     private String name;
     private int level;
     private int skillLevel;
@@ -18,14 +18,12 @@ public class MonsterAttributes implements Parcelable, Comparable<MonsterAttribut
     private String imageUrl;
 
     // Default constructor
-    public MonsterAttributes()
-    {
+    public MonsterAttributes() {
         this.name = "";
     }
 
     // For hard-coded hashmap
-    public MonsterAttributes(int level, int skillLevel, int awakenings)
-    {
+    public MonsterAttributes(int level, int skillLevel, int awakenings) {
         this.level = level;
         this.skillLevel = skillLevel;
         this.awakenings = awakenings;
@@ -41,8 +39,7 @@ public class MonsterAttributes implements Parcelable, Comparable<MonsterAttribut
     }
 
     // For when the user searches for monsters/updates their box
-    public MonsterAttributes(String name, int level, int awakenings, int plusEggs, int skillLevel)
-    {
+    public MonsterAttributes(String name, int level, int awakenings, int plusEggs, int skillLevel) {
         this.name = name;
         this.level = level;
         this.awakenings = awakenings;
@@ -51,18 +48,15 @@ public class MonsterAttributes implements Parcelable, Comparable<MonsterAttribut
     }
 
     // Getters
-    public int getLevel()
-    {
+    public int getLevel() {
         return level;
     }
 
-    public int getSkillLevel()
-    {
+    public int getSkillLevel() {
         return skillLevel;
     }
 
-    public int getAwakenings()
-    {
+    public int getAwakenings() {
         return awakenings;
     }
 
@@ -70,20 +64,16 @@ public class MonsterAttributes implements Parcelable, Comparable<MonsterAttribut
         return imageUrl;
     }
 
-    public int getPlusEggs()
-    {
+    public int getPlusEggs() {
         return plusEggs;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public int getMonsterId()
-    {
-        if (monsterId == 0)
-        {
+    public int getMonsterId() {
+        if (monsterId == 0) {
             String idString = imageUrl.replace("http://www.puzzledragonx.com/en/img/book/", "").replace(".png", "");
             return Integer.valueOf(idString);
         }
@@ -91,33 +81,27 @@ public class MonsterAttributes implements Parcelable, Comparable<MonsterAttribut
     }
 
     // Setters
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void setLevel(int level)
-    {
+    public void setLevel(int level) {
         this.level = level;
     }
 
-    public void setSkillLevel(int skillLevel)
-    {
+    public void setSkillLevel(int skillLevel) {
         this.skillLevel = skillLevel;
     }
 
-    public void setAwakenings(int awakenings)
-    {
+    public void setAwakenings(int awakenings) {
         this.awakenings = awakenings;
     }
 
-    public void setPlusEggs(int plusEggs)
-    {
+    public void setPlusEggs(int plusEggs) {
         this.plusEggs = plusEggs;
     }
 
-    protected MonsterAttributes(Parcel in)
-    {
+    protected MonsterAttributes(Parcel in) {
         name = in.readString();
         level = in.readInt();
         skillLevel = in.readInt();
@@ -127,14 +111,12 @@ public class MonsterAttributes implements Parcelable, Comparable<MonsterAttribut
     }
 
     @Override
-    public int describeContents()
-    {
+    public int describeContents() {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags)
-    {
+    public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
         dest.writeInt(level);
         dest.writeInt(skillLevel);
@@ -144,8 +126,7 @@ public class MonsterAttributes implements Parcelable, Comparable<MonsterAttribut
     }
 
     @SuppressWarnings("unused")
-    public static final Parcelable.Creator<MonsterAttributes> CREATOR = new Parcelable.Creator<MonsterAttributes>()
-    {
+    public static final Parcelable.Creator<MonsterAttributes> CREATOR = new Parcelable.Creator<MonsterAttributes>() {
         @Override
         public MonsterAttributes createFromParcel(Parcel in)
         {
@@ -160,8 +141,7 @@ public class MonsterAttributes implements Parcelable, Comparable<MonsterAttribut
     };
 
     @Override
-    public int compareTo(MonsterAttributes another)
-    {
+    public int compareTo(@NonNull MonsterAttributes another) {
         return another.monsterId - this.monsterId;
     }
 }

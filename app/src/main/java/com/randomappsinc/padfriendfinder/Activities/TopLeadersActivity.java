@@ -79,6 +79,7 @@ public class TopLeadersActivity extends StandardActivity {
                             case 1:
                                 MonsterAttributes chosenMonster =
                                         MonsterServer.getMonsterServer().getMonsterAttributes(monsterName);
+                                chosenMonster.setPlusEggs(Constants.MAX_PLUS_EGGS);
                                 intent = new Intent(context, FriendResultsActivity.class);
                                 intent.putExtra(Constants.MONSTER_KEY, chosenMonster);
                         }
