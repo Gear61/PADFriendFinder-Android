@@ -3,14 +3,11 @@ package com.randomappsinc.padfriendfinder.Models;
 /**
  * Created by alexanderchiou on 7/20/15.
  */
-public class Friend
-{
+public class Friend {
     private String padId;
     private MonsterAttributes monster;
 
-    public Friend(String padId, MonsterAttributes monster)
-    {
-
+    public Friend(String padId, MonsterAttributes monster) {
         this.padId = padId;
         this.monster = monster;
     }

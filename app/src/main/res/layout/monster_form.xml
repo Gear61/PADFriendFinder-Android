@@ -1,5 +1,7 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp">
@@ -13,9 +15,7 @@
         <com.randomappsinc.padfriendfinder.Views.CustomAutoCompleteTextView
             android:id="@+id/monster_search_box"
             android:imeOptions="actionDone"
-            android:singleLine="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            style="@style/text_input"/>
 
         <LinearLayout
             android:layout_marginTop="5dp"
@@ -44,6 +44,7 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -56,25 +57,19 @@
                 android:textSize="18sp"
                 android:layout_alignBaseline="@+id/level"/>
 
-            <Button
+            <com.rey.material.widget.Button
                 android:id="@+id/max_level"
-                android:text="@string/max"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"/>
+                style="@style/max_button_style"
+                app:rd_style="@style/button_ripple_attributes"/>
 
             <EditText
                 android:id="@+id/level"
-                android:textSize="18sp"
                 android:maxLength="2"
-                android:singleLine="true"
-                android:inputType="number"
                 android:layout_alignLeft="@+id/num_awakenings"
                 android:layout_alignBottom="@+id/max_level"
                 android:layout_toRightOf="@+id/lvl"
                 android:layout_toLeftOf="@+id/max_level"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                style="@style/stat_input_style"/>
 
             <TextView
                 android:id="@+id/awkns"
@@ -85,25 +80,21 @@
                 android:textSize="18sp"
                 android:layout_alignBaseline="@+id/num_awakenings"/>
 
-            <Button
+            <com.rey.material.widget.Button
                 android:id="@+id/max_awakenings"
                 android:layout_below="@+id/max_level"
-                android:text="@string/max"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"/>
+                style="@style/max_button_style"
+                app:rd_style="@style/button_ripple_attributes"/>
 
             <EditText
                 android:id="@+id/num_awakenings"
-                android:textSize="18sp"
+                android:layout_marginLeft="5dp"
                 android:singleLine="true"
-                android:inputType="number"
                 android:maxLength="2"
                 android:layout_alignBottom="@+id/max_awakenings"
                 android:layout_toRightOf="@+id/awkns"
                 android:layout_toLeftOf="@+id/max_awakenings"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                style="@style/stat_input_style"/>
 
             <TextView
                 android:id="@+id/abbreviated_plus_eggs"
@@ -114,26 +105,20 @@
                 android:textSize="18sp"
                 android:layout_alignBaseline="@+id/num_plus_eggs"/>
 
-            <Button
+            <com.rey.material.widget.Button
                 android:id="@+id/max_plus_eggs"
                 android:layout_below="@+id/max_awakenings"
-                android:text="@string/max"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"/>
+                style="@style/max_button_style"
+                app:rd_style="@style/button_ripple_attributes"/>
 
             <EditText
                 android:id="@+id/num_plus_eggs"
-                android:textSize="18sp"
                 android:layout_alignLeft="@+id/num_awakenings"
-                android:singleLine="true"
-                android:inputType="number"
                 android:maxLength="3"
                 android:layout_alignBottom="@+id/max_plus_eggs"
                 android:layout_toRightOf="@+id/awkns"
                 android:layout_toLeftOf="@+id/max_plus_eggs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                style="@style/stat_input_style"/>
 
             <TextView
                 android:id="@+id/s_lvl"
@@ -144,53 +129,53 @@
                 android:textSize="18sp"
                 android:layout_alignBaseline="@+id/skill_level"/>
 
-            <Button
+            <com.rey.material.widget.Button
                 android:id="@+id/max_skill_level"
                 android:layout_below="@+id/max_plus_eggs"
-                android:text="@string/max"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"/>
+                style="@style/max_button_style"
+                app:rd_style="@style/button_ripple_attributes"/>
 
             <EditText
                 android:id="@+id/skill_level"
-                android:textSize="18sp"
                 android:imeOptions="actionDone"
-                android:singleLine="true"
-                android:inputType="number"
                 android:maxLength="2"
                 android:layout_alignLeft="@+id/num_awakenings"
                 android:layout_alignBottom="@+id/max_skill_level"
                 android:layout_toRightOf="@+id/s_lvl"
                 android:layout_toLeftOf="@+id/max_plus_eggs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                style="@style/stat_input_style"/>
         </RelativeLayout>
 
         <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
+            <com.rey.material.widget.Button
                 android:id="@+id/hypermax"
                 android:text="@string/hypermax"
                 android:layout_weight="1"
                 android:layout_width="0px"
-                android:layout_height="wrap_content"/>
+                android:layout_marginRight="5dp"
+                style="@style/ripple_button_style"
+                app:rd_style="@style/button_ripple_attributes"/>
 
-            <Button
+            <com.rey.material.widget.Button
                 android:id="@+id/minimum"
                 android:text="@string/minimum"
                 android:layout_weight="1"
                 android:layout_width="0px"
-                android:layout_height="wrap_content"/>
+                android:layout_marginLeft="5dp"
+                style="@style/ripple_button_style"
+                app:rd_style="@style/button_ripple_attributes"/>
         </LinearLayout>
 
-        <Button
+        <com.rey.material.widget.Button
             android:id="@+id/submit_monster"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/submit"/>
+            android:text="@string/submit"
+            style="@style/ripple_button_style"
+            app:rd_style="@style/button_ripple_attributes"/>
     </LinearLayout>
 </ScrollView>
