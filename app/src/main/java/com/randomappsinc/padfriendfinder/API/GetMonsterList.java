@@ -1,11 +1,11 @@
 package com.randomappsinc.padfriendfinder.API;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.MyApplication;
 
@@ -24,9 +24,9 @@ import java.io.IOException;
 public class GetMonsterList extends AsyncTask<String, Integer, Long>
 {
     private int statusCode;
-    private ProgressDialog progressDialog;
+    private MaterialDialog progressDialog;
 
-    public GetMonsterList(ProgressDialog progressDialog)
+    public GetMonsterList(MaterialDialog progressDialog)
     {
         this.progressDialog = progressDialog;
     }

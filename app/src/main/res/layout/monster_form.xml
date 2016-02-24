@@ -156,6 +156,7 @@
             <com.rey.material.widget.Button
                 android:id="@+id/hypermax"
                 android:text="@string/hypermax"
+                android:layout_height="45dp"
                 android:layout_weight="1"
                 android:layout_width="0px"
                 android:layout_marginRight="5dp"
@@ -165,6 +166,7 @@
             <com.rey.material.widget.Button
                 android:id="@+id/minimum"
                 android:text="@string/minimum"
+                android:layout_height="45dp"
                 android:layout_weight="1"
                 android:layout_width="0px"
                 android:layout_marginLeft="5dp"
@@ -175,6 +177,7 @@
         <com.rey.material.widget.Button
             android:id="@+id/submit_monster"
             android:text="@string/submit"
+            android:layout_height="45dp"
             style="@style/ripple_button_style"
             app:rd_style="@style/button_ripple_attributes"/>
     </LinearLayout>

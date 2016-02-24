@@ -1,31 +1,12 @@
 <resources>
     <string name="app_name">PAD Friend Finder</string>
     <string name="submit">Submit</string>
-    <string name="find_friends">Find Friends</string>
-    <string name="monster_box">Monster Box</string>
-
-    <!-- PAD ID Form -->
-    <string name="pad_id_label">PAD ID Form</string>
-    <string name="your_pad_id">Your PAD ID</string>
-    <string name="enter_pad_id">Enter in a PAD ID</string>
-    <string name="intro">This app needs your PAD ID in order to work, so please enter it below.</string>
-
-    <!-- Monster Search -->
-    <string name="hypermax">Hypermax</string>
-    <string name="minimum">Minimum</string>
-    <string name="max">Max</string>
-    <string name="lvl">Lvl:</string>
-    <string name="awkns">Awkns:</string>
-    <string name="abbreviated_plus_eggs">+ eggs:</string>
-    <string name="s_lvl">S Lvl:</string>
-    <string name="no_monster_chosen">No monster chosen</string>
 
     <!-- Monster Box -->
     <string name="monster_box_instructions">These are the monsters associated with your PAD ID.
         Hit the + button in the bottom right to add monsters to your box.
         Click on any monster to see its options.</string>
     <string name="no_monsters">There are no monsters associated with your PAD ID.</string>
-    <string name="add_monster">Add Monster</string>
     <string name="monster_box_label">Monster Box</string>
 
     <!-- Friend Results -->

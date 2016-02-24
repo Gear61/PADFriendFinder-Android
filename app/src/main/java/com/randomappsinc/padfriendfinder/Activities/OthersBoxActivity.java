@@ -12,7 +12,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +37,7 @@ public class OthersBoxActivity extends StandardActivity {
     @Bind(R.id.parent) View parent;
     @Bind(R.id.star_icon) TextView star;
     @Bind(R.id.others_list) ListView othersList;
-    @Bind(R.id.loading_box) ProgressBar loadingBox;
+    @Bind(R.id.loading_box) View loadingBox;
     @Bind(R.id.no_monsters) TextView nothing;
     @Bind(R.id.entered_id) TextView chosenId;
     @Bind(R.id.pad_id_input) AutoCompleteTextView othersId;
@@ -71,6 +70,7 @@ public class OthersBoxActivity extends StandardActivity {
 
     @OnEditorAction(R.id.pad_id_input)
     public boolean onEditorAction(int actionId) {
+        FormUtils.hideKeyboard(this);
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
             if (FormUtils.validatePadId(othersId.getText().toString(), parent)) {
                 displayResult(othersId.getText().toString());
@@ -110,7 +110,8 @@ public class OthersBoxActivity extends StandardActivity {
             if (PreferencesManager.get().isFavorited(userId)) {
                 star.setTextColor(getResources().getColor(R.color.silver));
                 PreferencesManager.get().removeFavorite(userId);
-            } else {
+            }
+            else {
                 star.setTextColor(getResources().getColor(R.color.gold));
                 PreferencesManager.get().addFavorite(userId);
                 mySet.add(userId);
@@ -121,18 +122,20 @@ public class OthersBoxActivity extends StandardActivity {
 
     @OnClick(R.id.clipboard_icon)
     public void onClipboard() {
+        FormUtils.hideKeyboard(this);
         String userId = chosenId.getText().toString();
         if (!userId.equals(getString(R.string.no_id_chosen))) {
             ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText(Constants.PAD_ID_KEY, userId);
             clipboard.setPrimaryClip(clip);
-            Toast.makeText(this, Constants.PAD_ID_COPIED_MESSAGE, Toast.LENGTH_SHORT).show();
+            FormUtils.showSnackbar(parent, getString(R.string.id_copied));
         }
     }
 
     // For when you're copy-pasting an ID in instead of typing it.
     @OnClick(R.id.search_icon)
     public void onSearch() {
+        FormUtils.hideKeyboard(this);
         if (FormUtils.validatePadId(othersId.getText().toString(), parent)) {
             displayResult(othersId.getText().toString());
         }

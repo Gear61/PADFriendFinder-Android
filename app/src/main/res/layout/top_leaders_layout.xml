@@ -1,26 +1,16 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
-    tools:context="com.randomappsinc.padfriendfinder.Activities.TopLeadersActivity">
+    android:padding="10dp">
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/topLeadersLV"
-        android:visibility="gone"
-        android:paddingTop="2dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/top_leaders"
+        android:visibility="gone"/>
 
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/topLeadersPB"
-        android:visibility="gone"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+    <com.rey.material.widget.ProgressView
+        android:id="@+id/loading_top_leaders"
+        style="@style/progress_bar"/>
 </RelativeLayout>

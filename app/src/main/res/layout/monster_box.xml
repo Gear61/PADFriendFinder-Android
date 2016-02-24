@@ -4,16 +4,16 @@
     android:layout_height="match_parent"
     android:padding="10dp">
 
-    <ProgressBar
+    <com.rey.material.widget.ProgressView
         android:id="@+id/loading_monsters"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        style="@style/progress_bar"/>
 
     <TextView
         android:id="@+id/monster_box_instructions"
         android:visibility="gone"
         android:text="@string/monster_box_instructions"
+        android:textSize="18sp"
+        android:textColor="@color/dark_gray"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

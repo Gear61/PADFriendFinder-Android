@@ -9,13 +9,9 @@
         android:id="@+id/fav_instructions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/favsInstructions" />
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/favorites_list"
-        android:visibility="gone"/>
+        android:text="@string/favsInstructions"
+        android:textSize="18sp"
+        android:textColor="@color/dark_gray"/>
 
     <TextView
         android:id="@+id/no_favs"
@@ -26,4 +22,9 @@
         android:textSize="28sp"
         android:layout_marginTop="25dp"
         android:visibility="gone"/>
+
+    <ListView
+        android:id="@+id/favorites_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

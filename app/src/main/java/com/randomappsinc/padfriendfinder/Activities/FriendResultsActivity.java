@@ -11,7 +11,6 @@ import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +22,7 @@ import com.randomappsinc.padfriendfinder.Models.Friend;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.R;
+import com.randomappsinc.padfriendfinder.Utils.FormUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -35,7 +35,8 @@ import butterknife.OnItemClick;
  * Created by alexanderchiou on 7/21/15.
  */
 public class FriendResultsActivity extends StandardActivity {
-    @Bind(R.id.loading_friend_results) ProgressBar loadingFriendResults;
+    @Bind(R.id.parent) View parent;
+    @Bind(R.id.loading_friend_results) View loadingFriendResults;
     @Bind(R.id.friend_results_intro) TextView intro;
     @Bind(R.id.monster_picture) ImageView monsterPicture;
     @Bind(R.id.monster_name) TextView monsterName;
@@ -115,6 +116,6 @@ public class FriendResultsActivity extends StandardActivity {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText(Constants.PAD_ID_KEY, padId);
         clipboard.setPrimaryClip(clip);
-        Toast.makeText(this, Constants.PAD_ID_COPIED_MESSAGE, Toast.LENGTH_SHORT).show();
+        FormUtils.showSnackbar(parent, getString(R.string.id_copied));
     }
 }

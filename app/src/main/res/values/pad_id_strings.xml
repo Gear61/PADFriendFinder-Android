@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="pad_id_label">PAD ID Form</string>
+    <string name="your_pad_id">Your PAD ID</string>
+    <string name="enter_pad_id">Enter in a PAD ID</string>
+    <string name="intro">This app needs your PAD ID in order to work, so please enter it below.</string>
+
     <string name="incomplete_pad_id">Please enter in all 9 digits of the PAD ID.</string>
     <string name="only_na">We only support NA right now, so a PAD ID\'s first digit must be 3.</string>
     <string name="same_pad_id">This is what your PAD ID already is.</string>

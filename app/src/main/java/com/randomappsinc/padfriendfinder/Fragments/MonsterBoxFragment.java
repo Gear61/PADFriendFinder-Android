@@ -1,22 +1,20 @@
 package com.randomappsinc.padfriendfinder.Fragments;
 
-import android.app.AlertDialog;
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.padfriendfinder.API.DeleteMonster;
 import com.randomappsinc.padfriendfinder.API.GetMonsterBox;
@@ -40,12 +38,12 @@ import butterknife.OnItemClick;
  * Created by alexanderchiou on 9/15/15.
  */
 public class MonsterBoxFragment extends Fragment {
-    @Bind(R.id.loading_monsters) ProgressBar loadingMonsters;
+    @Bind(R.id.loading_monsters) View loadingMonsters;
     @Bind(R.id.monster_box_instructions) TextView instructions;
     @Bind(R.id.no_monsters) TextView noMonsters;
     @Bind(R.id.monster_list) ListView monsterList;
 
-    private ProgressDialog deletingMonsterDialog;
+    private MaterialDialog deletingMonsterDialog;
     private MonsterBoxAdapter boxAdapter;
     private MonsterBoxReceiver boxReceiver;
     private MonsterUpdateReceiver updateReceiver;
@@ -62,8 +60,10 @@ public class MonsterBoxFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.monster_box, container, false);
         ButterKnife.bind(this, rootView);
 
-        deletingMonsterDialog = new ProgressDialog(getActivity());
-        deletingMonsterDialog.setMessage(Constants.DELETING_MONSTER_MESSAGE);
+        deletingMonsterDialog = new MaterialDialog.Builder(getActivity())
+                .content(R.string.deleting_monster)
+                .progress(true, 0)
+                .build();
         boxAdapter = new MonsterBoxAdapter(getActivity());
         monsterList.setAdapter(boxAdapter);
 
@@ -214,27 +214,19 @@ public class MonsterBoxFragment extends Fragment {
 
     private void showMonsterDeleteDialog(final String monsterName) {
         final Context context = getActivity();
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-        alertDialogBuilder.setTitle(Constants.DELETE_MONSTER_CONFIRMATION);
-        alertDialogBuilder.setMessage("Are you sure you want to delete \"" + monsterName + "\" from your box?")
-                .setCancelable(true)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int id)
-                    {
+        String message = getString(R.string.confirm_delete) + monsterName + getString(R.string.from_your_box);
+        new MaterialDialog.Builder(getActivity())
+                .title(R.string.delete_monster_confirmation)
+                .content(message)
+                .positiveText(R.string.yes)
+                .negativeText(R.string.no)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         deletingMonsterDialog.show();
                         new DeleteMonster(context, monsterName).execute();
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int id)
-                    {
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.setCanceledOnTouchOutside(true);
-        alertDialog.show();
+                .show();
     }
 }

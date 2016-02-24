@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -27,8 +26,8 @@ import butterknife.OnItemClick;
 import de.greenrobot.event.EventBus;
 
 public class TopLeadersActivity extends StandardActivity {
-    @Bind(R.id.topLeadersLV) ListView topLeaders;
-    @Bind(R.id.topLeadersPB) ProgressBar loading;
+    @Bind(R.id.top_leaders) ListView topLeaders;
+    @Bind(R.id.loading_top_leaders) View loading;
 
     private TopMonsterAdapter topMonsterAdapter;
 
@@ -56,7 +55,7 @@ public class TopLeadersActivity extends StandardActivity {
         super.onStop();
     }
 
-    @OnItemClick(R.id.topLeadersLV)
+    @OnItemClick(R.id.top_leaders)
     public void onItemClick(int position) {
         final Context context = this;
         final String monsterName = topMonsterAdapter.getItem(position).getName();

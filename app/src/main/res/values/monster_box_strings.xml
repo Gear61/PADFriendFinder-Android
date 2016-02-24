@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="delete_monster_confirmation">Delete Monster Confirmation</string>
+    <string name="confirm_delete">Are you sure you want to delete \"</string>
+    <string name="from_your_box">\" from your box?</string>
+    <string name="deleting_monster">Deleting your monster from our database&#8230;</string>
+</resources>

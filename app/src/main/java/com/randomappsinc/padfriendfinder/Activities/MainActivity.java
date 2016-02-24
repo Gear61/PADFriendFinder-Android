@@ -1,7 +1,6 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,7 +8,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.randomappsinc.padfriendfinder.API.GetMonsterList;
@@ -18,12 +19,14 @@ import com.randomappsinc.padfriendfinder.Fragments.NavigationDrawerFragment;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.R;
+import com.randomappsinc.padfriendfinder.Utils.FormUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+    @Bind(R.id.parent) View parent;
     @Bind(R.id.add_monster) FloatingActionButton addMonster;
 
     @Override
@@ -50,11 +53,11 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
             MonsterBoxFragment monsterBoxFragment = new MonsterBoxFragment();
             fragmentManager.beginTransaction().replace(R.id.container, monsterBoxFragment).commit();
 
-            ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setMessage(getString(R.string.loading_monster_list));
-            progressDialog.setCancelable(false);
-            progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.show();
+            MaterialDialog progressDialog = new MaterialDialog.Builder(this)
+                    .content(R.string.loading_monster_list)
+                    .progress(true, 0)
+                    .cancelable(false)
+                    .show();
             new GetMonsterList(progressDialog).execute();
         }
     }
@@ -87,6 +90,10 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 break;
         }
         startActivity(intent);
+    }
+
+    public void showSnackbar(String message) {
+        FormUtils.showSnackbar(parent, message);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.padfriendfinder.API.UpdateMonster;
 import com.randomappsinc.padfriendfinder.Adapters.MonsterSearchAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
@@ -49,14 +49,13 @@ public class MonsterFormActivity extends StandardActivity {
     @Bind(R.id.skill_level) EditText skillLevel;
     @Bind(R.id.num_plus_eggs) EditText numPlusEggs;
 
-    private ProgressDialog updatingBoxDialog;
+    private MaterialDialog updatingBoxDialog;
     private MonsterAttributes monsterChosen;
     private MonsterUpdateReceiver updateReceiver;
     private MonsterSearchAdapter monsterAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.monster_form);
@@ -65,7 +64,9 @@ public class MonsterFormActivity extends StandardActivity {
 
         monsterAdapter = new MonsterSearchAdapter(this, android.R.layout.simple_dropdown_item_1line,
                 MonsterServer.getMonsterServer().getFriendFinderMonsterList());
-        updatingBoxDialog = new ProgressDialog(this);
+        updatingBoxDialog = new MaterialDialog.Builder(this)
+                .progress(true, 0)
+                .build();
 
         setUpPage();
 
@@ -164,13 +165,13 @@ public class MonsterFormActivity extends StandardActivity {
     }
 
     private void setUpSearchMode() {
-        setTitle(Constants.FIND_FRIENDS_LABEL);
+        setTitle(R.string.find_friends);
         setUpMonsterInput();
     }
 
     private void setUpAddMode() {
-        setTitle(Constants.ADD_MONSTER_LABEL);
-        updatingBoxDialog.setMessage(Constants.ADDING_MONSTER);
+        setTitle(R.string.add_monster);
+        updatingBoxDialog.setContent(Constants.ADDING_MONSTER);
         setUpMonsterInput();
     }
 
@@ -181,7 +182,7 @@ public class MonsterFormActivity extends StandardActivity {
     }
 
     private void setUpUpdateMode() {
-        setTitle(Constants.UPDATE_MONSTER_LABEL);
+        setTitle(R.string.update_monster);
         MonsterAttributes monster = getIntent().getParcelableExtra(Constants.MONSTER_KEY);
         monsterChosen = MonsterServer.getMonsterServer().getMonsterAttributes(monster.getName());
         Picasso.with(this).load(monster.getImageUrl()).into(monsterPicture);
@@ -191,7 +192,7 @@ public class MonsterFormActivity extends StandardActivity {
         numAwakenings.setText(String.valueOf(monster.getAwakenings()));
         numPlusEggs.setText(String.valueOf(monster.getPlusEggs()));
         skillLevel.setText(String.valueOf(monster.getSkillLevel()));
-        updatingBoxDialog.setMessage(Constants.UPDATING_MONSTER);
+        updatingBoxDialog.setContent(Constants.UPDATING_MONSTER);
     }
 
     private void clearEverything() {
@@ -305,8 +306,7 @@ public class MonsterFormActivity extends StandardActivity {
                 }
             }
         }
-        else
-        {
+        else {
             Toast.makeText(this, Constants.INVALID_MONSTER_MESSAGE, Toast.LENGTH_LONG).show();
         }
     }

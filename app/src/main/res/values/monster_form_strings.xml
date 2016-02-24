@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hypermax">Hypermax</string>
+    <string name="minimum">Minimum</string>
+    <string name="max">Max</string>
+    <string name="lvl">Lvl:</string>
+    <string name="awkns">Awkns:</string>
+    <string name="abbreviated_plus_eggs">+ eggs:</string>
+    <string name="s_lvl">S Lvl:</string>
+    <string name="no_monster_chosen">No monster chosen</string>
+
+    <string name="find_friends">Find Friends</string>
+    <string name="add_monster">Add Monster</string>
+    <string name="update_monster">Update Monster</string>
+</resources>

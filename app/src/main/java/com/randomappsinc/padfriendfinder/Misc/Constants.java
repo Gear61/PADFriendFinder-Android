@@ -6,7 +6,6 @@ package com.randomappsinc.padfriendfinder.Misc;
 public class Constants {
     // PAD ID form
     public static final String CHANGE_ID_STRING = "Please enter in your new PAD ID.";
-    public static final String CHANGING_ID = "Changing your PAD ID...";
     public static final String ID_CHANGED = "PAD ID successfully changed.";
     public static final String ID_ALREADY_IN_USE = "This PAD ID is already in use.";
     public static final String CANT_CHANGE_ID = "We are unable to change your PAD ID at this time.";
@@ -50,9 +49,6 @@ public class Constants {
     public static final String SEARCH_MODE = "Search";
     public static final String ADD_MODE = "Add";
     public static final String UPDATE_MODE = "Update";
-    public static final String FIND_FRIENDS_LABEL = "Find Friends";
-    public static final String ADD_MONSTER_LABEL = "Add Monster";
-    public static final String UPDATE_MONSTER_LABEL = "Update Monster";
     public static final int MAX_PLUS_EGGS = 297;
     public static final String LOOKING_FOR_HINT = "I am looking for...";
     public static final String INVALID_MONSTER_MESSAGE = "Please enter in a valid monster name.";
@@ -65,8 +61,6 @@ public class Constants {
     public static final String ADDING_MONSTER = "Adding your monster to our database...";
     public static final String UPDATING_MONSTER = "Updating your monster in our database...";
 
-    // Friend results
-    public static final String PAD_ID_COPIED_MESSAGE = "PAD ID copied to clipboard.";
     public static final String FETCH_FRIENDS_FAILED_MESSAGE = "We were unable to find friends for you. " +
             "Please try again later.";
 
@@ -79,15 +73,6 @@ public class Constants {
     public static final String MONSTER_DELETE_FAILED_MESSAGE = "We were unable to delete your monster from our database. " +
             "Please try again later.";
     public static final String DELETING_MONSTER_MESSAGE = "Deleting your monster from our database...";
-    public static final String FIND_OTHER = "Find other";
-    public static final String UPDATE = "Update";
-    public static final String DELETE = "Delete";
-    public static final String SET = "Set";
-    public static final String DELETE_MONSTER_CONFIRMATION = "Delete Monster Confirmation";
-
-    //Monster Item (For Supported Leaders and Popular Leaders ListViews)
-    public static final String SEARCH = "Search for";
-    public static final String HYPERMAXD = "Display hypermax";
 
     // Popular Leaders
     public static final String FAILED_TO_FETCH = "We were unable to fetch the top leaders.";
@@ -96,5 +81,4 @@ public class Constants {
     public static final String OTHERS_ID_KEY = "ID";
     public static final String SETTINGS_KEY = "SETTINGS_MODE";
     public static final String CHOOSE_AVATAR_MODE = "chooseAvatarMode";
-    public static final String UPDATE_AVATAR_KEY = "update_avatar";
 }
