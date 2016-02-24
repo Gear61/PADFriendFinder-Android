@@ -2,13 +2,15 @@ package com.randomappsinc.padfriendfinder.Utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.MyApplication;
+import com.randomappsinc.padfriendfinder.R;
 
 /**
  * Created by alexanderchiou on 9/9/15.
@@ -26,16 +28,26 @@ public class FormUtils {
         activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 
-    public static boolean validatePadId(String padId) {
+    public static boolean validatePadId(String padId, View parent) {
         Context context = MyApplication.getAppContext();
         if (padId.length() != 9) {
-            Toast.makeText(context, Constants.INCOMPLETE_PAD_ID_MESSAGE, Toast.LENGTH_LONG).show();
+            showSnackbar(parent, context.getString(R.string.incomplete_pad_id));
             return false;
         }
         if (padId.charAt(0) != '3') {
-            Toast.makeText(context, Constants.INCORRECT_FIRST_DIGIT_MESSAGE, Toast.LENGTH_LONG).show();
+            showSnackbar(parent, context.getString(R.string.only_na));
             return false;
         }
         return true;
+    }
+
+    public static void showSnackbar(View parent, String message) {
+        Context context = MyApplication.getAppContext();
+        Snackbar snackbar = Snackbar.make(parent, message, Snackbar.LENGTH_LONG);
+        View rootView = snackbar.getView();
+        snackbar.getView().setBackgroundColor(context.getResources().getColor(R.color.app_blue));
+        TextView tv = (TextView) rootView.findViewById(android.support.design.R.id.snackbar_text);
+        tv.setTextColor(Color.WHITE);
+        snackbar.show();
     }
 }

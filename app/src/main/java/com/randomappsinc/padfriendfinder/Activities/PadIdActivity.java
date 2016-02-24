@@ -1,17 +1,18 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.padfriendfinder.API.ChangeID;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
@@ -26,27 +27,29 @@ import butterknife.OnClick;
  * Created by alexanderchiou on 7/14/15.
  */
 public class PadIdActivity extends StandardActivity {
+    @Bind(R.id.parent) View parent;
     @Bind(R.id.pad_id_instructions) TextView padID_textView;
     @Bind(R.id.pad_id_input) EditText padIdInput;
 
-    private Context context;
     private boolean settingsMode;
     private idChangeReceiver idChangeReceiver;
-    private ProgressDialog progressDialog;
+    private MaterialDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = this;
         setContentView(R.layout.pad_id_form);
         ButterKnife.bind(this);
         settingsMode = getIntent().getBooleanExtra(Constants.SETTINGS_KEY, false);
 
         idChangeReceiver = new idChangeReceiver();
-        this.registerReceiver(idChangeReceiver, new IntentFilter(Constants.ID_CHECKED_KEY));
+        registerReceiver(idChangeReceiver, new IntentFilter(Constants.ID_CHECKED_KEY));
 
-        progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage(Constants.CHANGING_ID);
+        progressDialog = new MaterialDialog.Builder(this)
+                .content(R.string.changing_id)
+                .progress(true, 0)
+                .build();
+
         if (settingsMode) {
             String currentPadId = PreferencesManager.get().getPadId();
             padIdInput.setText(currentPadId);
@@ -58,51 +61,44 @@ public class PadIdActivity extends StandardActivity {
 
     @OnClick(R.id.submit_pad_id)
     public void onClick() {
-        final String input = padIdInput.getText().toString();
-        if (FormUtils.validatePadId(padIdInput.getText().toString())) {
+        String userPadId = padIdInput.getText().toString();
+        if (FormUtils.validatePadId(userPadId, parent)) {
             FormUtils.hideKeyboard(this);
             if (!settingsMode) {
-                showDialog(input);
+                showConfirmDialog(userPadId);
             }
             else {
-                if (!input.equals(PreferencesManager.get().getPadId())) {
+                if (!userPadId.equals(PreferencesManager.get().getPadId())) {
                     progressDialog.show();
-                    new ChangeID(context, input).execute();
+                    new ChangeID(this, userPadId).execute();
                 }
                 else {
-                    Toast.makeText(context, Constants.ID_THE_SAME, Toast.LENGTH_LONG).show();
+                    FormUtils.showSnackbar(parent, getString(R.string.same_pad_id));
                 }
             }
         }
     }
 
-    private void showDialog(final String input) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                context);
-        alertDialogBuilder.setTitle(Constants.PAD_ID_CONFIRMATION);
-        alertDialogBuilder.setMessage("You have entered " + input + " as your PAD ID. " +
-                "Are you absolutely sure that this is correct?").setCancelable(true)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int id)
-                    {
+    private void showConfirmDialog(final String input) {
+        final Context context = this;
+        String message = getString(R.string.confirm_id_first) + input + ". " + getString(R.string.confirm_id_second);
+
+        new MaterialDialog.Builder(this)
+                .title(R.string.pad_id_confirmation)
+                .content(message)
+                .positiveText(R.string.yes)
+                .negativeText(R.string.no)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         PreferencesManager.get().setPadId(input);
                         Intent intent = new Intent(context, MainActivity.class);
                         startActivity(intent);
-                        Toast.makeText(context, Constants.WELCOME_MESSAGE, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, R.string.welcome, Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int id)
-                    {
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.setCanceledOnTouchOutside(true);
-        alertDialog.show();
+                .show();
     }
 
     private class idChangeReceiver extends BroadcastReceiver {

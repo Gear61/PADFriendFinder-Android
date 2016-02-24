@@ -35,6 +35,7 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 
 public class OthersBoxActivity extends StandardActivity {
+    @Bind(R.id.parent) View parent;
     @Bind(R.id.star_icon) TextView star;
     @Bind(R.id.others_list) ListView othersList;
     @Bind(R.id.loading_box) ProgressBar loadingBox;
@@ -71,7 +72,7 @@ public class OthersBoxActivity extends StandardActivity {
     @OnEditorAction(R.id.pad_id_input)
     public boolean onEditorAction(int actionId) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            if (FormUtils.validatePadId(othersId.getText().toString())) {
+            if (FormUtils.validatePadId(othersId.getText().toString(), parent)) {
                 displayResult(othersId.getText().toString());
             }
             return true;
@@ -132,13 +133,12 @@ public class OthersBoxActivity extends StandardActivity {
     // For when you're copy-pasting an ID in instead of typing it.
     @OnClick(R.id.search_icon)
     public void onSearch() {
-        if (FormUtils.validatePadId(othersId.getText().toString())) {
+        if (FormUtils.validatePadId(othersId.getText().toString(), parent)) {
             displayResult(othersId.getText().toString());
         }
     }
 
-    private class OthersBoxReceiver extends BroadcastReceiver
-    {
+    private class OthersBoxReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent)
         {

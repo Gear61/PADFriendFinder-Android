@@ -3,22 +3,13 @@ package com.randomappsinc.padfriendfinder.Misc;
 /**
  * Created by alexanderchiou on 7/13/15.
  */
-public class Constants
-{
-    // Welcome
-    public static final String WELCOME_MESSAGE = "Welcome to PAD Friend Finder!";
-
+public class Constants {
     // PAD ID form
-    public static final String INCOMPLETE_PAD_ID_MESSAGE = "Please enter in all 9 digits of the PAD ID.";
-    public static final String INCORRECT_FIRST_DIGIT_MESSAGE = "We only support NA right now, so a PAD ID's first" +
-            " digit must be 3.";
-    public static final String PAD_ID_CONFIRMATION = "PAD ID Confirmation";
     public static final String CHANGE_ID_STRING = "Please enter in your new PAD ID.";
     public static final String CHANGING_ID = "Changing your PAD ID...";
     public static final String ID_CHANGED = "PAD ID successfully changed.";
     public static final String ID_ALREADY_IN_USE = "This PAD ID is already in use.";
     public static final String CANT_CHANGE_ID = "We are unable to change your PAD ID at this time.";
-    public static final String ID_THE_SAME = "This is what your PAD ID already is.";
 
     // Monster search
     public static final String MONSTER_FORM_INCOMPLETE_MESSAGE = "Please fill in every field before submitting!";

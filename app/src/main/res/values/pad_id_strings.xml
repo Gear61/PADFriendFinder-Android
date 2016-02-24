@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="incomplete_pad_id">Please enter in all 9 digits of the PAD ID.</string>
+    <string name="only_na">We only support NA right now, so a PAD ID\'s first digit must be 3.</string>
+    <string name="same_pad_id">This is what your PAD ID already is.</string>
+
+    <string name="pad_id_confirmation">PAD ID Confirmation</string>
+    <string name="confirm_id_first">You have entered in your PAD ID as:&#160;</string>
+    <string name="confirm_id_second">Are you absolutely sure that this is correct?</string>
+
+    <string name="welcome">Welcome to PAD Friend Finder!</string>
+
+    <string name="changing_id">Changing your PAD ID&#8230;</string>
+</resources>

@@ -102,4 +102,7 @@
     <string name="search">Search</string>
     <string name="choose_avatar_label">Choose Avatar</string>
     <string name="title_activity_top_leaders">Popular Leaders</string>
+    
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
