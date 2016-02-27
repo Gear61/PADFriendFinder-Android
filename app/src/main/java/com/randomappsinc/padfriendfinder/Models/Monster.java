@@ -12,7 +12,7 @@ import com.randomappsinc.padfriendfinder.Misc.MonsterServer;
  * Created by alexanderchiou on 7/13/15.
  */
 
-public class MonsterAttributes implements Parcelable, Comparable<MonsterAttributes> {
+public class Monster implements Parcelable, Comparable<Monster> {
     @SerializedName("name")
     @Expose
     private String name;
@@ -40,12 +40,12 @@ public class MonsterAttributes implements Parcelable, Comparable<MonsterAttribut
     private String imageUrl;
 
     // Default constructor
-    public MonsterAttributes() {
+    public Monster() {
         this.name = "";
     }
 
     // For hard-coded hashmap
-    public MonsterAttributes(int level, int skillLevel, int awakenings) {
+    public Monster(int level, int skillLevel, int awakenings) {
         this.level = level;
         this.skillLevel = skillLevel;
         this.awakenings = awakenings;
@@ -61,7 +61,7 @@ public class MonsterAttributes implements Parcelable, Comparable<MonsterAttribut
     }
 
     // For when the user searches for monsters/updates their box
-    public MonsterAttributes(String name, int level, int awakenings, int plusEggs, int skillLevel) {
+    public Monster(String name, int level, int awakenings, int plusEggs, int skillLevel) {
         this.name = name;
         this.level = level;
         this.awakenings = awakenings;
@@ -131,7 +131,7 @@ public class MonsterAttributes implements Parcelable, Comparable<MonsterAttribut
         this.plusEggs = plusEggs;
     }
 
-    protected MonsterAttributes(Parcel in) {
+    protected Monster(Parcel in) {
         name = in.readString();
         level = in.readInt();
         skillLevel = in.readInt();
@@ -156,22 +156,22 @@ public class MonsterAttributes implements Parcelable, Comparable<MonsterAttribut
     }
 
     @SuppressWarnings("unused")
-    public static final Parcelable.Creator<MonsterAttributes> CREATOR = new Parcelable.Creator<MonsterAttributes>() {
+    public static final Parcelable.Creator<Monster> CREATOR = new Parcelable.Creator<Monster>() {
         @Override
-        public MonsterAttributes createFromParcel(Parcel in)
+        public Monster createFromParcel(Parcel in)
         {
-            return new MonsterAttributes(in);
+            return new Monster(in);
         }
 
         @Override
-        public MonsterAttributes[] newArray(int size)
+        public Monster[] newArray(int size)
         {
-            return new MonsterAttributes[size];
+            return new Monster[size];
         }
     };
 
     @Override
-    public int compareTo(@NonNull MonsterAttributes another) {
+    public int compareTo(@NonNull Monster another) {
         return another.monsterId - this.monsterId;
     }
 }

@@ -4,7 +4,7 @@ package com.randomappsinc.padfriendfinder.Misc;
  * Created by alexanderchiou on 7/13/15.
  */
 
-import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
+import com.randomappsinc.padfriendfinder.Models.Monster;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,8 +18,8 @@ import java.util.Set;
  */
 public class MonsterServer {
     private static MonsterServer instance = null;
-    private static HashMap<String, MonsterAttributes> nameToAttributes = new HashMap<>();
-    private static List<MonsterAttributes> allMonsters = new ArrayList<>();
+    private static HashMap<String, Monster> nameToAttributes = new HashMap<>();
+    private static List<Monster> allMonsters = new ArrayList<>();
     private static Set<String> friendFinderMonsterList = new HashSet<>();
 
     private MonsterServer() {}
@@ -32,9 +32,9 @@ public class MonsterServer {
         return instance;
     }
 
-    public void setUpMonsterMap(List<MonsterAttributes> monsters) {
+    public void setUpMonsterMap(List<Monster> monsters) {
         if (allMonsters.isEmpty()) {
-            for (MonsterAttributes monster : monsters)
+            for (Monster monster : monsters)
             {
                 nameToAttributes.put(monster.getName(), monster);
                 allMonsters.add(monster);
@@ -58,7 +58,7 @@ public class MonsterServer {
         return monsters;
     }
 
-    public MonsterAttributes getMonsterAttributes(String monsterName) {
+    public Monster getMonsterAttributes(String monsterName) {
         if (monsterName == null) {
             return null;
         }
@@ -66,16 +66,16 @@ public class MonsterServer {
     }
 
     public String getImageUrl(String monsterName) {
-        MonsterAttributes match = getMonsterAttributes(monsterName);
+        Monster match = getMonsterAttributes(monsterName);
         return match.getImageUrl();
     }
 
-    public List<MonsterAttributes> getMatches(String prefix) {
+    public List<Monster> getMatches(String prefix) {
         if (prefix.isEmpty()) {
             return allMonsters;
         }
-        List<MonsterAttributes> matches = new ArrayList<>();
-        for (MonsterAttributes monster : nameToAttributes.values()) {
+        List<Monster> matches = new ArrayList<>();
+        for (Monster monster : nameToAttributes.values()) {
             if (monster.getName().toLowerCase().contains(prefix.toLowerCase())) {
                 matches.add(monster);
             }

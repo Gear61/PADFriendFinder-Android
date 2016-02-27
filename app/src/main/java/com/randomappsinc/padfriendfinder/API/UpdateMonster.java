@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import com.randomappsinc.padfriendfinder.Misc.Constants;
-import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
+import com.randomappsinc.padfriendfinder.Models.Monster;
 import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 
 import org.apache.http.HttpResponse;
@@ -23,9 +23,9 @@ public class UpdateMonster extends AsyncTask<String, Integer, Long>
 {
     private Context context;
     private RestCallResponse restCallResponse;
-    private MonsterAttributes monster;
+    private Monster monster;
 
-    public UpdateMonster(Context context, MonsterAttributes monster)
+    public UpdateMonster(Context context, Monster monster)
     {
         this.context = context;
         this.restCallResponse = new RestCallResponse();

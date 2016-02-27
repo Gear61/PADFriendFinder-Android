@@ -4,7 +4,7 @@ import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.MonsterServer;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.Models.Friend;
-import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
+import com.randomappsinc.padfriendfinder.Models.Monster;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,14 +19,14 @@ import java.util.Set;
  */
 public class JSONParser
 {
-    public static MonsterAttributes parseMonsterJson(JSONObject monsterJson)
+    public static Monster parseMonsterJson(JSONObject monsterJson)
     {
-        MonsterAttributes monster = new MonsterAttributes();
+        Monster monster = new Monster();
         try
         {
             String monsterName = monsterJson.getString(Constants.NAME_KEY);
             monster.setName(monsterName);
-            MonsterAttributes mappedMonster = MonsterServer.getMonsterServer().getMonsterAttributes(monsterName);
+            Monster mappedMonster = MonsterServer.getMonsterServer().getMonsterAttributes(monsterName);
             if (mappedMonster != null)
                 monster.setImageUrl(mappedMonster.getImageUrl());
             else  {
@@ -64,17 +64,17 @@ public class JSONParser
                 {
                     continue;
                 }
-                Friend friend = new Friend(padId, parseMonsterJson(friendJson));
-                friends.add(friend);
+                // Friend friend = new Friend(padId, parseMonsterJson(friendJson));
+                // friends.add(friend);
             }
         }
         catch (JSONException e) {}
         return friends;
     }
 
-    public static List<MonsterAttributes> parseMonsterBoxResponse(String response)
+    public static List<Monster> parseMonsterBoxResponse(String response)
     {
-        List<MonsterAttributes> monsters = new ArrayList<>();
+        List<Monster> monsters = new ArrayList<>();
         try
         {
             JSONArray monstersArray = new JSONArray(response);
@@ -89,7 +89,7 @@ public class JSONParser
     }
 
     public static void parseMonsterListResponse(String response) {
-        List<MonsterAttributes> monsters = new ArrayList<>();
+        List<Monster> monsters = new ArrayList<>();
         try {
             JSONArray monstersArray = new JSONArray(response);
             for (int i = 0; i < monstersArray.length(); i++)

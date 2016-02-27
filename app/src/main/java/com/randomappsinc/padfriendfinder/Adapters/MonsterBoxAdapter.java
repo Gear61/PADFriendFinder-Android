@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
+import com.randomappsinc.padfriendfinder.Models.Monster;
 import com.randomappsinc.padfriendfinder.R;
 import com.squareup.picasso.Picasso;
 
@@ -21,7 +21,7 @@ import java.util.List;
 public class MonsterBoxAdapter extends BaseAdapter
 {
     private Context context;
-    private List<MonsterAttributes> monsters;
+    private List<Monster> monsters;
 
     public MonsterBoxAdapter(Context context)
     {
@@ -29,13 +29,13 @@ public class MonsterBoxAdapter extends BaseAdapter
         this.monsters = new ArrayList<>();
     }
 
-    public void addMonsters(List<MonsterAttributes> monsters)
+    public void addMonsters(List<Monster> monsters)
     {
         this.monsters.addAll(monsters);
         notifyDataSetChanged();
     }
 
-    public void updateMonster(MonsterAttributes monster)
+    public void updateMonster(Monster monster)
     {
         // This loop updates the monster if it's already there
         for (int i = 0; i < monsters.size(); i++)
@@ -72,7 +72,7 @@ public class MonsterBoxAdapter extends BaseAdapter
         monsters.clear();
     }
 
-    public MonsterAttributes getItem(int position) {
+    public Monster getItem(int position) {
         return monsters.get(position);
     }
 
@@ -113,7 +113,7 @@ public class MonsterBoxAdapter extends BaseAdapter
             holder = (ViewHolder) v.getTag();
         }
 
-        MonsterAttributes monster = monsters.get(position);
+        Monster monster = monsters.get(position);
         Picasso.with(context).load(monster.getImageUrl()).into(holder.picture);
         holder.name.setText(monster.getName());
         holder.level.setText(String.valueOf(monster.getLevel()));

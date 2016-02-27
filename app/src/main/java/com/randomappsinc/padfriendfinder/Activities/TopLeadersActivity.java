@@ -13,7 +13,7 @@ import com.randomappsinc.padfriendfinder.API.RestClient;
 import com.randomappsinc.padfriendfinder.Adapters.TopMonsterAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.MonsterServer;
-import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
+import com.randomappsinc.padfriendfinder.Models.Monster;
 import com.randomappsinc.padfriendfinder.Models.TopLeader;
 import com.randomappsinc.padfriendfinder.R;
 import com.randomappsinc.padfriendfinder.Utils.FormUtils;
@@ -76,7 +76,7 @@ public class TopLeadersActivity extends StandardActivity {
                                 intent.putExtra(Constants.MODE_KEY, Constants.SEARCH_MODE);
                                 break;
                             case 1:
-                                MonsterAttributes chosenMonster =
+                                Monster chosenMonster =
                                         MonsterServer.getMonsterServer().getMonsterAttributes(monsterName);
                                 chosenMonster.setPlusEggs(Constants.MAX_PLUS_EGGS);
                                 intent = new Intent(context, FriendResultsActivity.class);

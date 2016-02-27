@@ -1,8 +1,10 @@
 package com.randomappsinc.padfriendfinder.API;
 
 import com.randomappsinc.padfriendfinder.API.Models.DeleteMonsterInfo;
+import com.randomappsinc.padfriendfinder.API.Models.FriendRequest;
 import com.randomappsinc.padfriendfinder.API.Models.IgnoredResponse;
-import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
+import com.randomappsinc.padfriendfinder.Models.Friend;
+import com.randomappsinc.padfriendfinder.Models.Monster;
 import com.randomappsinc.padfriendfinder.Models.TopLeader;
 
 import java.util.List;
@@ -24,11 +26,14 @@ public interface PFFService {
     Call<List<TopLeader>> getTopLeaders();
 
     @GET("/getMonsters")
-    Call<List<MonsterAttributes>> getMonsterList();
+    Call<List<Monster>> getMonsterList();
 
     @GET("/monsters/{padId}")
-    Call<List<MonsterAttributes>> getMonsterBox(@Path("padId") String padId);
+    Call<List<Monster>> getMonsterBox(@Path("padId") String padId);
 
     @POST("/monsters/delete")
     Call<IgnoredResponse> deleteMonster(@Body DeleteMonsterInfo deleteMonsterInfo);
+
+    @POST("/fetch")
+    Call<List<Friend>> findFriends(@Body FriendRequest friendRequest);
 }

@@ -1,6 +1,6 @@
 package com.randomappsinc.padfriendfinder.Misc;
 
-import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
+import com.randomappsinc.padfriendfinder.Models.Monster;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,7 +14,7 @@ public class MonsterBoxManager
 {
     private static MonsterBoxManager instance = null;
     // If this is null, this means that we need to make the API call to fetch their box
-    private static List<MonsterAttributes> monsters;
+    private static List<Monster> monsters;
     private static Set<String> monsterNames;
 
     private MonsterBoxManager() {}
@@ -34,13 +34,13 @@ public class MonsterBoxManager
         return monsterNames.contains(monsterName);
     }
 
-    public void addMonsters (List<MonsterAttributes> monsters)
+    public void addMonsters (List<Monster> monsters)
     {
         if (this.monsters == null)
         {
             this.monsters = new ArrayList<>();
         }
-        for (MonsterAttributes monster : monsters)
+        for (Monster monster : monsters)
         {
             this.monsters.add(monster);
             this.monsterNames.add(monster.getName());
@@ -48,7 +48,7 @@ public class MonsterBoxManager
     }
 
     // For when the user adds/updates a monster
-    public void updateMonster(MonsterAttributes monster)
+    public void updateMonster(Monster monster)
     {
         if (this.monsters == null)
         {
@@ -82,7 +82,7 @@ public class MonsterBoxManager
         }
     }
 
-    public List<MonsterAttributes> getMonsterList()
+    public List<Monster> getMonsterList()
     {
         return monsters;
     }

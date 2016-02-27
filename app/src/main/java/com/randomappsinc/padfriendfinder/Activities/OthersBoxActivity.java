@@ -20,7 +20,7 @@ import com.randomappsinc.padfriendfinder.API.JSONParser;
 import com.randomappsinc.padfriendfinder.Adapters.MonsterBoxAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
-import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
+import com.randomappsinc.padfriendfinder.Models.Monster;
 import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.R;
 import com.randomappsinc.padfriendfinder.Utils.FormUtils;
@@ -148,7 +148,7 @@ public class OthersBoxActivity extends StandardActivity {
             RestCallResponse response = intent.getParcelableExtra(Constants.REST_CALL_RESPONSE_KEY);
             if (response.getStatusCode() == 200)
             {
-                List<MonsterAttributes> monsterBox = JSONParser.parseMonsterBoxResponse(response.getResponse());
+                List<Monster> monsterBox = JSONParser.parseMonsterBoxResponse(response.getResponse());
                 boxAdapter.clear();
                 boxAdapter.addMonsters(monsterBox);
                 refreshContent();

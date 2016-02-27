@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.randomappsinc.padfriendfinder.Misc.MonsterServer;
-import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
+import com.randomappsinc.padfriendfinder.Models.Monster;
 import com.randomappsinc.padfriendfinder.R;
 import com.squareup.picasso.Picasso;
 
@@ -72,8 +72,8 @@ public class MonsterSearchAdapter extends ArrayAdapter<String> {
         }
 
         holder.monsterName.setText(items.get(position));
-        MonsterAttributes monsterAttributes = monsterServer.getMonsterAttributes(items.get(position));
-        Picasso.with(context).load(monsterAttributes.getImageUrl()).into(holder.monsterIcon);
+        Monster monster = monsterServer.getMonsterAttributes(items.get(position));
+        Picasso.with(context).load(monster.getImageUrl()).into(holder.monsterIcon);
         return view;
     }
 

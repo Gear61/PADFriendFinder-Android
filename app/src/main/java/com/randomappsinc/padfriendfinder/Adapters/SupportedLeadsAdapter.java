@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.randomappsinc.padfriendfinder.Misc.MonsterServer;
-import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
+import com.randomappsinc.padfriendfinder.Models.Monster;
 import com.randomappsinc.padfriendfinder.R;
 import com.squareup.picasso.Picasso;
 
@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 public class SupportedLeadsAdapter extends BaseAdapter
 {
     private Context context;
-    private List<MonsterAttributes> matches;
+    private List<Monster> matches;
 
     public SupportedLeadsAdapter(Context context)
     {
@@ -42,7 +42,7 @@ public class SupportedLeadsAdapter extends BaseAdapter
         return matches.size();
     }
 
-    public MonsterAttributes getItem(int position) {
+    public Monster getItem(int position) {
         return matches.get(position);
     }
 
@@ -77,7 +77,7 @@ public class SupportedLeadsAdapter extends BaseAdapter
             holder = (ViewHolder) view.getTag();
         }
 
-        MonsterAttributes monster = matches.get(position);
+        Monster monster = matches.get(position);
         Picasso.with(context).load(monster.getImageUrl()).error(R.mipmap.mystery_creature).into(holder.monsterPicture);
         holder.monsterName.setText(monster.getName());
 

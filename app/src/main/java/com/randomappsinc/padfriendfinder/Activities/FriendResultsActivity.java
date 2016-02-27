@@ -1,26 +1,22 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
-import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.randomappsinc.padfriendfinder.API.FetchFriends;
-import com.randomappsinc.padfriendfinder.API.JSONParser;
+import com.randomappsinc.padfriendfinder.API.Callbacks.FindFriendsCallback;
+import com.randomappsinc.padfriendfinder.API.Events.SnackbarEvent;
+import com.randomappsinc.padfriendfinder.API.Models.FriendRequest;
+import com.randomappsinc.padfriendfinder.API.RestClient;
 import com.randomappsinc.padfriendfinder.Adapters.FriendResultsAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Models.Friend;
-import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
-import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
+import com.randomappsinc.padfriendfinder.Models.Monster;
 import com.randomappsinc.padfriendfinder.R;
 import com.randomappsinc.padfriendfinder.Utils.FormUtils;
 import com.squareup.picasso.Picasso;
@@ -30,11 +26,14 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by alexanderchiou on 7/21/15.
  */
 public class FriendResultsActivity extends StandardActivity {
+    public static final String LOG_TAG = "FriendResults";
+
     @Bind(R.id.parent) View parent;
     @Bind(R.id.loading_friend_results) View loadingFriendResults;
     @Bind(R.id.friend_results_intro) TextView intro;
@@ -45,7 +44,6 @@ public class FriendResultsActivity extends StandardActivity {
     @Bind(R.id.friend_results_list) ListView friendResultsList;
 
     private FriendResultsAdapter friendResultsAdapter;
-    private FetchFriendsReceiver friendsReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,60 +51,50 @@ public class FriendResultsActivity extends StandardActivity {
         setContentView(R.layout.friend_results);
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        EventBus.getDefault().register(this);
 
-        MonsterAttributes monster = getIntent().getExtras().getParcelable(Constants.MONSTER_KEY);
+        Monster monster = getIntent().getParcelableExtra(Constants.MONSTER_KEY);
         Picasso.with(this).load(monster.getImageUrl()).into(monsterPicture);
         monsterName.setText(monster.getName());
         friendResultsAdapter = new FriendResultsAdapter(this);
         friendResultsList.setAdapter(friendResultsAdapter);
 
-        // Receiver for API call
-        friendsReceiver = new FetchFriendsReceiver();
-        registerReceiver(friendsReceiver, new IntentFilter(Constants.FETCH_FRIENDS_KEY));
-
-        new FetchFriends(this, monster).execute();
+        // new FetchFriends(this, monster).execute();
+        FindFriendsCallback callback = new FindFriendsCallback();
+        FriendRequest request = new FriendRequest(monster);
+        RestClient.getInstance().getPffService().findFriends(request).enqueue(callback);
     }
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
-        try
-        {
-            unregisterReceiver(friendsReceiver);
-        }
-        catch (IllegalArgumentException ignored) {}
+        EventBus.getDefault().unregister(this);
     }
 
-    private class FetchFriendsReceiver extends BroadcastReceiver
-    {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            RestCallResponse response = intent.getParcelableExtra(Constants.REST_CALL_RESPONSE_KEY);
-            if (response.getStatusCode() == 200) {
-                List<Friend> friendResults = JSONParser.parseFriendCandidatesResponse(response.getResponse());
-                friendResultsAdapter.addFriends(friendResults);
-            }
-            else {
-                Toast.makeText(context, Constants.FETCH_FRIENDS_FAILED_MESSAGE, Toast.LENGTH_LONG).show();
-            }
+    public void onEvent(List<Friend> friends) {
+        friendResultsAdapter.addFriends(friends);
+        loadingFriendResults.setVisibility(View.GONE);
+        String isAre = friendResultsAdapter.getCount() == 1 ? "is" : "are";
+        String results = friendResultsAdapter.getCount() == 1 ? "result" : "results";
+        String introText = "Here " + isAre + " your <b>" + String.valueOf(friendResultsAdapter.getCount())+ "</b>" +
+                "</b> search " + results + " for:";
+        intro.setText(Html.fromHtml(introText));
+        intro.setVisibility(View.VISIBLE);
+        monsterPicture.setVisibility(View.VISIBLE);
+        monsterName.setVisibility(View.VISIBLE);
+        instructions.setVisibility(View.VISIBLE);
+        if (friendResultsAdapter.getCount() == 0) {
+            noResults.setVisibility(View.VISIBLE);
+        }
+        else {
+            friendResultsList.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void onEvent(SnackbarEvent event) {
+        if (event.getScreen().equals(LOG_TAG)) {
             loadingFriendResults.setVisibility(View.GONE);
-            String isAre = friendResultsAdapter.getCount() == 1 ? "is" : "are";
-            String results = friendResultsAdapter.getCount() == 1 ? "result" : "results";
-            String introText = "Here " + isAre + " your <b>" + String.valueOf(friendResultsAdapter.getCount())+ "</b>" +
-                    "</b> search " + results + " for:";
-            intro.setText(Html.fromHtml(introText));
-            intro.setVisibility(View.VISIBLE);
-            monsterPicture.setVisibility(View.VISIBLE);
-            monsterName.setVisibility(View.VISIBLE);
-            instructions.setVisibility(View.VISIBLE);
-            if (friendResultsAdapter.getCount() == 0) {
-                noResults.setVisibility(View.VISIBLE);
-            }
-            else {
-                friendResultsList.setVisibility(View.VISIBLE);
-            }
+            FormUtils.showSnackbar(parent, event.getMessage());
         }
     }
 

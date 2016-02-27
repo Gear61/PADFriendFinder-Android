@@ -19,7 +19,7 @@ import com.randomappsinc.padfriendfinder.Adapters.MonsterSearchAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.MonsterBoxManager;
 import com.randomappsinc.padfriendfinder.Misc.MonsterServer;
-import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
+import com.randomappsinc.padfriendfinder.Models.Monster;
 import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.R;
 import com.randomappsinc.padfriendfinder.Utils.FormUtils;
@@ -49,7 +49,7 @@ public class MonsterFormActivity extends StandardActivity {
 
     private String mode;
     private MaterialDialog updatingBoxDialog;
-    private MonsterAttributes monsterChosen;
+    private Monster monsterChosen;
     private MonsterUpdateReceiver updateReceiver;
     private MonsterSearchAdapter monsterAdapter;
 
@@ -181,7 +181,7 @@ public class MonsterFormActivity extends StandardActivity {
 
     private void setUpUpdateMode() {
         setTitle(R.string.update_monster);
-        MonsterAttributes monster = getIntent().getParcelableExtra(Constants.MONSTER_KEY);
+        Monster monster = getIntent().getParcelableExtra(Constants.MONSTER_KEY);
         monsterChosen = MonsterServer.getMonsterServer().getMonsterAttributes(monster.getName());
         Picasso.with(this).load(monster.getImageUrl()).into(monsterPicture);
         monsterEditText.setVisibility(View.GONE);
@@ -212,10 +212,10 @@ public class MonsterFormActivity extends StandardActivity {
 
     @OnTextChanged(value = R.id.monster_search_box, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterTextChanged (Editable input) {
-        MonsterAttributes monsterAttributes = MonsterServer.getMonsterServer().getMonsterAttributes(input.toString());
-        if (monsterAttributes != null) {
-            monsterChosen = monsterAttributes;
-            Picasso.with(this).load(monsterAttributes.getImageUrl()).into(monsterPicture);
+        Monster monster = MonsterServer.getMonsterServer().getMonsterAttributes(input.toString());
+        if (monster != null) {
+            monsterChosen = monster;
+            Picasso.with(this).load(monster.getImageUrl()).into(monsterPicture);
             monsterName.setText(input.toString());
             monsterEditText.setText("");
             level.requestFocus();
@@ -288,7 +288,7 @@ public class MonsterFormActivity extends StandardActivity {
                 // Everything is A-OK
                 else {
                     FormUtils.hideKeyboard(this);
-                    MonsterAttributes monster = new MonsterAttributes(enteredName, monLevel,
+                    Monster monster = new Monster(enteredName, monLevel,
                             monNumAwakenings, monNumPlusEggs, monSkillLevel);
                     monster.setImageUrl(monsterChosen.getImageUrl());
                     if (mode.equals(Constants.SEARCH_MODE)) {

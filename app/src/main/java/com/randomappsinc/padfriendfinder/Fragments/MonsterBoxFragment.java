@@ -28,7 +28,7 @@ import com.randomappsinc.padfriendfinder.Adapters.MonsterBoxAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.MonsterBoxManager;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
-import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
+import com.randomappsinc.padfriendfinder.Models.Monster;
 import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.R;
 
@@ -55,7 +55,6 @@ public class MonsterBoxFragment extends Fragment {
     private MonsterUpdateReceiver updateReceiver;
 
     private String monsterToDelete;
-    private MonsterAttributes monsterToUpdate;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,7 +92,7 @@ public class MonsterBoxFragment extends Fragment {
         catch (IllegalArgumentException ignored) {}
     }
 
-    public void onEvent(List<MonsterAttributes> monsterBox) {
+    public void onEvent(List<Monster> monsterBox) {
         if (boxAdapter.getCount() == 0) {
             boxAdapter.addMonsters(monsterBox);
             MonsterBoxManager.getInstance().addMonsters(monsterBox);
@@ -135,7 +134,7 @@ public class MonsterBoxFragment extends Fragment {
             RestCallResponse response = intent.getParcelableExtra(Constants.REST_CALL_RESPONSE_KEY);
             if (response.getStatusCode() == 200)
             {
-                MonsterAttributes monster = intent.getParcelableExtra(Constants.MONSTER_KEY);
+                Monster monster = intent.getParcelableExtra(Constants.MONSTER_KEY);
                 boxAdapter.updateMonster(monster);
                 boxAdapter.notifyDataSetChanged();
                 MonsterBoxManager.getInstance().updateMonster(monster);
@@ -200,7 +199,6 @@ public class MonsterBoxFragment extends Fragment {
     }
 
     private void showMonsterDeleteDialog(final String monsterName) {
-        final Context context = getActivity();
         String message = getString(R.string.confirm_delete) + monsterName + getString(R.string.from_your_box);
         new MaterialDialog.Builder(getActivity())
                 .title(R.string.delete_monster_confirmation)

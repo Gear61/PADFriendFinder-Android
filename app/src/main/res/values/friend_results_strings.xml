@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="id_copied">PAD ID copied to clipboard.</string>
+    <string name="fetch_fail">We were unable to find potential friends for you. Please try again later.</string>
 </resources>

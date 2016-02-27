@@ -23,19 +23,16 @@ import butterknife.ButterKnife;
 /**
  * Created by alexanderchiou on 7/21/15.
  */
-public class FriendResultsAdapter extends BaseAdapter
-{
+public class FriendResultsAdapter extends BaseAdapter {
     private Context context;
     private List<Friend> friends;
 
-    public FriendResultsAdapter(Context context)
-    {
+    public FriendResultsAdapter(Context context) {
         this.context = context;
         this.friends = new ArrayList<>();
     }
 
-    public void addFriends(List<Friend> friends)
-    {
+    public void addFriends(List<Friend> friends) {
         this.friends.addAll(friends);
         notifyDataSetChanged();
     }
@@ -52,8 +49,7 @@ public class FriendResultsAdapter extends BaseAdapter
         return position;
     }
 
-    public static class ViewHolder
-    {
+    public static class ViewHolder {
         @Bind(R.id.pad_id) TextView padId;
         @Bind(R.id.level) TextView level;
         @Bind(R.id.awakenings) TextView awakenings;
@@ -61,34 +57,30 @@ public class FriendResultsAdapter extends BaseAdapter
         @Bind(R.id.skill_level) TextView skillLevel;
         @Bind(R.id.monster_box) ImageView monsterBox;
 
-        public ViewHolder(View view)
-        {
+        public ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
     }
 
     // Renders the ListView item that the user has scrolled to or is about to scroll to
-    public View getView(int position, View view, ViewGroup parent)
-    {
+    public View getView(int position, View view, ViewGroup parent) {
         ViewHolder holder;
-        if (view == null)
-        {
+        if (view == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = vi.inflate(R.layout.friend_result_list_item, null);
+            view = vi.inflate(R.layout.friend_result_list_item, parent, false);
             holder = new ViewHolder(view);
             view.setTag(holder);
         }
-        else
-        {
+        else {
             holder = (ViewHolder) view.getTag();
         }
 
         final Friend friend = friends.get(position);
         holder.padId.setText(friend.getPadId());
-        holder.level.setText(String.valueOf(friend.getMonster().getLevel()));
-        holder.awakenings.setText(String.valueOf(friend.getMonster().getAwakenings()));
-        holder.plusEggs.setText(String.valueOf(friend.getMonster().getPlusEggs()));
-        holder.skillLevel.setText(String.valueOf(friend.getMonster().getSkillLevel()));
+        holder.level.setText(String.valueOf(friend.getLevel()));
+        holder.awakenings.setText(String.valueOf(friend.getAwakenings()));
+        holder.plusEggs.setText(String.valueOf(friend.getPlusEggs()));
+        holder.skillLevel.setText(String.valueOf(friend.getSkillLevel()));
         holder.monsterBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

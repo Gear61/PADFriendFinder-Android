@@ -2,7 +2,7 @@ package com.randomappsinc.padfriendfinder.API;
 
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
-import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
+import com.randomappsinc.padfriendfinder.Models.Monster;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,7 +13,7 @@ import org.json.JSONObject;
 
 public class JSONBuilder
 {
-    private static JSONObject createMonsterJson(MonsterAttributes monster)
+    private static JSONObject createMonsterJson(Monster monster)
     {
         JSONObject monsterJson = new JSONObject();
         try
@@ -29,7 +29,7 @@ public class JSONBuilder
     }
 
     // For adding/updating creatures in your box
-    public static String updateMonsterBuilder(MonsterAttributes monster)
+    public static String updateMonsterBuilder(Monster monster)
     {
         JSONObject monsterBoxJson = new JSONObject();
         try
@@ -42,7 +42,7 @@ public class JSONBuilder
     }
 
     // For finding friends
-    public static String fetchFriendsBuilder(MonsterAttributes monster)
+    public static String fetchFriendsBuilder(Monster monster)
     {
         return updateMonsterBuilder(monster).toString();
     }

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.randomappsinc.padfriendfinder.Misc.MonsterServer;
-import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
+import com.randomappsinc.padfriendfinder.Models.Monster;
 import com.randomappsinc.padfriendfinder.Models.TopLeader;
 import com.randomappsinc.padfriendfinder.R;
 import com.squareup.picasso.Picasso;
@@ -73,7 +73,7 @@ public class TopMonsterAdapter extends BaseAdapter {
 
         String name = topLeaders.get(position).getName();
         int count = topLeaders.get(position).getLeaderCount();
-        MonsterAttributes monster = MonsterServer.getMonsterServer().getMonsterAttributes(name);
+        Monster monster = MonsterServer.getMonsterServer().getMonsterAttributes(name);
         holder.rank.setText(Integer.toString(++position) + ".");
         Picasso.with(context).load(monster.getImageUrl()).into(holder.monsterImg);
         holder.name.setText(name);
