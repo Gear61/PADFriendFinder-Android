@@ -13,8 +13,6 @@
     <string name="confirm_id_first">You have entered in your PAD ID as:&#160;</string>
     <string name="confirm_id_second">Are you absolutely sure that this is correct?</string>
 
-    <string name="welcome">Welcome to PAD Friend Finder!</string>
-
     <string name="changing_id">Changing your PAD ID&#8230;</string>
 
     <string name="id_change_success">PAD ID successfully changed.</string>

@@ -96,7 +96,6 @@ public class PadIdActivity extends StandardActivity {
                         PreferencesManager.get().setPadId(input);
                         Intent intent = new Intent(context, MainActivity.class);
                         startActivity(intent);
-                        Toast.makeText(context, R.string.welcome, Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 })

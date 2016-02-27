@@ -87,6 +87,10 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         }
     }
 
+    public void showSnackbar(String message) {
+        FormUtils.showSnackbar(parent, message);
+    }
+
     @OnClick(R.id.add_monster)
     public void addMonster() {
         Intent intent = new Intent(this, MonsterFormActivity.class);

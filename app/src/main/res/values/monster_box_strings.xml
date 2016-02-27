@@ -5,4 +5,10 @@
     <string name="from_your_box">\" from your box?</string>
     <string name="deleting_monster">Deleting your monster from our database&#8230;</string>
     <string name="box_load_fail">We failed to load your monster box. Please try again later.</string>
+
+    <string name="delete_monster_success">Your monster was successfully deleted from our database.</string>
+    <string name="delete_monster_failure">
+        We failed to delete your monster from our database.
+        Please try again later.
+    </string>
 </resources>

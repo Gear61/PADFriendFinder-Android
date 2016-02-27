@@ -12,16 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.padfriendfinder.API.ApiConstants;
+import com.randomappsinc.padfriendfinder.API.Callbacks.BasicCallback;
 import com.randomappsinc.padfriendfinder.API.Callbacks.GetMonsterBoxCallback;
-import com.randomappsinc.padfriendfinder.API.DeleteMonster;
 import com.randomappsinc.padfriendfinder.API.Events.BasicResponseEvent;
 import com.randomappsinc.padfriendfinder.API.Events.SnackbarEvent;
+import com.randomappsinc.padfriendfinder.API.Models.DeleteMonsterInfo;
 import com.randomappsinc.padfriendfinder.API.RestClient;
+import com.randomappsinc.padfriendfinder.Activities.MainActivity;
 import com.randomappsinc.padfriendfinder.Activities.MonsterFormActivity;
 import com.randomappsinc.padfriendfinder.Adapters.MonsterBoxAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
@@ -52,7 +53,9 @@ public class MonsterBoxFragment extends Fragment {
     private MaterialDialog deletingMonsterDialog;
     private MonsterBoxAdapter boxAdapter;
     private MonsterUpdateReceiver updateReceiver;
-    private MonsterDeleteReceiver deleteReceiver;
+
+    private String monsterToDelete;
+    private MonsterAttributes monsterToUpdate;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,9 +76,7 @@ public class MonsterBoxFragment extends Fragment {
         monsterList.setAdapter(boxAdapter);
 
         updateReceiver = new MonsterUpdateReceiver();
-        deleteReceiver = new MonsterDeleteReceiver();
         getActivity().registerReceiver(updateReceiver, new IntentFilter(Constants.MONSTER_UPDATE_KEY));
-        getActivity().registerReceiver(deleteReceiver, new IntentFilter(Constants.DELETE_KEY));
 
         return rootView;
     }
@@ -88,7 +89,6 @@ public class MonsterBoxFragment extends Fragment {
         try
         {
             getActivity().unregisterReceiver(updateReceiver);
-            getActivity().unregisterReceiver(deleteReceiver);
         }
         catch (IllegalArgumentException ignored) {}
     }
@@ -104,37 +104,26 @@ public class MonsterBoxFragment extends Fragment {
     public void onEvent(BasicResponseEvent event) {
         if (event.getEventType().equals(Constants.GET_MONSTERS_KEY) &&
                 event.getResponseCode() == ApiConstants.STATUS_OK) {
-            // new GetMonsterBox(getActivity(), PreferencesManager.get().getPadId(), false).execute();
             GetMonsterBoxCallback callback = new GetMonsterBoxCallback();
             RestClient.getInstance().getPffService().getMonsterBox(PreferencesManager.get().getPadId()).enqueue(callback);
+        }
+        else if (event.getEventType().equals(Constants.DELETE_KEY)) {
+            deletingMonsterDialog.dismiss();
+            if (event.getResponseCode() == ApiConstants.STATUS_OK) {
+                boxAdapter.deleteMonster(monsterToDelete);
+                MonsterBoxManager.getInstance().deleteMonster(monsterToDelete);
+                refreshContent();
+                showSnackbar(getString(R.string.delete_monster_success));
+            }
+            else {
+                showSnackbar(getString(R.string.delete_monster_failure));
+            }
         }
     }
 
     public void onEvent(SnackbarEvent event) {
         if (event.getScreen().equals(LOG_TAG)) {
             loadingMonsters.setVisibility(View.GONE);
-        }
-    }
-
-    private class MonsterDeleteReceiver extends BroadcastReceiver
-    {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            deletingMonsterDialog.dismiss();
-            RestCallResponse response = intent.getParcelableExtra(Constants.REST_CALL_RESPONSE_KEY);
-            if (response.getStatusCode() == 200)
-            {
-                String monsterName = intent.getStringExtra(Constants.NAME_KEY);
-                boxAdapter.deleteMonster(monsterName);
-                MonsterBoxManager.getInstance().deleteMonster(monsterName);
-                refreshContent();
-                Toast.makeText(context, Constants.MONSTER_DELETE_SUCCESS_MESSAGE, Toast.LENGTH_SHORT).show();
-            }
-            else
-            {
-                Toast.makeText(context, Constants.MONSTER_DELETE_FAILED_MESSAGE, Toast.LENGTH_LONG).show();
-            }
         }
     }
 
@@ -167,6 +156,11 @@ public class MonsterBoxFragment extends Fragment {
             noMonsters.setVisibility(View.GONE);
             monsterList.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void showSnackbar(String message) {
+        MainActivity activity = (MainActivity) getActivity();
+        activity.showSnackbar(message);
     }
 
     @OnItemClick(R.id.monster_list)
@@ -217,7 +211,10 @@ public class MonsterBoxFragment extends Fragment {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         deletingMonsterDialog.show();
-                        new DeleteMonster(context, monsterName).execute();
+                        monsterToDelete = monsterName;
+                        BasicCallback callback = new BasicCallback(Constants.DELETE_KEY);
+                        DeleteMonsterInfo info = new DeleteMonsterInfo(monsterName);
+                        RestClient.getInstance().getPffService().deleteMonster(info).enqueue(callback);
                     }
                 })
                 .show();

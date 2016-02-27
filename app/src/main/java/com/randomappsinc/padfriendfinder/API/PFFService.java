@@ -1,5 +1,6 @@
 package com.randomappsinc.padfriendfinder.API;
 
+import com.randomappsinc.padfriendfinder.API.Models.DeleteMonsterInfo;
 import com.randomappsinc.padfriendfinder.API.Models.IgnoredResponse;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.Models.TopLeader;
@@ -7,7 +8,9 @@ import com.randomappsinc.padfriendfinder.Models.TopLeader;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -25,4 +28,7 @@ public interface PFFService {
 
     @GET("/monsters/{padId}")
     Call<List<MonsterAttributes>> getMonsterBox(@Path("padId") String padId);
+
+    @POST("/monsters/delete")
+    Call<IgnoredResponse> deleteMonster(@Body DeleteMonsterInfo deleteMonsterInfo);
 }
