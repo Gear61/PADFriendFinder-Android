@@ -1,6 +1,9 @@
 package com.randomappsinc.padfriendfinder.API;
 
 import com.randomappsinc.padfriendfinder.API.Models.IgnoredResponse;
+import com.randomappsinc.padfriendfinder.Models.TopLeader;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -12,4 +15,7 @@ import retrofit2.http.Path;
 public interface PFFService {
     @GET("/changeID/{oldId}/{newId}")
     Call<IgnoredResponse> changePadId(@Path("oldId") String oldId, @Path("newId") String newId);
+
+    @GET("/topLeaders")
+    Call<List<TopLeader>> getTopLeaders();
 }

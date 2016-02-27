@@ -5,7 +5,6 @@ import com.randomappsinc.padfriendfinder.Misc.MonsterServer;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.Models.Friend;
 import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
-import com.randomappsinc.padfriendfinder.Models.TopLeader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -101,28 +100,5 @@ public class JSONParser
         }
         catch (JSONException e) {}
         MonsterServer.getMonsterServer().setUpMonsterMap(monsters);
-    }
-
-    public static TopLeader parseTopLeaderJSON(JSONObject topLeaderJSON) {
-        TopLeader topLeader = new TopLeader();
-        try {
-            topLeader.setName(topLeaderJSON.getString("name"));
-            topLeader.setLeaderCount(topLeaderJSON.getInt("count"));
-        }
-        catch (JSONException e) {}
-        return topLeader;
-    }
-
-    public static List<TopLeader> parseTopLeaders(String response) {
-        List<TopLeader> topLeaders = new ArrayList<>();
-        try {
-            JSONArray topLeadersArray = new JSONArray(response);
-            for (int i = 0; i < topLeadersArray.length(); i++) {
-                JSONObject topLeaderJSON = topLeadersArray.getJSONObject(i);
-                topLeaders.add(parseTopLeaderJSON(topLeaderJSON));
-            }
-        }
-        catch (JSONException e) {}
-        return topLeaders;
     }
 }

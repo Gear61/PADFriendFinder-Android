@@ -20,9 +20,6 @@ public class Constants {
     public static final String MONSTER_ID_KEY = "monsterId";
     public static final String GET_MONSTERS_KEY = "getMonsters";
     public static final String CHANGE_ID_KEY = "changeID";
-    public static final String ID_CHECKED_KEY ="ID_Checked";
-    public static final String ID_STATUS_KEY = "status";
-    public static final String TOP_LEADERS_KEY = "topLeaders";
 
     // Activity communication/broadcasts
     public static final String MODE_KEY = "mode";
@@ -56,9 +53,6 @@ public class Constants {
     public static final String MONSTER_DELETE_SUCCESS_MESSAGE = "Your monster was successfully deleted from our database.";
     public static final String MONSTER_DELETE_FAILED_MESSAGE = "We were unable to delete your monster from our database. " +
             "Please try again later.";
-
-    // Popular Leaders
-    public static final String FAILED_TO_FETCH = "We were unable to fetch the top leaders.";
 
     // Intent keys
     public static final String OTHERS_ID_KEY = "ID";

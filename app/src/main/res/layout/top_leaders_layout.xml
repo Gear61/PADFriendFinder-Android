@@ -1,16 +1,23 @@
-<RelativeLayout
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent"
+    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp">
+    android:layout_height="match_parent">
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/top_leaders"
-        android:visibility="gone"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
 
-    <com.rey.material.widget.ProgressView
-        android:id="@+id/loading_top_leaders"
-        style="@style/progress_bar"/>
-</RelativeLayout>
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/top_leaders"/>
+
+        <com.rey.material.widget.ProgressView
+            android:id="@+id/loading_top_leaders"
+            style="@style/progress_bar"/>
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

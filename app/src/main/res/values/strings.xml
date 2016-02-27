@@ -86,4 +86,6 @@
     
     <string name="yes">Yes</string>
     <string name="no">No</string>
+
+    <string name="top_leaders_fail">Sorry, we were unable to fetch the most popular leaders.</string>
 </resources>

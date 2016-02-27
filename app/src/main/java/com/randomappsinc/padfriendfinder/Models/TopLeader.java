@@ -1,24 +1,19 @@
 package com.randomappsinc.padfriendfinder.Models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by jman0_000 on 10/1/2015.
  */
 public class TopLeader {
+    @SerializedName("name")
+    @Expose
+    private String name;
 
-    String name;
-    int leaderCount;
-
-    public TopLeader() {
-        this.name = "";
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setLeaderCount(int leaderCount) {
-        this.leaderCount = leaderCount;
-    }
+    @SerializedName("count")
+    @Expose
+    private int leaderCount;
 
     public String getName() {
         return name;
