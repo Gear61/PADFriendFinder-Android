@@ -16,4 +16,9 @@
     <string name="welcome">Welcome to PAD Friend Finder!</string>
 
     <string name="changing_id">Changing your PAD ID&#8230;</string>
+
+    <string name="id_change_success">PAD ID successfully changed.</string>
+    <string name="id_already_used">This PAD ID is already in use.</string>
+    <string name="cannot_change_id">We are unable to change your PAD ID at this time.</string>
+    <string name="enter_in_new_id">Please enter in your new PAD ID.</string>
 </resources>

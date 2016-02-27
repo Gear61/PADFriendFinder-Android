@@ -4,15 +4,6 @@ package com.randomappsinc.padfriendfinder.Misc;
  * Created by alexanderchiou on 7/13/15.
  */
 public class Constants {
-    // PAD ID form
-    public static final String CHANGE_ID_STRING = "Please enter in your new PAD ID.";
-    public static final String ID_CHANGED = "PAD ID successfully changed.";
-    public static final String ID_ALREADY_IN_USE = "This PAD ID is already in use.";
-    public static final String CANT_CHANGE_ID = "We are unable to change your PAD ID at this time.";
-
-    // Monster search
-    public static final String MONSTER_FORM_INCOMPLETE_MESSAGE = "Please fill in every field before submitting!";
-
     // API
     public static final String SERVER_URL = "https://mysterious-citadel-1245.herokuapp.com/";
     public static final String PAD_ID_KEY = "pad_ID";
@@ -28,7 +19,7 @@ public class Constants {
     public static final String DELETE_KEY = "delete";
     public static final String MONSTER_ID_KEY = "monsterId";
     public static final String GET_MONSTERS_KEY = "getMonsters";
-    public static final String CHECK_ID_KEY = "changeID";
+    public static final String CHANGE_ID_KEY = "changeID";
     public static final String ID_CHECKED_KEY ="ID_Checked";
     public static final String ID_STATUS_KEY = "status";
     public static final String TOP_LEADERS_KEY = "topLeaders";
@@ -41,17 +32,10 @@ public class Constants {
     public static final String REST_CALL_RESPONSE_KEY = "restCallResponse";
 
     // Monster form
-    public static final String HAVE_A_HINT = "I have a...";
-    public static final String LEVEL_HINT = "Level";
-    public static final String AWAKENINGS_HINT = "Awakenings";
-    public static final String PLUS_EGGS_HINT = "+ Eggs";
-    public static final String SKILL_LEVEL_HINT = "Skill Level";
     public static final String SEARCH_MODE = "Search";
     public static final String ADD_MODE = "Add";
     public static final String UPDATE_MODE = "Update";
     public static final int MAX_PLUS_EGGS = 297;
-    public static final String LOOKING_FOR_HINT = "I am looking for...";
-    public static final String INVALID_MONSTER_MESSAGE = "Please enter in a valid monster name.";
     public static final String MONSTER_ADD_FAILED_MESSAGE = "We were unable to add your monster to our database. " +
             "Please try again later.";
     public static final String MONSTER_UPDATE_FAILED_MESSAGE = "We were unable to update your monster in our database. " +
@@ -61,7 +45,7 @@ public class Constants {
     public static final String ADDING_MONSTER = "Adding your monster to our database...";
     public static final String UPDATING_MONSTER = "Updating your monster in our database...";
 
-    public static final String FETCH_FRIENDS_FAILED_MESSAGE = "We were unable to find friends for you. " +
+    public static final String FETCH_FRIENDS_FAILED_MESSAGE = "We were unable to find potential friends for you. " +
             "Please try again later.";
 
     // Monster box
@@ -72,7 +56,6 @@ public class Constants {
     public static final String MONSTER_DELETE_SUCCESS_MESSAGE = "Your monster was successfully deleted from our database.";
     public static final String MONSTER_DELETE_FAILED_MESSAGE = "We were unable to delete your monster from our database. " +
             "Please try again later.";
-    public static final String DELETING_MONSTER_MESSAGE = "Deleting your monster from our database...";
 
     // Popular Leaders
     public static final String FAILED_TO_FETCH = "We were unable to fetch the top leaders.";

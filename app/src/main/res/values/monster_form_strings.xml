@@ -12,4 +12,15 @@
     <string name="find_friends">Find Friends</string>
     <string name="add_monster">Add Monster</string>
     <string name="update_monster">Update Monster</string>
+
+    <string name="have_a_hint">I have a&#8230;</string>
+    <string name="level_hint">Level</string>
+    <string name="awakenings_hint">Awakenings</string>
+    <string name="plus_eggs_hint">+ Eggs</string>
+    <string name="skill_level_hint">Skill Level</string>
+    <string name="looking_for_hint">I am looking for&#8230;</string>
+    <string name="invalid_monster">Please enter in a valid monster name.</string>
+    <string name="incomplete_monster_form">Please fill in every field before submitting!</string>
+
+    <string name="monster_box_dupe">Your monster box already has a&#160;</string>
 </resources>

@@ -131,12 +131,14 @@ public class MonsterFormActivity extends StandardActivity {
 
         // Hint setting
         String minimumPrefix = mode.equals(Constants.SEARCH_MODE) ? "Min " : "";
-        String searchHint = mode.equals(Constants.SEARCH_MODE) ? Constants.LOOKING_FOR_HINT : Constants.HAVE_A_HINT;
+        String searchHint = mode.equals(Constants.SEARCH_MODE)
+                ? getString(R.string.looking_for_hint)
+                : getString(R.string.have_a_hint);
         monsterEditText.setHint(searchHint);
-        level.setHint(minimumPrefix + Constants.LEVEL_HINT);
-        numAwakenings.setHint(minimumPrefix + Constants.AWAKENINGS_HINT);
-        skillLevel.setHint(minimumPrefix + Constants.SKILL_LEVEL_HINT);
-        numPlusEggs.setHint(minimumPrefix + Constants.PLUS_EGGS_HINT);
+        level.setHint(minimumPrefix + getString(R.string.level_hint));
+        numAwakenings.setHint(minimumPrefix + getString(R.string.awakenings_hint));
+        skillLevel.setHint(minimumPrefix + getString(R.string.skill_level_hint));
+        numPlusEggs.setHint(minimumPrefix + getString(R.string.plus_eggs_hint));
 
         switch (mode) {
             case Constants.SEARCH_MODE:
@@ -266,7 +268,7 @@ public class MonsterFormActivity extends StandardActivity {
         if (monsterChosen != null) {
             if (level.getText().toString().isEmpty() || skillLevel.getText().toString().isEmpty() ||
                     numAwakenings.getText().toString().isEmpty() || numPlusEggs.getText().toString().isEmpty()) {
-                Toast.makeText(this, Constants.MONSTER_FORM_INCOMPLETE_MESSAGE, Toast.LENGTH_LONG).show();
+                FormUtils.showSnackbar(parent, getString(R.string.incomplete_monster_form));
             }
             else {
                 int monLevel = Integer.parseInt(level.getText().toString());
@@ -275,18 +277,18 @@ public class MonsterFormActivity extends StandardActivity {
                 int monNumPlusEggs = Integer.parseInt(numPlusEggs.getText().toString());
                 String message = MonsterSearchUtils.createMonsterFormMessage(monLevel, monNumAwakenings,
                         monSkillLevel, monNumPlusEggs, monsterChosen);
+                String enteredName = monsterName.getText().toString();
                 if (!message.isEmpty()) {
-                    Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+                    FormUtils.showSnackbar(parent, message);
                 }
-                else if (MonsterBoxManager.getInstance().alreadyContainsMonster(monsterName.getText().toString()) &&
+                else if (MonsterBoxManager.getInstance().alreadyContainsMonster(enteredName) &&
                         mode.equals(Constants.ADD_MODE)) {
-                    Toast.makeText(this, "Your monster box already has a " + monsterName.getText().toString() + ".",
-                            Toast.LENGTH_LONG).show();
+                    FormUtils.showSnackbar(parent, getString(R.string.monster_box_dupe) + enteredName + ".");
                 }
                 // Everything is A-OK
                 else {
                     FormUtils.hideKeyboard(this);
-                    MonsterAttributes monster = new MonsterAttributes(monsterName.getText().toString(), monLevel,
+                    MonsterAttributes monster = new MonsterAttributes(enteredName, monLevel,
                             monNumAwakenings, monNumPlusEggs, monSkillLevel);
                     monster.setImageUrl(monsterChosen.getImageUrl());
                     if (mode.equals(Constants.SEARCH_MODE)) {
@@ -303,7 +305,7 @@ public class MonsterFormActivity extends StandardActivity {
             }
         }
         else {
-            Toast.makeText(this, Constants.INVALID_MONSTER_MESSAGE, Toast.LENGTH_LONG).show();
+            FormUtils.showSnackbar(parent, getString(R.string.invalid_monster));
         }
     }
 

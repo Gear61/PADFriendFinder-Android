@@ -1,9 +1,7 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -13,7 +11,10 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.randomappsinc.padfriendfinder.API.ChangeID;
+import com.randomappsinc.padfriendfinder.API.ApiConstants;
+import com.randomappsinc.padfriendfinder.API.Callbacks.BasicCallback;
+import com.randomappsinc.padfriendfinder.API.Events.BasicResponseEvent;
+import com.randomappsinc.padfriendfinder.API.RestClient;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.R;
@@ -22,17 +23,17 @@ import com.randomappsinc.padfriendfinder.Utils.FormUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by alexanderchiou on 7/14/15.
  */
 public class PadIdActivity extends StandardActivity {
     @Bind(R.id.parent) View parent;
-    @Bind(R.id.pad_id_instructions) TextView padID_textView;
+    @Bind(R.id.pad_id_instructions) TextView instructions;
     @Bind(R.id.pad_id_input) EditText padIdInput;
 
     private boolean settingsMode;
-    private idChangeReceiver idChangeReceiver;
     private MaterialDialog progressDialog;
 
     @Override
@@ -41,9 +42,7 @@ public class PadIdActivity extends StandardActivity {
         setContentView(R.layout.pad_id_form);
         ButterKnife.bind(this);
         settingsMode = getIntent().getBooleanExtra(Constants.SETTINGS_KEY, false);
-
-        idChangeReceiver = new idChangeReceiver();
-        registerReceiver(idChangeReceiver, new IntentFilter(Constants.ID_CHECKED_KEY));
+        EventBus.getDefault().register(this);
 
         progressDialog = new MaterialDialog.Builder(this)
                 .content(R.string.changing_id)
@@ -55,22 +54,25 @@ public class PadIdActivity extends StandardActivity {
             padIdInput.setText(currentPadId);
             padIdInput.setSelection(currentPadId.length());
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            padID_textView.setText(Constants.CHANGE_ID_STRING);
+            instructions.setText(R.string.enter_in_new_id);
         }
     }
 
     @OnClick(R.id.submit_pad_id)
     public void onClick() {
-        String userPadId = padIdInput.getText().toString();
-        if (FormUtils.validatePadId(userPadId, parent)) {
+        String newPadId = padIdInput.getText().toString();
+        if (FormUtils.validatePadId(newPadId, parent)) {
             FormUtils.hideKeyboard(this);
             if (!settingsMode) {
-                showConfirmDialog(userPadId);
+                showConfirmDialog(newPadId);
             }
             else {
-                if (!userPadId.equals(PreferencesManager.get().getPadId())) {
+                if (!newPadId.equals(PreferencesManager.get().getPadId())) {
                     progressDialog.show();
-                    new ChangeID(this, userPadId).execute();
+                    BasicCallback callback = new BasicCallback(Constants.CHANGE_ID_KEY);
+                    RestClient.getInstance().getPffService()
+                            .changePadId(PreferencesManager.get().getPadId(), newPadId).enqueue(callback);
+
                 }
                 else {
                     FormUtils.showSnackbar(parent, getString(R.string.same_pad_id));
@@ -101,20 +103,20 @@ public class PadIdActivity extends StandardActivity {
                 .show();
     }
 
-    private class idChangeReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int status = intent.getIntExtra(Constants.ID_STATUS_KEY, 0);
+    public void onEvent(BasicResponseEvent event) {
+        if (event.getEventType().equals(Constants.CHANGE_ID_KEY)) {
             progressDialog.dismiss();
-            if (status == 200) {
-                Toast.makeText(context, Constants.ID_CHANGED, Toast.LENGTH_SHORT).show();
-                finish();
-            }
-            else if (status == 400) {
-                Toast.makeText(context, Constants.ID_ALREADY_IN_USE, Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(context,  Constants.CANT_CHANGE_ID, Toast.LENGTH_SHORT).show();
+            switch (event.getResponseCode()) {
+                case ApiConstants.STATUS_OK:
+                    PreferencesManager.get().setPadId(padIdInput.getText().toString());
+                    Toast.makeText(this, R.string.id_change_success, Toast.LENGTH_SHORT).show();
+                    finish();
+                    break;
+                case ApiConstants.BAD_REQUEST:
+                    FormUtils.showSnackbar(parent, getString(R.string.id_already_used));
+                    break;
+                default:
+                    FormUtils.showSnackbar(parent, getString(R.string.cannot_change_id));
             }
         }
     }
@@ -122,9 +124,6 @@ public class PadIdActivity extends StandardActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        try {
-            unregisterReceiver(idChangeReceiver);
-        }
-        catch (IllegalArgumentException ignored) {}
+        EventBus.getDefault().unregister(this);
     }
 }
