@@ -9,16 +9,14 @@ import android.widget.ListView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.padfriendfinder.API.Callbacks.TopLeadersCallback;
 import com.randomappsinc.padfriendfinder.API.Events.SnackbarEvent;
+import com.randomappsinc.padfriendfinder.API.Events.TopLeadersEvent;
 import com.randomappsinc.padfriendfinder.API.RestClient;
 import com.randomappsinc.padfriendfinder.Adapters.TopMonsterAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.MonsterServer;
 import com.randomappsinc.padfriendfinder.Models.Monster;
-import com.randomappsinc.padfriendfinder.Models.TopLeader;
 import com.randomappsinc.padfriendfinder.R;
 import com.randomappsinc.padfriendfinder.Utils.FormUtils;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -88,9 +86,9 @@ public class TopLeadersActivity extends StandardActivity {
                 .show();
     }
 
-    public void onEvent(List<TopLeader> topLeaders) {
+    public void onEvent(TopLeadersEvent event) {
         loading.setVisibility(View.GONE);
-        topMonsterAdapter.setTopMonsters(topLeaders);
+        topMonsterAdapter.setTopMonsters(event.getTopLeaderList());
     }
 
     public void onEvent(SnackbarEvent event) {

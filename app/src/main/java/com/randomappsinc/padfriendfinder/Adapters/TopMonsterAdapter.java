@@ -21,9 +21,8 @@ import java.util.List;
  * Created by jman0_000 on 10/3/2015.
  */
 public class TopMonsterAdapter extends BaseAdapter {
-
     private Context context;
-    List<TopLeader> topLeaders;
+    private List<TopLeader> topLeaders;
 
     public TopMonsterAdapter(Context context) {
         this.context = context;
@@ -54,31 +53,30 @@ public class TopMonsterAdapter extends BaseAdapter {
         return position;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
+    public View getView(int position, View view, ViewGroup parent) {
         ViewHolder holder;
-        if (v == null) {
+        if (view == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(R.layout.top_monster_item, null);
+            view = vi.inflate(R.layout.top_monster_item, parent, false);
             holder = new ViewHolder();
-            holder.rank = (TextView) v.findViewById(R.id.rank);
-            holder.monsterImg = (ImageView) v.findViewById(R.id.top_monster_img);
-            holder.name = (TextView) v.findViewById(R.id.top_leader_name);
-            holder.count = (TextView) v.findViewById(R.id.top_leader_count);
-            v.setTag(holder);
+            holder.rank = (TextView) view.findViewById(R.id.rank);
+            holder.monsterImg = (ImageView) view.findViewById(R.id.top_monster_img);
+            holder.name = (TextView) view.findViewById(R.id.top_leader_name);
+            holder.count = (TextView) view.findViewById(R.id.top_leader_count);
+            view.setTag(holder);
         }
         else {
-            holder = (ViewHolder) v.getTag();
+            holder = (ViewHolder) view.getTag();
         }
 
         String name = topLeaders.get(position).getName();
         int count = topLeaders.get(position).getLeaderCount();
         Monster monster = MonsterServer.getMonsterServer().getMonsterAttributes(name);
-        holder.rank.setText(Integer.toString(++position) + ".");
+        holder.rank.setText(String.valueOf(position + 1) + ".");
         Picasso.with(context).load(monster.getImageUrl()).into(holder.monsterImg);
         holder.name.setText(name);
-        holder.count.setText(Integer.toString(count));
+        holder.count.setText(String.valueOf(count));
 
-        return v;
+        return view;
     }
 }
