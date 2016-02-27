@@ -25,11 +25,11 @@ import butterknife.ButterKnife;
  * Created by alexanderchiou on 7/13/15.
  */
 public class MonsterSearchAdapter extends ArrayAdapter<String> {
-    private static final String[] DEFAULT_LEADERS = {"Marvelous Red Dragon Caller, Sonia",
-                                                     "Sparkling Goddess of Secrets, Kali",
-                                                     "Chaotic Flying General, Lu Bu",
-                                                     "Guardian of the Sacred City, Athena",
-                                                     "Keeper of the Sacred Texts, Metatron"};
+    private static final String[] DEFAULT_LEADERS = {"God of the Night, Tsukuyomi Dragon",
+                                                     "Sun God, Ra Dragon",
+                                                     "Awoken Sakuya",
+                                                     "Awoken Bastet",
+                                                     "Thought Spinner Norn, Verdandi"};
 
     private ArrayList<String> items;
     private ArrayList<String> itemsAll;
