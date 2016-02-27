@@ -1,10 +1,8 @@
 package com.randomappsinc.padfriendfinder.Fragments;
 
 import android.app.Fragment;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -20,6 +18,7 @@ import com.randomappsinc.padfriendfinder.API.Callbacks.BasicCallback;
 import com.randomappsinc.padfriendfinder.API.Callbacks.GetMonsterBoxCallback;
 import com.randomappsinc.padfriendfinder.API.Events.BasicResponseEvent;
 import com.randomappsinc.padfriendfinder.API.Events.MonsterBoxEvent;
+import com.randomappsinc.padfriendfinder.API.Events.MonsterUpdateEvent;
 import com.randomappsinc.padfriendfinder.API.Events.SnackbarEvent;
 import com.randomappsinc.padfriendfinder.API.Models.DeleteMonsterInfo;
 import com.randomappsinc.padfriendfinder.API.RestClient;
@@ -29,8 +28,6 @@ import com.randomappsinc.padfriendfinder.Adapters.MonsterBoxAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.MonsterBoxManager;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
-import com.randomappsinc.padfriendfinder.Models.Monster;
-import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.R;
 
 import butterknife.Bind;
@@ -51,7 +48,6 @@ public class MonsterBoxFragment extends Fragment {
 
     private MaterialDialog deletingMonsterDialog;
     private MonsterBoxAdapter boxAdapter;
-    private MonsterUpdateReceiver updateReceiver;
 
     private String monsterToDelete;
 
@@ -73,9 +69,6 @@ public class MonsterBoxFragment extends Fragment {
         boxAdapter = new MonsterBoxAdapter(getActivity());
         monsterList.setAdapter(boxAdapter);
 
-        updateReceiver = new MonsterUpdateReceiver();
-        getActivity().registerReceiver(updateReceiver, new IntentFilter(Constants.MONSTER_UPDATE_KEY));
-
         return rootView;
     }
 
@@ -84,11 +77,6 @@ public class MonsterBoxFragment extends Fragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
-        try
-        {
-            getActivity().unregisterReceiver(updateReceiver);
-        }
-        catch (IllegalArgumentException ignored) {}
     }
 
     public void onEvent(MonsterBoxEvent event) {
@@ -125,21 +113,14 @@ public class MonsterBoxFragment extends Fragment {
         }
     }
 
-    private class MonsterUpdateReceiver extends BroadcastReceiver
-    {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            RestCallResponse response = intent.getParcelableExtra(Constants.REST_CALL_RESPONSE_KEY);
-            if (response.getStatusCode() == 200)
-            {
-                Monster monster = intent.getParcelableExtra(Constants.MONSTER_KEY);
-                boxAdapter.updateMonster(monster);
-                boxAdapter.notifyDataSetChanged();
-                MonsterBoxManager.getInstance().updateMonster(monster);
-                refreshContent();
-            }
+    public void onEvent(MonsterUpdateEvent event) {
+        if (event.getMode().equals(Constants.UPDATE_MODE)) {
+            showSnackbar(getString(R.string.update_monster_success));
         }
+        boxAdapter.updateMonster(event.getMonster());
+        boxAdapter.notifyDataSetChanged();
+        MonsterBoxManager.getInstance().updateMonster(event.getMonster());
+        refreshContent();
     }
 
     // Refresh the page after an API call is made (or after initial loading)

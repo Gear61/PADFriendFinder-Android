@@ -1,9 +1,6 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
@@ -11,16 +8,18 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.randomappsinc.padfriendfinder.API.UpdateMonster;
+import com.randomappsinc.padfriendfinder.API.Callbacks.MonsterUpdateCallback;
+import com.randomappsinc.padfriendfinder.API.Events.MonsterUpdateEvent;
+import com.randomappsinc.padfriendfinder.API.Events.SnackbarEvent;
+import com.randomappsinc.padfriendfinder.API.Models.PlayerMonster;
+import com.randomappsinc.padfriendfinder.API.RestClient;
 import com.randomappsinc.padfriendfinder.Adapters.MonsterSearchAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.MonsterBoxManager;
 import com.randomappsinc.padfriendfinder.Misc.MonsterServer;
 import com.randomappsinc.padfriendfinder.Models.Monster;
-import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.R;
 import com.randomappsinc.padfriendfinder.Utils.FormUtils;
 import com.randomappsinc.padfriendfinder.Utils.MonsterSearchUtils;
@@ -31,6 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by alexanderchiou on 7/13/15.
@@ -38,6 +38,8 @@ import butterknife.OnTextChanged;
 
 // Used for searching for friends and the user updating their monster box
 public class MonsterFormActivity extends StandardActivity {
+    public static final String LOG_TAG = "MonsterForm";
+
     @Bind(R.id.parent) View parent;
     @Bind(R.id.monster_search_box) AutoCompleteTextView monsterEditText;
     @Bind(R.id.monster_picture) ImageView monsterPicture;
@@ -50,7 +52,6 @@ public class MonsterFormActivity extends StandardActivity {
     private String mode;
     private MaterialDialog updatingBoxDialog;
     private Monster monsterChosen;
-    private MonsterUpdateReceiver updateReceiver;
     private MonsterSearchAdapter monsterAdapter;
 
     @Override
@@ -60,6 +61,7 @@ public class MonsterFormActivity extends StandardActivity {
         setContentView(R.layout.monster_form);
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        EventBus.getDefault().register(this);
 
         monsterAdapter = new MonsterSearchAdapter(this, android.R.layout.simple_dropdown_item_1line,
                 MonsterServer.getMonsterServer().getFriendFinderMonsterList());
@@ -68,20 +70,6 @@ public class MonsterFormActivity extends StandardActivity {
                 .build();
 
         setUpPage();
-
-        updateReceiver = new MonsterUpdateReceiver();
-        registerReceiver(updateReceiver, new IntentFilter(Constants.MONSTER_UPDATE_KEY));
-    }
-
-    @Override
-    public void onDestroy()
-    {
-        super.onDestroy();
-        try
-        {
-            unregisterReceiver(updateReceiver);
-        }
-        catch (IllegalArgumentException ignored) {}
     }
 
     @Override
@@ -90,43 +78,7 @@ public class MonsterFormActivity extends StandardActivity {
         FormUtils.hideKeyboard(this);
     }
 
-    // Processes API call response
-    private class MonsterUpdateReceiver extends BroadcastReceiver
-    {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            updatingBoxDialog.dismiss();
-            RestCallResponse response = intent.getParcelableExtra(Constants.REST_CALL_RESPONSE_KEY);
-            if (response.getStatusCode() == 200)
-            {
-                if (mode.equals(Constants.ADD_MODE))
-                {
-                    Toast.makeText(context, Constants.MONSTER_ADD_SUCCESS_MESSAGE, Toast.LENGTH_SHORT).show();
-                    clearEverything();
-                }
-                else if (mode.equals(Constants.UPDATE_MODE))
-                {
-                    Toast.makeText(context, Constants.MONSTER_UPDATE_SUCCESS_MESSAGE, Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            }
-            else
-            {
-                if (mode.equals(Constants.ADD_MODE))
-                {
-                    Toast.makeText(context, Constants.MONSTER_ADD_FAILED_MESSAGE, Toast.LENGTH_LONG).show();
-                }
-                else if (mode.equals(Constants.UPDATE_MODE))
-                {
-                    Toast.makeText(context, Constants.MONSTER_UPDATE_FAILED_MESSAGE, Toast.LENGTH_LONG).show();
-                }
-            }
-        }
-    }
-
-    private void setUpPage()
-    {
+    private void setUpPage() {
         mode = getIntent().getStringExtra(Constants.MODE_KEY);
 
         // Hint setting
@@ -169,7 +121,7 @@ public class MonsterFormActivity extends StandardActivity {
 
     private void setUpAddMode() {
         setTitle(R.string.add_monster);
-        updatingBoxDialog.setContent(Constants.ADDING_MONSTER);
+        updatingBoxDialog.setContent(R.string.adding_monster);
         setUpMonsterInput();
     }
 
@@ -190,7 +142,7 @@ public class MonsterFormActivity extends StandardActivity {
         numAwakenings.setText(String.valueOf(monster.getAwakenings()));
         numPlusEggs.setText(String.valueOf(monster.getPlusEggs()));
         skillLevel.setText(String.valueOf(monster.getSkillLevel()));
-        updatingBoxDialog.setContent(Constants.UPDATING_MONSTER);
+        updatingBoxDialog.setContent(R.string.updating_monster);
     }
 
     private void clearEverything() {
@@ -299,7 +251,9 @@ public class MonsterFormActivity extends StandardActivity {
                     }
                     else if (mode.equals(Constants.ADD_MODE) || mode.equals(Constants.UPDATE_MODE)) {
                         updatingBoxDialog.show();
-                        new UpdateMonster(this, monster).execute();
+                        MonsterUpdateCallback callback = new MonsterUpdateCallback(mode, monster);
+                        PlayerMonster playerMonster = new PlayerMonster(monster);
+                        RestClient.getInstance().getPffService().updateMonster(playerMonster).enqueue(callback);
                     }
                 }
             }
@@ -309,10 +263,34 @@ public class MonsterFormActivity extends StandardActivity {
         }
     }
 
+    public void onEvent(MonsterUpdateEvent event) {
+        updatingBoxDialog.dismiss();
+        if (event.getMode().equals(Constants.ADD_MODE)) {
+            clearEverything();
+            FormUtils.showSnackbar(parent, getString(R.string.add_monster_success));
+        }
+        else {
+            finish();
+        }
+    }
+
+    public void onEvent(SnackbarEvent event) {
+        if (event.getScreen().equals(LOG_TAG)) {
+            updatingBoxDialog.dismiss();
+            FormUtils.showSnackbar(parent, event.getMessage());
+        }
+    }
+
     @OnFocusChange(R.id.monster_search_box)
     public void onFocusChange(boolean hasFocus) {
         if (hasFocus && getWindow().isActive()) {
             monsterEditText.showDropDown();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

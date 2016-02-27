@@ -8,7 +8,7 @@ import com.randomappsinc.padfriendfinder.Models.Monster;
 /**
  * Created by alexanderchiou on 2/27/16.
  */
-public class FriendRequest {
+public class PlayerMonster {
     @SerializedName("pad_ID")
     @Expose
     private String padId;
@@ -17,7 +17,7 @@ public class FriendRequest {
     @Expose
     private Monster monster;
 
-    public FriendRequest(Monster monster) {
+    public PlayerMonster(Monster monster) {
         this.padId = PreferencesManager.get().getPadId();
         this.monster = monster;
     }

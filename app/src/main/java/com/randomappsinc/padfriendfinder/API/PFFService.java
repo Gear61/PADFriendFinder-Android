@@ -1,8 +1,8 @@
 package com.randomappsinc.padfriendfinder.API;
 
 import com.randomappsinc.padfriendfinder.API.Models.DeleteMonsterInfo;
-import com.randomappsinc.padfriendfinder.API.Models.FriendRequest;
 import com.randomappsinc.padfriendfinder.API.Models.IgnoredResponse;
+import com.randomappsinc.padfriendfinder.API.Models.PlayerMonster;
 import com.randomappsinc.padfriendfinder.Models.Friend;
 import com.randomappsinc.padfriendfinder.Models.Monster;
 import com.randomappsinc.padfriendfinder.Models.TopLeader;
@@ -35,5 +35,8 @@ public interface PFFService {
     Call<IgnoredResponse> deleteMonster(@Body DeleteMonsterInfo deleteMonsterInfo);
 
     @POST("/fetch")
-    Call<List<Friend>> findFriends(@Body FriendRequest friendRequest);
+    Call<List<Friend>> findFriends(@Body PlayerMonster friendRequest);
+
+    @POST("/update")
+    Call<IgnoredResponse> updateMonster(@Body PlayerMonster playerMonster);
 }

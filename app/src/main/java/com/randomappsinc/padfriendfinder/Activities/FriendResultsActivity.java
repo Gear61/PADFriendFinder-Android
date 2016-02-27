@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.randomappsinc.padfriendfinder.API.Callbacks.FindFriendsCallback;
 import com.randomappsinc.padfriendfinder.API.Events.SnackbarEvent;
-import com.randomappsinc.padfriendfinder.API.Models.FriendRequest;
+import com.randomappsinc.padfriendfinder.API.Models.PlayerMonster;
 import com.randomappsinc.padfriendfinder.API.RestClient;
 import com.randomappsinc.padfriendfinder.Adapters.FriendResultsAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
@@ -60,7 +60,7 @@ public class FriendResultsActivity extends StandardActivity {
         friendResultsList.setAdapter(friendResultsAdapter);
 
         FindFriendsCallback callback = new FindFriendsCallback();
-        FriendRequest request = new FriendRequest(monster);
+        PlayerMonster request = new PlayerMonster(monster);
         RestClient.getInstance().getPffService().findFriends(request).enqueue(callback);
     }
 

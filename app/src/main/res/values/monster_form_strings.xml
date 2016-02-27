@@ -23,4 +23,14 @@
     <string name="incomplete_monster_form">Please fill in every field before submitting!</string>
 
     <string name="monster_box_dupe">Your monster box already has a&#160;</string>
+
+    <string name="add_monster_success">Your monster was successfully added to our database.</string>
+    <string name="add_monster_fail">We were unable to add your monster to our database. Please try again later.</string>
+    <string name="update_monster_success">Your monster was successfully updated in our database.</string>
+    <string name="update_monster_fail">
+        We failed to update your monster in our database. Please try again later.
+    </string>
+
+    <string name="adding_monster">Adding your monster to our database&#8230;</string>
+    <string name="updating_monster">Updating your monster in our database&#8230;</string>
 </resources>
