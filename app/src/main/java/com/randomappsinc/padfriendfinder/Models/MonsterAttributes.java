@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.randomappsinc.padfriendfinder.Misc.MonsterServer;
 
 /**
  * Created by alexanderchiou on 7/13/15.
@@ -83,7 +84,12 @@ public class MonsterAttributes implements Parcelable, Comparable<MonsterAttribut
 
     public String getImageUrl() {
         if (imageUrl == null) {
-            imageUrl = "http://www.puzzledragonx.com/en/img/book/" + String.valueOf(monsterId) + ".png";
+            if (monsterId != 0) {
+                imageUrl = "http://www.puzzledragonx.com/en/img/book/" + String.valueOf(monsterId) + ".png";
+            }
+            else {
+                imageUrl = MonsterServer.getMonsterServer().getImageUrl(name);
+            }
         }
         return imageUrl;
     }

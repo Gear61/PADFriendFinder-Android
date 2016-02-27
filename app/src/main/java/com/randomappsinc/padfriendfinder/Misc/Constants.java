@@ -46,8 +46,6 @@ public class Constants {
             "Please try again later.";
 
     // Monster box
-    public static final String BOX_FETCH_FAILED_MESSAGE = "We were unable to fetch your monster box. " +
-            "Please try again later.";
     public static final String OTHERS_BOX_FETCH_FAILED_MESSAGE = "We were unable to fetch this user's monster box. " +
             "Please try again later.";
     public static final String MONSTER_DELETE_SUCCESS_MESSAGE = "Your monster was successfully deleted from our database.";

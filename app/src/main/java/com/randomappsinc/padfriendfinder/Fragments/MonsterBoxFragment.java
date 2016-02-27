@@ -17,10 +17,11 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.padfriendfinder.API.ApiConstants;
+import com.randomappsinc.padfriendfinder.API.Callbacks.GetMonsterBoxCallback;
 import com.randomappsinc.padfriendfinder.API.DeleteMonster;
 import com.randomappsinc.padfriendfinder.API.Events.BasicResponseEvent;
-import com.randomappsinc.padfriendfinder.API.GetMonsterBox;
-import com.randomappsinc.padfriendfinder.API.JSONParser;
+import com.randomappsinc.padfriendfinder.API.Events.SnackbarEvent;
+import com.randomappsinc.padfriendfinder.API.RestClient;
 import com.randomappsinc.padfriendfinder.Activities.MonsterFormActivity;
 import com.randomappsinc.padfriendfinder.Adapters.MonsterBoxAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
@@ -41,6 +42,8 @@ import de.greenrobot.event.EventBus;
  * Created by alexanderchiou on 9/15/15.
  */
 public class MonsterBoxFragment extends Fragment {
+    public static final String LOG_TAG = "MonsterBox";
+
     @Bind(R.id.loading_monsters) View loadingMonsters;
     @Bind(R.id.monster_box_instructions) TextView instructions;
     @Bind(R.id.no_monsters) TextView noMonsters;
@@ -48,7 +51,6 @@ public class MonsterBoxFragment extends Fragment {
 
     private MaterialDialog deletingMonsterDialog;
     private MonsterBoxAdapter boxAdapter;
-    private MonsterBoxReceiver boxReceiver;
     private MonsterUpdateReceiver updateReceiver;
     private MonsterDeleteReceiver deleteReceiver;
 
@@ -71,10 +73,8 @@ public class MonsterBoxFragment extends Fragment {
         monsterList.setAdapter(boxAdapter);
 
         updateReceiver = new MonsterUpdateReceiver();
-        boxReceiver = new MonsterBoxReceiver();
         deleteReceiver = new MonsterDeleteReceiver();
         getActivity().registerReceiver(updateReceiver, new IntentFilter(Constants.MONSTER_UPDATE_KEY));
-        getActivity().registerReceiver(boxReceiver, new IntentFilter(Constants.MONSTER_BOX_KEY));
         getActivity().registerReceiver(deleteReceiver, new IntentFilter(Constants.DELETE_KEY));
 
         return rootView;
@@ -87,18 +87,32 @@ public class MonsterBoxFragment extends Fragment {
         EventBus.getDefault().unregister(this);
         try
         {
-            getActivity().unregisterReceiver(boxReceiver);
             getActivity().unregisterReceiver(updateReceiver);
             getActivity().unregisterReceiver(deleteReceiver);
         }
         catch (IllegalArgumentException ignored) {}
     }
 
+    public void onEvent(List<MonsterAttributes> monsterBox) {
+        if (boxAdapter.getCount() == 0) {
+            boxAdapter.addMonsters(monsterBox);
+            MonsterBoxManager.getInstance().addMonsters(monsterBox);
+            refreshContent();
+        }
+    }
 
     public void onEvent(BasicResponseEvent event) {
         if (event.getEventType().equals(Constants.GET_MONSTERS_KEY) &&
                 event.getResponseCode() == ApiConstants.STATUS_OK) {
-            new GetMonsterBox(getActivity(), PreferencesManager.get().getPadId(), false).execute();
+            // new GetMonsterBox(getActivity(), PreferencesManager.get().getPadId(), false).execute();
+            GetMonsterBoxCallback callback = new GetMonsterBoxCallback();
+            RestClient.getInstance().getPffService().getMonsterBox(PreferencesManager.get().getPadId()).enqueue(callback);
+        }
+    }
+
+    public void onEvent(SnackbarEvent event) {
+        if (event.getScreen().equals(LOG_TAG)) {
+            loadingMonsters.setVisibility(View.GONE);
         }
     }
 
@@ -137,27 +151,6 @@ public class MonsterBoxFragment extends Fragment {
                 boxAdapter.notifyDataSetChanged();
                 MonsterBoxManager.getInstance().updateMonster(monster);
                 refreshContent();
-            }
-        }
-    }
-
-    private class MonsterBoxReceiver extends BroadcastReceiver
-    {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            RestCallResponse response = intent.getParcelableExtra(Constants.REST_CALL_RESPONSE_KEY);
-            if (response.getStatusCode() == 200)
-            {
-                List<MonsterAttributes> monsterBox = JSONParser.parseMonsterBoxResponse(response.getResponse());
-                boxAdapter.addMonsters(monsterBox);
-                MonsterBoxManager.getInstance().addMonsters(monsterBox);
-                refreshContent();
-            }
-            else
-            {
-                refreshContent();
-                Toast.makeText(context, Constants.BOX_FETCH_FAILED_MESSAGE, Toast.LENGTH_LONG).show();
             }
         }
     }

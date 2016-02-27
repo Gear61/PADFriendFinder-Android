@@ -22,4 +22,7 @@ public interface PFFService {
 
     @GET("/getMonsters")
     Call<List<MonsterAttributes>> getMonsterList();
+
+    @GET("/monsters/{padId}")
+    Call<List<MonsterAttributes>> getMonsterBox(@Path("padId") String padId);
 }

@@ -25,6 +25,9 @@ public class StandardCallback<T> implements Callback<T> {
         if (response.code() != ApiConstants.STATUS_OK) {
             EventBus.getDefault().post(new SnackbarEvent(screen, errorMessage));
         }
+        else {
+            EventBus.getDefault().post(response.body());
+        }
     }
 
     @Override

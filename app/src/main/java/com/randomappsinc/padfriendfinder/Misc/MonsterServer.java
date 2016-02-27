@@ -65,6 +65,11 @@ public class MonsterServer {
         return nameToAttributes.get(monsterName);
     }
 
+    public String getImageUrl(String monsterName) {
+        MonsterAttributes match = getMonsterAttributes(monsterName);
+        return match.getImageUrl();
+    }
+
     public List<MonsterAttributes> getMatches(String prefix) {
         if (prefix.isEmpty()) {
             return allMonsters;

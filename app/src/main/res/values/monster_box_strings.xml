@@ -4,4 +4,5 @@
     <string name="confirm_delete">Are you sure you want to delete \"</string>
     <string name="from_your_box">\" from your box?</string>
     <string name="deleting_monster">Deleting your monster from our database&#8230;</string>
+    <string name="box_load_fail">We failed to load your monster box. Please try again later.</string>
 </resources>
