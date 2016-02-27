@@ -16,7 +16,9 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.randomappsinc.padfriendfinder.API.ApiConstants;
 import com.randomappsinc.padfriendfinder.API.DeleteMonster;
+import com.randomappsinc.padfriendfinder.API.Events.BasicResponseEvent;
 import com.randomappsinc.padfriendfinder.API.GetMonsterBox;
 import com.randomappsinc.padfriendfinder.API.JSONParser;
 import com.randomappsinc.padfriendfinder.Activities.MonsterFormActivity;
@@ -33,6 +35,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by alexanderchiou on 9/15/15.
@@ -48,7 +51,6 @@ public class MonsterBoxFragment extends Fragment {
     private MonsterBoxReceiver boxReceiver;
     private MonsterUpdateReceiver updateReceiver;
     private MonsterDeleteReceiver deleteReceiver;
-    private MonsterListReceiver monsterListReceiver;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class MonsterBoxFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.monster_box, container, false);
         ButterKnife.bind(this, rootView);
+        EventBus.getDefault().register(this);
 
         deletingMonsterDialog = new MaterialDialog.Builder(getActivity())
                 .content(R.string.deleting_monster)
@@ -70,11 +73,9 @@ public class MonsterBoxFragment extends Fragment {
         updateReceiver = new MonsterUpdateReceiver();
         boxReceiver = new MonsterBoxReceiver();
         deleteReceiver = new MonsterDeleteReceiver();
-        monsterListReceiver = new MonsterListReceiver();
         getActivity().registerReceiver(updateReceiver, new IntentFilter(Constants.MONSTER_UPDATE_KEY));
         getActivity().registerReceiver(boxReceiver, new IntentFilter(Constants.MONSTER_BOX_KEY));
         getActivity().registerReceiver(deleteReceiver, new IntentFilter(Constants.DELETE_KEY));
-        getActivity().registerReceiver(monsterListReceiver, new IntentFilter(Constants.GET_MONSTERS_KEY));
 
         return rootView;
     }
@@ -83,22 +84,21 @@ public class MonsterBoxFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
         try
         {
             getActivity().unregisterReceiver(boxReceiver);
             getActivity().unregisterReceiver(updateReceiver);
             getActivity().unregisterReceiver(deleteReceiver);
-            getActivity().unregisterReceiver(monsterListReceiver);
         }
         catch (IllegalArgumentException ignored) {}
     }
 
-    private class MonsterListReceiver extends BroadcastReceiver
-    {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            new GetMonsterBox(context, PreferencesManager.get().getPadId(), false).execute();
+
+    public void onEvent(BasicResponseEvent event) {
+        if (event.getEventType().equals(Constants.GET_MONSTERS_KEY) &&
+                event.getResponseCode() == ApiConstants.STATUS_OK) {
+            new GetMonsterBox(getActivity(), PreferencesManager.get().getPadId(), false).execute();
         }
     }
 

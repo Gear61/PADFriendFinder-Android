@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.padfriendfinder.Adapters.SupportedLeadsAdapter;
@@ -23,16 +22,15 @@ import butterknife.OnItemClick;
 import butterknife.OnTextChanged;
 
 public class SupportedLeadsActivity extends StandardActivity {
+    @Bind(R.id.parent) View parent;
     @Bind(R.id.monster_matches) ListView monsterMatches;
 
-    private Context context;
     private SupportedLeadsAdapter supportedLeadsAdapter;
     private boolean chooseAvatarMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = this;
         setContentView(R.layout.supported_leads);
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -46,8 +44,8 @@ public class SupportedLeadsActivity extends StandardActivity {
     }
 
     @OnTextChanged(value = R.id.search_input, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterTextChanged(Editable s) {
-        supportedLeadsAdapter.updateWithPrefix(s.toString());
+    public void afterTextChanged(Editable input) {
+        supportedLeadsAdapter.updateWithPrefix(input.toString());
     }
 
     @OnItemClick(R.id.monster_matches)
@@ -55,10 +53,11 @@ public class SupportedLeadsActivity extends StandardActivity {
         if (chooseAvatarMode) {
             FormUtils.hideKeyboard(this);
             PreferencesManager.get().setAvatarId(supportedLeadsAdapter.getItem(position).getMonsterId());
-            Toast.makeText(this, "Your avatar is now " + supportedLeadsAdapter.getItem(position).getName() + ".",
-                    Toast.LENGTH_SHORT).show();
+            FormUtils.showSnackbar(parent, getString(R.string.avatar_is_now)
+                    + supportedLeadsAdapter.getItem(position).getName() +  ".");
         }
         else {
+            final Context context = this;
             final String monsterName = supportedLeadsAdapter.getItem(position).getName();
 
             String[] choices = new String[2];

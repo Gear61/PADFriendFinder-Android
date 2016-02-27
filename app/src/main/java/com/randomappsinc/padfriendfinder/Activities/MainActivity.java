@@ -13,7 +13,11 @@ import android.view.View;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
-import com.randomappsinc.padfriendfinder.API.GetMonsterList;
+import com.randomappsinc.padfriendfinder.API.ApiConstants;
+import com.randomappsinc.padfriendfinder.API.Callbacks.GetMonsterListCallback;
+import com.randomappsinc.padfriendfinder.API.Events.BasicResponseEvent;
+import com.randomappsinc.padfriendfinder.API.Events.SnackbarEvent;
+import com.randomappsinc.padfriendfinder.API.RestClient;
 import com.randomappsinc.padfriendfinder.Fragments.MonsterBoxFragment;
 import com.randomappsinc.padfriendfinder.Fragments.NavigationDrawerFragment;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
@@ -24,14 +28,20 @@ import com.randomappsinc.padfriendfinder.Utils.FormUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+    public static final String LOG_TAG = "MainActivity";
+
     @Bind(R.id.parent) View parent;
     @Bind(R.id.add_monster) FloatingActionButton addMonster;
+
+    private MaterialDialog loadingMonsters;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         if (PreferencesManager.get().getPadId().isEmpty()) {
             startActivity(new Intent(this, PadIdActivity.class));
             finish();
@@ -53,12 +63,27 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
             MonsterBoxFragment monsterBoxFragment = new MonsterBoxFragment();
             fragmentManager.beginTransaction().replace(R.id.container, monsterBoxFragment).commit();
 
-            MaterialDialog progressDialog = new MaterialDialog.Builder(this)
+            loadingMonsters = new MaterialDialog.Builder(this)
                     .content(R.string.loading_monster_list)
                     .progress(true, 0)
                     .cancelable(false)
                     .show();
-            new GetMonsterList(progressDialog).execute();
+            GetMonsterListCallback callback = new GetMonsterListCallback();
+            RestClient.getInstance().getPffService().getMonsterList().enqueue(callback);
+        }
+    }
+
+    public void onEvent(BasicResponseEvent event) {
+        if (event.getEventType().equals(Constants.GET_MONSTERS_KEY) &&
+            event.getResponseCode() == ApiConstants.STATUS_OK) {
+            loadingMonsters.dismiss();
+            FormUtils.showSnackbar(parent, getString(R.string.monster_list_loaded));
+        }
+    }
+
+    public void onEvent(SnackbarEvent event) {
+        if (event.getScreen().equals(LOG_TAG)) {
+            FormUtils.showSnackbar(parent, event.getMessage());
         }
     }
 
@@ -92,10 +117,6 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         startActivity(intent);
     }
 
-    public void showSnackbar(String message) {
-        FormUtils.showSnackbar(parent, message);
-    }
-
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {
         super.startActivityForResult(intent, requestCode);
@@ -105,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     @Override
     public void finish() {
         super.finish();
+        EventBus.getDefault().unregister(this);
         overridePendingTransition(R.anim.slide_right_out, R.anim.slide_right_in);
     }
 

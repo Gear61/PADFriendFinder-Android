@@ -87,5 +87,8 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
+    <string name="avatar_is_now">Your avatar is now&#160;</string>
+    <string name="monster_list_loaded">Monster list loaded.</string>
+    <string name="monster_list_fail">We failed to load the monster list. Try using the app later.</string>
     <string name="top_leaders_fail">Sorry, we were unable to fetch the most popular leaders.</string>
 </resources>

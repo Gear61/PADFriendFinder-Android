@@ -1,6 +1,7 @@
 package com.randomappsinc.padfriendfinder.API;
 
 import com.randomappsinc.padfriendfinder.API.Models.IgnoredResponse;
+import com.randomappsinc.padfriendfinder.Models.MonsterAttributes;
 import com.randomappsinc.padfriendfinder.Models.TopLeader;
 
 import java.util.List;
@@ -18,4 +19,7 @@ public interface PFFService {
 
     @GET("/topLeaders")
     Call<List<TopLeader>> getTopLeaders();
+
+    @GET("/getMonsters")
+    Call<List<MonsterAttributes>> getMonsterList();
 }

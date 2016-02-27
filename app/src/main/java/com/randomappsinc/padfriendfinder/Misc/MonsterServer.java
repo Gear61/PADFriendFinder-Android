@@ -16,8 +16,7 @@ import java.util.Set;
 /**
  * Created by Alex on 11/1/2014.
  */
-public class MonsterServer
-{
+public class MonsterServer {
     private static MonsterServer instance = null;
     private static HashMap<String, MonsterAttributes> nameToAttributes = new HashMap<>();
     private static List<MonsterAttributes> allMonsters = new ArrayList<>();
@@ -25,8 +24,7 @@ public class MonsterServer
 
     private MonsterServer() {}
 
-    public static MonsterServer getMonsterServer()
-    {
+    public static MonsterServer getMonsterServer() {
         if (instance == null)
         {
             instance = new MonsterServer();
@@ -34,10 +32,8 @@ public class MonsterServer
         return instance;
     }
 
-    public static void setUpMonsterMap(List<MonsterAttributes> monsters)
-    {
-        if (allMonsters.isEmpty())
-        {
+    public void setUpMonsterMap(List<MonsterAttributes> monsters) {
+        if (allMonsters.isEmpty()) {
             for (MonsterAttributes monster : monsters)
             {
                 nameToAttributes.put(monster.getName(), monster);
@@ -48,42 +44,34 @@ public class MonsterServer
         }
     }
 
-    private static void setUpFriendFinderMonsterList()
-    {
+    private void setUpFriendFinderMonsterList() {
         for (String key : nameToAttributes.keySet())
         {
             friendFinderMonsterList.add(key);
         }
     }
 
-    public ArrayList<String> getFriendFinderMonsterList()
-    {
+    public ArrayList<String> getFriendFinderMonsterList() {
         ArrayList<String> monsters = new ArrayList<>();
         monsters.addAll(friendFinderMonsterList);
         Collections.sort(monsters);
         return monsters;
     }
 
-    public MonsterAttributes getMonsterAttributes(String monsterName)
-    {
-        if (monsterName == null)
-        {
+    public MonsterAttributes getMonsterAttributes(String monsterName) {
+        if (monsterName == null) {
             return null;
         }
         return nameToAttributes.get(monsterName);
     }
 
-    public List<MonsterAttributes> getMatches(String prefix)
-    {
-        if (prefix.isEmpty())
-        {
+    public List<MonsterAttributes> getMatches(String prefix) {
+        if (prefix.isEmpty()) {
             return allMonsters;
         }
         List<MonsterAttributes> matches = new ArrayList<>();
-        for (MonsterAttributes monster : nameToAttributes.values())
-        {
-            if (monster.getName().toLowerCase().contains(prefix.toLowerCase()))
-            {
+        for (MonsterAttributes monster : nameToAttributes.values()) {
+            if (monster.getName().toLowerCase().contains(prefix.toLowerCase())) {
                 matches.add(monster);
             }
         }

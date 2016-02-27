@@ -4,17 +4,38 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by alexanderchiou on 7/13/15.
  */
 
 public class MonsterAttributes implements Parcelable, Comparable<MonsterAttributes> {
+    @SerializedName("name")
+    @Expose
     private String name;
+
+    @SerializedName("level")
+    @Expose
     private int level;
+
+    @SerializedName("skill_level")
+    @Expose
     private int skillLevel;
+
+    @SerializedName("awakenings")
+    @Expose
     private int awakenings;
+
+    @SerializedName("plus_eggs")
+    @Expose
     private int plusEggs;
+
+    @SerializedName("monsterId")
+    @Expose
     private int monsterId;
+
     private String imageUrl;
 
     // Default constructor
@@ -61,6 +82,9 @@ public class MonsterAttributes implements Parcelable, Comparable<MonsterAttribut
     }
 
     public String getImageUrl() {
+        if (imageUrl == null) {
+            imageUrl = "http://www.puzzledragonx.com/en/img/book/" + String.valueOf(monsterId) + ".png";
+        }
         return imageUrl;
     }
 
