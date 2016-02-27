@@ -59,7 +59,6 @@ public class FriendResultsActivity extends StandardActivity {
         friendResultsAdapter = new FriendResultsAdapter(this);
         friendResultsList.setAdapter(friendResultsAdapter);
 
-        // new FetchFriends(this, monster).execute();
         FindFriendsCallback callback = new FindFriendsCallback();
         FriendRequest request = new FriendRequest(monster);
         RestClient.getInstance().getPffService().findFriends(request).enqueue(callback);

@@ -42,9 +42,6 @@ public class Constants {
     public static final String ADDING_MONSTER = "Adding your monster to our database...";
     public static final String UPDATING_MONSTER = "Updating your monster in our database...";
 
-    public static final String FETCH_FRIENDS_FAILED_MESSAGE = "We were unable to find potential friends for you. " +
-            "Please try again later.";
-
     // Monster box
     public static final String OTHERS_BOX_FETCH_FAILED_MESSAGE = "We were unable to fetch this user's monster box. " +
             "Please try again later.";

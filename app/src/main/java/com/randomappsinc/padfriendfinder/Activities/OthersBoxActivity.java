@@ -1,11 +1,7 @@
 package com.randomappsinc.padfriendfinder.Activities;
 
-import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -13,27 +9,28 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.randomappsinc.padfriendfinder.API.GetMonsterBox;
-import com.randomappsinc.padfriendfinder.API.JSONParser;
+import com.randomappsinc.padfriendfinder.API.Callbacks.GetMonsterBoxCallback;
+import com.randomappsinc.padfriendfinder.API.Events.MonsterBoxEvent;
+import com.randomappsinc.padfriendfinder.API.Events.SnackbarEvent;
+import com.randomappsinc.padfriendfinder.API.RestClient;
 import com.randomappsinc.padfriendfinder.Adapters.MonsterBoxAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
-import com.randomappsinc.padfriendfinder.Models.Monster;
-import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.R;
 import com.randomappsinc.padfriendfinder.Utils.FormUtils;
 
-import java.util.List;
 import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
+import de.greenrobot.event.EventBus;
 
 public class OthersBoxActivity extends StandardActivity {
+    public static final String LOG_TAG = "OthersBox";
+
     @Bind(R.id.parent) View parent;
     @Bind(R.id.star_icon) TextView star;
     @Bind(R.id.others_list) ListView othersList;
@@ -43,7 +40,6 @@ public class OthersBoxActivity extends StandardActivity {
     @Bind(R.id.pad_id_input) AutoCompleteTextView othersId;
 
     private MonsterBoxAdapter boxAdapter;
-    private OthersBoxReceiver othersBoxReceiver;
     private Set<String> mySet = PreferencesManager.get().getFavorites();
 
     @Override
@@ -52,10 +48,10 @@ public class OthersBoxActivity extends StandardActivity {
         setContentView(R.layout.id_search);
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        EventBus.getDefault().register(this);
+
         boxAdapter = new MonsterBoxAdapter(this);
         othersList.setAdapter(boxAdapter);
-        othersBoxReceiver = new OthersBoxReceiver();
-        this.registerReceiver(othersBoxReceiver, new IntentFilter(Constants.OTHER_BOX_KEY));
 
         setUpAdapter();
 
@@ -100,7 +96,8 @@ public class OthersBoxActivity extends StandardActivity {
         else {
             star.setTextColor(getResources().getColor(R.color.silver));
         }
-        new GetMonsterBox(this, padId, true).execute();
+        GetMonsterBoxCallback callback = new GetMonsterBoxCallback(true);
+        RestClient.getInstance().getPffService().getMonsterBox(padId).enqueue(callback);
     }
 
     @OnClick(R.id.star_icon)
@@ -141,23 +138,18 @@ public class OthersBoxActivity extends StandardActivity {
         }
     }
 
-    private class OthersBoxReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            RestCallResponse response = intent.getParcelableExtra(Constants.REST_CALL_RESPONSE_KEY);
-            if (response.getStatusCode() == 200)
-            {
-                List<Monster> monsterBox = JSONParser.parseMonsterBoxResponse(response.getResponse());
-                boxAdapter.clear();
-                boxAdapter.addMonsters(monsterBox);
-                refreshContent();
-            }
-            else
-            {
-                refreshContent();
-                Toast.makeText(context, Constants.OTHERS_BOX_FETCH_FAILED_MESSAGE, Toast.LENGTH_LONG).show();
-            }
+    public void onEvent(MonsterBoxEvent event) {
+        if (event.isOthersBox()) {
+            boxAdapter.clear();
+            boxAdapter.addMonsters(event.getMonsterList());
+            refreshContent();
+        }
+    }
+
+    public void onEvent(SnackbarEvent event) {
+        if (event.getScreen().equals(LOG_TAG)) {
+            loadingBox.setVisibility(View.GONE);
+            FormUtils.showSnackbar(parent, event.getMessage());
         }
     }
 
@@ -175,13 +167,8 @@ public class OthersBoxActivity extends StandardActivity {
     }
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
-        try
-        {
-            unregisterReceiver(othersBoxReceiver);
-        }
-        catch (IllegalArgumentException ignored) {}
+        EventBus.getDefault().unregister(this);
     }
 }

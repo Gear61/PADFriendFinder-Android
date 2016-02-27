@@ -40,22 +40,4 @@ public class JSONBuilder
         catch (JSONException ignored) {}
         return monsterBoxJson.toString();
     }
-
-    // For finding friends
-    public static String fetchFriendsBuilder(Monster monster)
-    {
-        return updateMonsterBuilder(monster).toString();
-    }
-
-    public static String deleteMonsterBuilder(String monsterName)
-    {
-        JSONObject deleteMonsterJson = new JSONObject();
-        try
-        {
-            deleteMonsterJson.put(Constants.PAD_ID_KEY, PreferencesManager.get().getPadId());
-            deleteMonsterJson.put(Constants.NAME_KEY, monsterName);
-        }
-        catch (JSONException ignored) {}
-        return deleteMonsterJson.toString();
-    }
 }

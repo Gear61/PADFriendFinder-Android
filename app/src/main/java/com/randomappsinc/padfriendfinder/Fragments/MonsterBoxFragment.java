@@ -19,6 +19,7 @@ import com.randomappsinc.padfriendfinder.API.ApiConstants;
 import com.randomappsinc.padfriendfinder.API.Callbacks.BasicCallback;
 import com.randomappsinc.padfriendfinder.API.Callbacks.GetMonsterBoxCallback;
 import com.randomappsinc.padfriendfinder.API.Events.BasicResponseEvent;
+import com.randomappsinc.padfriendfinder.API.Events.MonsterBoxEvent;
 import com.randomappsinc.padfriendfinder.API.Events.SnackbarEvent;
 import com.randomappsinc.padfriendfinder.API.Models.DeleteMonsterInfo;
 import com.randomappsinc.padfriendfinder.API.RestClient;
@@ -31,8 +32,6 @@ import com.randomappsinc.padfriendfinder.Misc.PreferencesManager;
 import com.randomappsinc.padfriendfinder.Models.Monster;
 import com.randomappsinc.padfriendfinder.Models.RestCallResponse;
 import com.randomappsinc.padfriendfinder.R;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -92,10 +91,10 @@ public class MonsterBoxFragment extends Fragment {
         catch (IllegalArgumentException ignored) {}
     }
 
-    public void onEvent(List<Monster> monsterBox) {
-        if (boxAdapter.getCount() == 0) {
-            boxAdapter.addMonsters(monsterBox);
-            MonsterBoxManager.getInstance().addMonsters(monsterBox);
+    public void onEvent(MonsterBoxEvent event) {
+        if (!event.isOthersBox()) {
+            boxAdapter.addMonsters(event.getMonsterList());
+            MonsterBoxManager.getInstance().addMonsters(event.getMonsterList());
             refreshContent();
         }
     }
@@ -103,7 +102,7 @@ public class MonsterBoxFragment extends Fragment {
     public void onEvent(BasicResponseEvent event) {
         if (event.getEventType().equals(Constants.GET_MONSTERS_KEY) &&
                 event.getResponseCode() == ApiConstants.STATUS_OK) {
-            GetMonsterBoxCallback callback = new GetMonsterBoxCallback();
+            GetMonsterBoxCallback callback = new GetMonsterBoxCallback(false);
             RestClient.getInstance().getPffService().getMonsterBox(PreferencesManager.get().getPadId()).enqueue(callback);
         }
         else if (event.getEventType().equals(Constants.DELETE_KEY)) {
