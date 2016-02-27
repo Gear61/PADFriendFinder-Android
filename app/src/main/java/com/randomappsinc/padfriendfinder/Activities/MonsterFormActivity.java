@@ -38,9 +38,7 @@ import butterknife.OnTextChanged;
 
 // Used for searching for friends and the user updating their monster box
 public class MonsterFormActivity extends StandardActivity {
-    private String mode;
-
-    // Views
+    @Bind(R.id.parent) View parent;
     @Bind(R.id.monster_search_box) AutoCompleteTextView monsterEditText;
     @Bind(R.id.monster_picture) ImageView monsterPicture;
     @Bind(R.id.monster_name) TextView monsterName;
@@ -49,6 +47,7 @@ public class MonsterFormActivity extends StandardActivity {
     @Bind(R.id.skill_level) EditText skillLevel;
     @Bind(R.id.num_plus_eggs) EditText numPlusEggs;
 
+    private String mode;
     private MaterialDialog updatingBoxDialog;
     private MonsterAttributes monsterChosen;
     private MonsterUpdateReceiver updateReceiver;
@@ -86,8 +85,7 @@ public class MonsterFormActivity extends StandardActivity {
     }
 
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
         FormUtils.hideKeyboard(this);
     }
@@ -140,27 +138,25 @@ public class MonsterFormActivity extends StandardActivity {
         skillLevel.setHint(minimumPrefix + Constants.SKILL_LEVEL_HINT);
         numPlusEggs.setHint(minimumPrefix + Constants.PLUS_EGGS_HINT);
 
-        if (mode.equals(Constants.SEARCH_MODE))
-        {
-            setUpSearchMode();
-            String monsterName = getIntent().getStringExtra(Constants.NAME_KEY);
-            if (monsterName != null)
-            {
-                monsterChosen = MonsterServer.getMonsterServer().getMonsterAttributes(monsterName);
-                if (monsterChosen != null)
-                {
-                    Picasso.with(this).load(monsterChosen.getImageUrl()).into(monsterPicture);
-                    this.monsterName.setText(monsterName);
-                    monsterEditText.setVisibility(View.GONE);
-                    level.requestFocus();
+        switch (mode) {
+            case Constants.SEARCH_MODE:
+                setUpSearchMode();
+                String monsterName = getIntent().getStringExtra(Constants.NAME_KEY);
+                if (monsterName != null) {
+                    monsterChosen = MonsterServer.getMonsterServer().getMonsterAttributes(monsterName);
+                    if (monsterChosen != null) {
+                        Picasso.with(this).load(monsterChosen.getImageUrl()).into(monsterPicture);
+                        this.monsterName.setText(monsterName);
+                        monsterEditText.setVisibility(View.GONE);
+                        level.requestFocus();
+                    }
                 }
-            }
-        }
-        else if (mode.equals(Constants.ADD_MODE)) {
-            setUpAddMode();
-        }
-        else if (mode.equals(Constants.UPDATE_MODE)) {
-            setUpUpdateMode();
+                break;
+            case Constants.ADD_MODE:
+                setUpAddMode();
+                break;
+            case Constants.UPDATE_MODE:
+                setUpUpdateMode();
         }
     }
 
@@ -213,12 +209,12 @@ public class MonsterFormActivity extends StandardActivity {
     }
 
     @OnTextChanged(value = R.id.monster_search_box, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterTextChanged (Editable s) {
-        MonsterAttributes monsterAttributes = MonsterServer.getMonsterServer().getMonsterAttributes(s.toString());
+    public void afterTextChanged (Editable input) {
+        MonsterAttributes monsterAttributes = MonsterServer.getMonsterServer().getMonsterAttributes(input.toString());
         if (monsterAttributes != null) {
             monsterChosen = monsterAttributes;
             Picasso.with(this).load(monsterAttributes.getImageUrl()).into(monsterPicture);
-            monsterName.setText(s.toString());
+            monsterName.setText(input.toString());
             monsterEditText.setText("");
             level.requestFocus();
         }
@@ -237,7 +233,7 @@ public class MonsterFormActivity extends StandardActivity {
     }
 
     @OnClick(R.id.minimum)
-    public void minimum(View v) {
+    public void minimum() {
         FormUtils.hideKeyboard(this);
         level.setText(String.valueOf(1));
         numAwakenings.setText(String.valueOf(0));
@@ -249,24 +245,24 @@ public class MonsterFormActivity extends StandardActivity {
     @OnClick({R.id.max_level, R.id.max_awakenings, R.id.max_plus_eggs, R.id.max_skill_level})
     public void max(View view) {
         if (monsterChosen != null) {
-            if (view.getId() == R.id.max_level) {
-                level.setText(String.valueOf(monsterChosen.getLevel()));
-            }
-            else if (view.getId() == R.id.max_awakenings) {
-                numAwakenings.setText(String.valueOf(monsterChosen.getAwakenings()));
-            }
-            else if (view.getId() == R.id.max_plus_eggs) {
-                numPlusEggs.setText(String.valueOf(Constants.MAX_PLUS_EGGS));
-            }
-            else if (view.getId() == R.id.max_skill_level) {
-                skillLevel.setText(String.valueOf(monsterChosen.getSkillLevel()));
+            switch (view.getId()) {
+                case R.id.max_level:
+                    level.setText(String.valueOf(monsterChosen.getLevel()));
+                    break;
+                case R.id.max_awakenings:
+                    numAwakenings.setText(String.valueOf(monsterChosen.getAwakenings()));
+                    break;
+                case R.id.max_plus_eggs:
+                    numPlusEggs.setText(String.valueOf(Constants.MAX_PLUS_EGGS));
+                    break;
+                case R.id.max_skill_level:
+                    skillLevel.setText(String.valueOf(monsterChosen.getSkillLevel()));
             }
         }
     }
 
     @OnClick(R.id.submit_monster)
-    public void onClick(View v)
-    {
+    public void onClick(View v) {
         if (monsterChosen != null) {
             if (level.getText().toString().isEmpty() || skillLevel.getText().toString().isEmpty() ||
                     numAwakenings.getText().toString().isEmpty() || numPlusEggs.getText().toString().isEmpty()) {
