@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp">
+    android:gravity="center_vertical"
+    android:background="@color/white"
+    android:padding="5dp">
 
     <ImageView
         android:id="@+id/monster_icon"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
         android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_vertical"/>
+        android:layout_height="50dp"/>
 
     <TextView
         android:id="@+id/monster_name"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
         android:textSize="16sp"
         android:textColor="@color/dark_gray"/>
 </LinearLayout>

@@ -35,7 +35,7 @@ public class TopLeadersActivity extends StandardActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.top_leaders_layout);
+        setContentView(R.layout.top_leaders);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
 

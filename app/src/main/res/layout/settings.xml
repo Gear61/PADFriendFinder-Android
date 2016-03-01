@@ -4,11 +4,11 @@
     android:id="@+id/parent"
     android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="10dp">
 
     <ListView
         android:id="@+id/settings_options"
-        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </android.support.design.widget.CoordinatorLayout>
