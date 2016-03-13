@@ -91,4 +91,13 @@
     <string name="monster_list_loaded">Monster list loaded.</string>
     <string name="monster_list_fail">We failed to load the monster list. Try using the app later.</string>
     <string name="top_leaders_fail">Sorry, we were unable to fetch the most popular leaders.</string>
+
+    <string name="please_rate">
+        Hey, it looks like you\'re a frequent user of PAD Friend Finder!
+        If you have a couple seconds, we would be incredibly grateful if you could rate this app in the Play Store.
+        Don\'t worry, we won\'t bother you with this ever again no matter what you choose.
+        Thank you for even downloading this app to begin with!
+    </string>
+    <string name="will_help">Sure, I\'ll help</string>
+    <string name="no_im_good">No, I\'m good</string>
 </resources>

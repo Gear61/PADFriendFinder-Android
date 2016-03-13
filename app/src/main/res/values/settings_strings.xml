@@ -25,4 +25,11 @@
     <string name="send_email">Send email</string>
     <string name="play_store_error">Unable to open the Play Store.</string>
     <string name="email_subject">PAD Friend Finder Feedback (Android)</string>
+
+    <string name="suggest_lead_instructions">
+        If we don\'t support one of your favorite leaders,
+        please let us know by clicking the + button in the toolbar above!
+    </string>
+    <string name="suggest_leader">Suggest leader</string>
+    <string name="suggest_leader_title">Leader Suggestion(s) For PAD Friend Finder</string>
 </resources>

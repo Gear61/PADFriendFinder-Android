@@ -2,12 +2,17 @@ package com.randomappsinc.padfriendfinder.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.randomappsinc.padfriendfinder.Adapters.SupportedLeadsAdapter;
 import com.randomappsinc.padfriendfinder.Misc.Constants;
 import com.randomappsinc.padfriendfinder.Misc.MonsterServer;
@@ -41,6 +46,13 @@ public class SupportedLeadsActivity extends StandardActivity {
         }
         supportedLeadsAdapter = new SupportedLeadsAdapter(this);
         monsterMatches.setAdapter(supportedLeadsAdapter);
+
+        if (PreferencesManager.get().shouldShowSuggestTip()) {
+            new MaterialDialog.Builder(this)
+                    .content(R.string.suggest_lead_instructions)
+                    .positiveText(android.R.string.yes)
+                    .show();
+        }
     }
 
     @OnTextChanged(value = R.id.search_input, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -88,5 +100,29 @@ public class SupportedLeadsActivity extends StandardActivity {
                     })
                     .show();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.supported_leads_menu, menu);
+        menu.findItem(R.id.suggest_leader).setIcon(
+                new IconDrawable(this, FontAwesomeIcons.fa_plus)
+                        .colorRes(R.color.white)
+                        .actionBarSize());
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.suggest_leader) {
+            String uriText = "mailto:" + SettingsActivity.SUPPORT_EMAIL +
+                    "?subject=" + Uri.encode(getString(R.string.suggest_leader_title));
+            Uri mailUri = Uri.parse(uriText);
+            Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
+            sendIntent.setData(mailUri);
+            startActivity(Intent.createChooser(sendIntent, getString(R.string.send_email)));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

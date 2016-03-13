@@ -2,7 +2,9 @@ package com.randomappsinc.padfriendfinder.Activities;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
@@ -70,6 +73,26 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                     .show();
             GetMonsterListCallback callback = new GetMonsterListCallback();
             RestClient.getInstance().getPffService().getMonsterList().enqueue(callback);
+
+            if (PreferencesManager.get().shouldAskToRate()) {
+                new MaterialDialog.Builder(this)
+                        .content(R.string.please_rate)
+                        .negativeText(R.string.no_im_good)
+                        .positiveText(R.string.will_help)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                Uri uri =  Uri.parse("market://details?id=" + getApplicationContext().getPackageName());
+                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                if (!(getPackageManager().queryIntentActivities(intent, 0).size() > 0)) {
+                                    showSnackbar(getString(R.string.play_store_error));
+                                    return;
+                                }
+                                startActivity(intent);
+                            }
+                        })
+                        .show();
+            }
         }
     }
 
