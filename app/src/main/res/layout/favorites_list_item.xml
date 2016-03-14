@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="5dp"
+    android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,7 +10,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/star_icon"
-        android:textColor="@color/silver"
         android:layout_centerVertical="true"
         android:id="@+id/star_icon"
         android:textSize="48sp"/>
@@ -21,6 +20,5 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/star_icon"
-        android:layout_toStartOf="@+id/star_icon"
-        android:textSize="32sp" />
+        android:textSize="32sp"/>
 </RelativeLayout>

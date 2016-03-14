@@ -11,11 +11,27 @@
         android:padding="10dp"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/search_input"
-            android:imeOptions="actionDone"
-            android:hint="@string/search"
-            style="@style/text_input"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/search_input"
+                android:imeOptions="actionDone"
+                android:hint="@string/search"
+                android:paddingRight="45dp"
+                style="@style/text_input"/>
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/clear_search"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:text="@string/clear_icon"
+                android:textColor="@color/app_blue"
+                android:textSize="28dp"
+                android:gravity="center"
+                android:layout_gravity="right"/>
+        </FrameLayout>
 
         <ListView
             android:id="@+id/monster_matches"

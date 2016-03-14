@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -23,11 +24,13 @@ import com.randomappsinc.padfriendfinder.Utils.FormUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnItemClick;
 import butterknife.OnTextChanged;
 
 public class SupportedLeadsActivity extends StandardActivity {
     @Bind(R.id.parent) View parent;
+    @Bind(R.id.search_input) EditText searchInput;
     @Bind(R.id.monster_matches) ListView monsterMatches;
 
     private SupportedLeadsAdapter supportedLeadsAdapter;
@@ -58,6 +61,11 @@ public class SupportedLeadsActivity extends StandardActivity {
     @OnTextChanged(value = R.id.search_input, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterTextChanged(Editable input) {
         supportedLeadsAdapter.updateWithPrefix(input.toString());
+    }
+
+    @OnClick(R.id.clear_search)
+    public void clearSearch() {
+        searchInput.setText("");
     }
 
     @OnItemClick(R.id.monster_matches)

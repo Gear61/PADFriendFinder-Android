@@ -56,7 +56,7 @@ public class FavoritesAdapter extends BaseAdapter {
         }
     }
 
-    public void onStar_Click(View view, String id) {
+    public void onStarClick(View view, String id) {
         TextView star = (TextView) view;
         if (star.getCurrentTextColor() == context.getResources().getColor(R.color.gold)) {
             star.setTextColor(context.getResources().getColor(R.color.silver));
@@ -81,15 +81,17 @@ public class FavoritesAdapter extends BaseAdapter {
         }
 
         final String id = favorites.get(position);
-        if (PreferencesManager.get().isFavorited(id))
+        if (PreferencesManager.get().isFavorited(id)) {
             holder.star.setTextColor(context.getResources().getColor(R.color.gold));
-        else
+        }
+        else {
             holder.star.setTextColor(context.getResources().getColor(R.color.silver));
+        }
 
         holder.star.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onStar_Click(view, id);
+                onStarClick(view, id);
             }
         });
         holder.pad_id.setText(id);

@@ -45,6 +45,7 @@
     <string name="email_icon">{fa-envelope}</string>
     <string name="rankings_icon">{fa-bar-chart}</string>
     <string name="plus_icon">{fa-plus}</string>
+    <string name="clear_icon">{fa-remove}</string>
 
     <!-- Favorite String(s) -->
     <string name="favsInstructions">Click on any ID to look at their monster box.
