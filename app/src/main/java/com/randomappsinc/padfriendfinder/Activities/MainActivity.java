@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     @Bind(R.id.parent) View parent;
     @Bind(R.id.add_monster) FloatingActionButton addMonster;
+    @Bind(R.id.drawer_layout) DrawerLayout drawer;
 
     private MaterialDialog loadingMonsters;
 
@@ -48,8 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         if (PreferencesManager.get().getPadId().isEmpty()) {
             startActivity(new Intent(this, PadIdActivity.class));
             finish();
-        }
-        else {
+        } else {
             setContentView(R.layout.activity_main);
             ButterKnife.bind(this);
 
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                     getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
             // Set up the drawer.
-            mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
+            mNavigationDrawerFragment.setUp(R.id.navigation_drawer, drawer);
 
             FragmentManager fragmentManager = getFragmentManager();
 
